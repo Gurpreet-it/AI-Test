@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attention Is All You Need — Interactive Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #faf9f5;
+  --paper-2: #f4f1ea;
+  --ink: #1f1e1d;
+  --ink-2: #3d3929;
+  --muted: #6b6759;
+  --line: #e8e3d6;
+  --coral: #c96442;
+  --coral-hover: #b9573a;
+  --coral-soft: rgba(201, 100, 66, 0.10);
+  --blue: #1d4ed8;
+  --blue-soft: rgba(29, 78, 216, 0.10);
+  --green: #15803d;
+  --green-soft: rgba(21, 128, 61, 0.10);
+  --purple: #7e22ce;
+  --purple-soft: rgba(126, 34, 206, 0.10);
+  --yellow: #a16207;
+  --yellow-soft: rgba(161, 98, 7, 0.10);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--paper); color: var(--ink); min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: "Source Serif 4", Georgia, serif; font-weight: 700; letter-spacing: -0.01em; }
+code, .mono { font-family: "JetBrains Mono", monospace; }
+
+/* Header */
+header {
+  background: var(--paper); border-bottom: 1px solid var(--line);
+  padding: 22px 32px; position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(8px);
+}
+header .inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+header .logo {
+  width: 36px; height: 36px; border-radius: 8px; background: var(--coral);
+  display: grid; place-items: center; color: white; font-weight: 700; font-size: 16px;
+}
+header h1 { font-size: 18px; font-weight: 600; margin-right: auto; }
+header h1 span { color: var(--coral); }
+header .pill {
+  font-size: 11px; padding: 4px 10px; border-radius: 12px;
+  background: var(--coral-soft); color: var(--coral); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* Layout */
+.container { max-width: 1280px; margin: 0 auto; padding: 32px; }
+
+.hero {
+  background: white; border: 1px solid var(--line); border-radius: 16px;
+  padding: 36px 40px; margin-bottom: 28px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.hero h2 { font-size: 32px; margin-bottom: 10px; }
+.hero h2 span { color: var(--coral); }
+.hero p { font-size: 16px; color: var(--ink-2); line-height: 1.6; margin-bottom: 18px; max-width: 720px; }
+.hero .cite { font-size: 12px; color: var(--muted); font-family: "JetBrains Mono", monospace; }
+
+/* Input panel */
+.input-panel {
+  background: white; border: 2px solid var(--coral); border-radius: 14px;
+  padding: 24px 28px; margin-bottom: 28px;
+  box-shadow: 0 4px 16px rgba(201, 100, 66, 0.08);
+}
+.input-panel .label {
+  font-size: 11px; color: var(--coral); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px;
+}
+.input-row { display: flex; gap: 12px; align-items: stretch; }
+.input-row input {
+  flex: 1; padding: 14px 18px; font-size: 18px;
+  font-family: "Source Serif 4", Georgia, serif;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--ink); transition: border-color 0.15s;
+}
+.input-row input:focus {
+  outline: none; border-color: var(--coral); background: white;
+}
+.input-row button {
+  padding: 0 24px; font-size: 14px; font-weight: 600;
+  background: var(--coral); color: white; border: none; border-radius: 10px;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.input-row button:hover { background: var(--coral-hover); }
+
+.preset-row { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.preset-chip {
+  padding: 5px 12px; font-size: 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+  color: var(--ink-2); cursor: pointer; transition: all 0.15s;
+  font-family: "JetBrains Mono", monospace;
+}
+.preset-chip:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-soft); }
+
+.config-row { display: flex; gap: 18px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+.config-row label { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.config-row select, .config-row input[type="number"] {
+  padding: 5px 10px; font-size: 13px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--paper); color: var(--ink); font-family: "JetBrains Mono", monospace;
+}
+
+/* Step section */
+.step {
+  background: white; border: 1px solid var(--line); border-radius: 14px;
+  padding: 26px 30px; margin-bottom: 24px;
+}
+.step-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+.step-num {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: var(--coral-soft); color: var(--coral);
+  display: grid; place-items: center; font-weight: 700;
+  font-family: "JetBrains Mono", monospace; font-size: 14px;
+  flex-shrink: 0;
+}
+.step-header h3 { font-size: 22px; flex: 1; }
+.step-eq {
+  font-family: "JetBrains Mono", monospace; font-size: 13px;
+  padding: 4px 10px; background: var(--paper-2); border-radius: 6px;
+  color: var(--ink-2); border: 1px solid var(--line);
+}
+.step-explainer { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin: 10px 0 18px; padding-left: 46px; }
+.step-explainer code { background: var(--paper-2); padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+.step-body { padding-left: 46px; }
+
+/* Token badges */
+.token-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.token-badge {
+  padding: 6px 12px; background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: 7px; font-family: "JetBrains Mono", monospace; font-size: 13px;
+  font-weight: 500;
+}
+.token-badge .id { color: var(--coral); margin-left: 6px; font-size: 11px; }
+
+/* Matrix tables */
+.matrix-wrap { overflow-x: auto; margin: 14px 0; }
+table.matrix {
+  border-collapse: separate; border-spacing: 0;
+  font-family: "JetBrains Mono", monospace; font-size: 11px;
+}
+table.matrix th, table.matrix td {
+  padding: 6px 10px; text-align: right; min-width: 56px;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: white;
+}
+table.matrix tr:first-child th { background: var(--paper-2); font-weight: 600; color: var(--ink); }
+table.matrix th:first-child {
+  background: var(--paper-2); font-weight: 600; color: var(--coral);
+  text-align: left; position: sticky; left: 0;
+}
+table.matrix th { font-weight: 500; color: var(--muted); font-size: 11px; }
+table.matrix td { color: var(--ink); }
+table.matrix.q td { color: var(--coral); }
+table.matrix.k td { color: var(--blue); }
+table.matrix.v td { color: var(--purple); }
+table.matrix tr:hover td { background: var(--paper); }
+
+/* Heatmap for attention weights */
+.heatmap-table { border-collapse: separate; border-spacing: 2px; font-family: "JetBrains Mono", monospace; font-size: 11px; }
+.heatmap-table th, .heatmap-table td {
+  padding: 6px 8px; min-width: 60px; text-align: center;
+}
+.heatmap-table th { background: var(--paper-2); color: var(--muted); font-weight: 600; }
+.heatmap-table th:first-child { background: var(--paper-2); color: var(--coral); text-align: right; }
+.heatmap-cell { color: var(--ink); font-weight: 600; border-radius: 4px; transition: transform 0.15s; cursor: help; }
+.heatmap-cell:hover { transform: scale(1.1); z-index: 1; }
+
+/* Info chips */
+.shape-chip {
+  display: inline-block; padding: 3px 9px; border-radius: 5px;
+  background: var(--paper-2); color: var(--muted);
+  font-family: "JetBrains Mono", monospace; font-size: 11px;
+  border: 1px solid var(--line); margin-left: 8px;
+}
+
+/* Multi-head tabs */
+.head-tabs { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.head-tab {
+  padding: 6px 14px; font-size: 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 7px;
+  color: var(--ink-2); cursor: pointer; transition: all 0.15s;
+  font-family: "JetBrains Mono", monospace;
+}
+.head-tab:hover { border-color: var(--coral); }
+.head-tab.active { background: var(--coral); color: white; border-color: var(--coral); font-weight: 600; }
+
+.head-panel { display: none; }
+.head-panel.active { display: block; }
+
+/* Token detail panel */
+.detail-panel {
+  background: var(--paper-2); border-radius: 10px; padding: 16px 20px;
+  margin-top: 14px; border: 1px solid var(--line);
+}
+.detail-panel h4 { font-size: 13px; color: var(--coral); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+.detail-panel .formula {
+  font-family: "JetBrains Mono", monospace; font-size: 12px;
+  color: var(--ink-2); line-height: 1.7; white-space: pre-wrap;
+}
+
+/* Output vector display */
+.output-vec {
+  display: flex; gap: 4px; padding: 8px 12px; background: var(--paper-2);
+  border-radius: 8px; font-family: "JetBrains Mono", monospace; font-size: 11px;
+  border: 1px solid var(--line); overflow-x: auto;
+}
+.output-vec .v { padding: 3px 6px; background: white; border-radius: 4px; color: var(--ink); }
+
+/* Legend */
+.legend { display: flex; gap: 16px; align-items: center; font-size: 12px; color: var(--muted); margin: 10px 0; }
+.legend .chip { display: inline-flex; align-items: center; gap: 6px; }
+.legend .dot { width: 12px; height: 12px; border-radius: 3px; }
+
+/* Callout */
+.callout {
+  background: var(--coral-soft); border-left: 3px solid var(--coral);
+  padding: 12px 18px; border-radius: 0 8px 8px 0; margin: 14px 0;
+  font-size: 13px; color: var(--ink); line-height: 1.6;
+}
+.callout strong { color: var(--coral); }
+
+footer {
+  text-align: center; padding: 40px 32px; font-size: 12px;
+  color: var(--muted); border-top: 1px solid var(--line); margin-top: 40px;
+}
+footer a { color: var(--coral); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .step-body { padding-left: 0; }
+  .step-explainer { padding-left: 0; }
+  .input-row { flex-direction: column; }
+}
+
+/* Diff highlight for active calculation */
+.calc-row { background: var(--coral-soft) !important; }
+.calc-col-bg { background: var(--blue-soft) !important; }
+
+/* Token focus selector */
+.focus-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.focus-row label { font-size: 13px; color: var(--muted); }
+.focus-row select {
+  padding: 6px 12px; font-size: 13px; font-family: "JetBrains Mono", monospace;
+  border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <div class="logo">A</div>
+    <h1><span>Attention</span> Is All You Need · Interactive Demo</h1>
+    <span class="pill">Vaswani et al. 2017</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h2>Type a sentence. Watch <span>self-attention</span> compute it live.</h2>
+    <p>Every step from the paper — tokenize, embed, project to Q/K/V, score, scale, softmax, weight, multi-head, concat — runs in your browser with real (small) matrices. Deterministic: same sentence always gives same numbers.</p>
+    <span class="cite">Scaled Dot-Product Attention &nbsp;·&nbsp; Attention(Q, K, V) = softmax(QK<sup>T</sup> / √d<sub>k</sub>) · V</span>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-panel">
+    <div class="label">Your sentence</div>
+    <div class="input-row">
+      <input type="text" id="sentenceInput" value="the cat will sit on the mat" placeholder="Type any short sentence...">
+      <button onclick="runAttention()">Compute Attention</button>
+    </div>
+    <div class="preset-row">
+      <button class="preset-chip" onclick="setSentence('the cat will sit on the mat')">the cat will sit on the mat</button>
+      <button class="preset-chip" onclick="setSentence('she gave him a red apple')">she gave him a red apple</button>
+      <button class="preset-chip" onclick="setSentence('the bank by the river')">the bank by the river</button>
+      <button class="preset-chip" onclick="setSentence('I love testing AI models')">I love testing AI models</button>
+      <button class="preset-chip" onclick="setSentence('attention is all you need')">attention is all you need</button>
+    </div>
+    <div class="config-row">
+      <label>d<sub>model</sub>:
+        <select id="dModel" onchange="runAttention()">
+          <option value="4">4</option>
+          <option value="6" selected>6</option>
+          <option value="8">8</option>
+        </select>
+      </label>
+      <label>heads:
+        <select id="nHeads" onchange="runAttention()">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+        </select>
+      </label>
+      <label>random seed:
+        <input type="number" id="seed" value="42" min="1" max="999" onchange="runAttention()" style="width: 70px;">
+      </label>
+    </div>
+  </div>
+
+  <!-- STEP 1: TOKENIZE -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <h3>Tokenize</h3>
+      <span class="step-eq">sentence → tokens</span>
+    </div>
+    <p class="step-explainer">Split the sentence into pieces (here: lowercase words). Each token gets an integer ID from a vocabulary. Real models use BPE / WordPiece — sub-word pieces — so unseen words still work.</p>
+    <div class="step-body">
+      <div class="token-row" id="tokenRow"></div>
+      <div class="callout" id="tokenCallout"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2: EMBED -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <h3>Embed</h3>
+      <span class="step-eq">E ∈ ℝ<sup>n × d<sub>model</sub></sup></span>
+    </div>
+    <p class="step-explainer">Each token ID maps to a vector of <code>d_model</code> numbers. Vectors are <em>learned</em> in real training — here we derive each one deterministically from the token text so the same word always lands at the same point in space.</p>
+    <div class="step-body">
+      <div id="embedMatrix"></div>
+      <div class="callout">Rows = tokens. Columns = the abstract "features" the model has learned. Similar words have similar rows.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3: PROJECT to Q, K, V -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <h3>Project to Query, Key, Value</h3>
+      <span class="step-eq">Q = E·W<sup>Q</sup> &nbsp;K = E·W<sup>K</sup> &nbsp;V = E·W<sup>V</sup></span>
+    </div>
+    <p class="step-explainer">Three learned weight matrices <code>W^Q, W^K, W^V</code> (each <code>d_model × d_k</code>) turn each embedding into three new vectors. <strong style="color: var(--coral)">Query</strong> = "what I want", <strong style="color: var(--blue)">Key</strong> = "what I offer", <strong style="color: var(--purple)">Value</strong> = "what I carry".</p>
+    <div class="step-body">
+      <h4 style="font-size: 14px; color: var(--coral); margin-bottom: 8px; margin-top: 8px;">Q matrix <span class="shape-chip" id="qShape"></span></h4>
+      <div id="qMatrix"></div>
+      <h4 style="font-size: 14px; color: var(--blue); margin-bottom: 8px; margin-top: 16px;">K matrix <span class="shape-chip" id="kShape"></span></h4>
+      <div id="kMatrix"></div>
+      <h4 style="font-size: 14px; color: var(--purple); margin-bottom: 8px; margin-top: 16px;">V matrix <span class="shape-chip" id="vShape"></span></h4>
+      <div id="vMatrix"></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: SCORES -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <h3>Raw attention scores: Q · K<sup>T</sup></h3>
+      <span class="step-eq">scores ∈ ℝ<sup>n × n</sup></span>
+    </div>
+    <p class="step-explainer">Dot-product every Query with every Key. <code>scores[i][j]</code> = how much token <em>i</em> wants from token <em>j</em>. Big number = strong match.</p>
+    <div class="step-body">
+      <div id="scoreMatrix"></div>
+    </div>
+  </div>
+
+  <!-- STEP 5: SCALE -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">5</div>
+      <h3>Scale by √d<sub>k</sub></h3>
+      <span class="step-eq">scores / √d<sub>k</sub></span>
+    </div>
+    <p class="step-explainer">Without scaling, large d<sub>k</sub> creates huge dot-products → softmax saturates → gradients vanish. Dividing by √d<sub>k</sub> keeps values in a useful range.</p>
+    <div class="step-body">
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">Dividing all scores by <code id="scaleFactor">√d_k</code>:</p>
+      <div id="scaledMatrix"></div>
+    </div>
+  </div>
+
+  <!-- STEP 6: SOFTMAX -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">6</div>
+      <h3>Softmax → attention weights</h3>
+      <span class="step-eq">A = softmax(scores)</span>
+    </div>
+    <p class="step-explainer">Apply softmax row by row. Each row now sums to 1 — interpret as percentages: how much of token <em>i</em>'s attention goes to each other token.</p>
+    <div class="step-body">
+      <div class="legend">
+        <span class="chip"><span class="dot" style="background: rgba(201,100,66,0.15);"></span> low</span>
+        <span class="chip"><span class="dot" style="background: rgba(201,100,66,0.55);"></span> medium</span>
+        <span class="chip"><span class="dot" style="background: var(--coral);"></span> high</span>
+      </div>
+      <div id="weightsMatrix"></div>
+      <div class="callout"><strong>Read row-wise:</strong> row "<span id="readToken">cat</span>" tells you what "<span id="readToken2">cat</span>" pays attention to. Each row sums to 1.00.</div>
+    </div>
+  </div>
+
+  <!-- STEP 7: OUTPUT -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">7</div>
+      <h3>Multiply by V → output</h3>
+      <span class="step-eq">output = A · V</span>
+    </div>
+    <p class="step-explainer">Each token's new vector = weighted sum of all Values, using attention weights. The word is now <em>contextualized</em> — it carries information from the words it attended to.</p>
+    <div class="step-body">
+      <div class="focus-row">
+        <label>Show calculation for:</label>
+        <select id="focusToken"></select>
+      </div>
+      <div id="outputMatrix"></div>
+      <div class="detail-panel" id="focusDetail"></div>
+    </div>
+  </div>
+
+  <!-- STEP 8: MULTI-HEAD -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">8</div>
+      <h3>Multi-Head Attention</h3>
+      <span class="step-eq">Concat(head<sub>1</sub>, ..., head<sub>h</sub>) · W<sup>O</sup></span>
+    </div>
+    <p class="step-explainer">Run h separate attention computations in parallel — each with its own <code>W^Q, W^K, W^V</code>. Each head learns a different relationship pattern (one might track subject↔verb, another track noun↔modifier, etc).</p>
+    <div class="step-body">
+      <div class="head-tabs" id="headTabs"></div>
+      <div id="headPanels"></div>
+      <h4 style="font-size: 14px; color: var(--green); margin-top: 20px; margin-bottom: 8px;">Final output (all heads concatenated)</h4>
+      <div id="finalOutput"></div>
+      <div class="callout"><strong>Real transformer:</strong> this stack of self-attention + feed-forward is repeated 12 to 96 times. The <em>same</em> mechanism, learned to do different jobs at different depths.</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Local demo · numbers reproducible from seed · all math runs in your browser ·
+  <a href="https://arxiv.org/abs/1706.03762" target="_blank">read the paper</a>
+</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   Deterministic PRNG (mulberry32)
+─────────────────────────────────────────────────────────────── */
+function mulberry32(seed) {
+  return function() {
+    seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+    let t = seed;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function gaussian(rng) {
+  // Box-Muller
+  const u = 1 - rng(); const v = rng();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v) * 0.5;
+}
+
+// Stable string-to-seed
+function strHash(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) {
+    h = ((h << 5) - h) + s.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h) + 1;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Matrix ops
+─────────────────────────────────────────────────────────────── */
+function makeMatrix(rows, cols, rng) {
+  const m = [];
+  for (let i = 0; i < rows; i++) {
+    const row = [];
+    for (let j = 0; j < cols; j++) row.push(gaussian(rng));
+    m.push(row);
+  }
+  return m;
+}
+
+function matmul(a, b) {
+  const n = a.length, k = a[0].length, m = b[0].length;
+  const out = Array.from({length: n}, () => new Array(m).fill(0));
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < m; j++) {
+      let s = 0;
+      for (let p = 0; p < k; p++) s += a[i][p] * b[p][j];
+      out[i][j] = s;
+    }
+  }
+  return out;
+}
+
+function transpose(m) {
+  const rows = m.length, cols = m[0].length;
+  const out = Array.from({length: cols}, () => new Array(rows));
+  for (let i = 0; i < rows; i++) for (let j = 0; j < cols; j++) out[j][i] = m[i][j];
+  return out;
+}
+
+function scale(m, s) {
+  return m.map(row => row.map(v => v * s));
+}
+
+function softmaxRows(m) {
+  return m.map(row => {
+    const max = Math.max(...row);
+    const exp = row.map(v => Math.exp(v - max));
+    const sum = exp.reduce((a, b) => a + b, 0);
+    return exp.map(v => v / sum);
+  });
+}
+
+function concatCols(matrices) {
+  const n = matrices[0].length;
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    out.push(matrices.flatMap(m => m[i]));
+  }
+  return out;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Rendering helpers
+─────────────────────────────────────────────────────────────── */
+function fmt(x, d = 2) {
+  if (!isFinite(x)) return "–";
+  return x.toFixed(d);
+}
+
+function renderMatrix(matrix, rowLabels, colLabels, options = {}) {
+  const klass = options.class || "";
+  let html = `<div class="matrix-wrap"><table class="matrix ${klass}">`;
+  html += "<tr><th></th>";
+  for (const c of colLabels) html += `<th>${c}</th>`;
+  html += "</tr>";
+  for (let i = 0; i < matrix.length; i++) {
+    html += `<tr><th>${rowLabels[i]}</th>`;
+    for (let j = 0; j < matrix[i].length; j++) html += `<td>${fmt(matrix[i][j])}</td>`;
+    html += "</tr>";
+  }
+  html += "</table></div>";
+  return html;
+}
+
+function renderHeatmap(matrix, rowLabels, colLabels, title = "attention weight") {
+  let html = `<div class="matrix-wrap"><table class="heatmap-table">`;
+  html += "<tr><th></th>";
+  for (const c of colLabels) html += `<th>${c}</th>`;
+  html += "</tr>";
+  for (let i = 0; i < matrix.length; i++) {
+    html += `<tr><th>${rowLabels[i]}</th>`;
+    for (let j = 0; j < matrix[i].length; j++) {
+      const v = matrix[i][j];
+      const alpha = Math.min(1, 0.06 + v * 1.4);
+      const fg = v > 0.35 ? "white" : "var(--ink)";
+      html += `<td class="heatmap-cell" style="background: rgba(201, 100, 66, ${alpha}); color: ${fg};" title="${rowLabels[i]} → ${colLabels[j]} = ${fmt(v, 4)}">${fmt(v)}</td>`;
+    }
+    html += "</tr>";
+  }
+  html += "</table></div>";
+  return html;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Main attention pipeline
+─────────────────────────────────────────────────────────────── */
+let STATE = {};
+
+function tokenize(sentence) {
+  return sentence.trim().toLowerCase().split(/\s+/).filter(Boolean);
+}
+
+function embed(tokens, dModel) {
+  // Deterministic embedding per token text
+  const E = [];
+  for (const tok of tokens) {
+    const rng = mulberry32(strHash(tok));
+    const row = [];
+    for (let i = 0; i < dModel; i++) row.push(gaussian(rng));
+    E.push(row);
+  }
+  return E;
+}
+
+function runAttention() {
+  const sentence = document.getElementById("sentenceInput").value;
+  const dModel = parseInt(document.getElementById("dModel").value);
+  const nHeads = parseInt(document.getElementById("nHeads").value);
+  const seed = parseInt(document.getElementById("seed").value);
+
+  const tokens = tokenize(sentence);
+  if (tokens.length < 2) {
+    alert("Please enter at least 2 words.");
+    return;
+  }
+
+  const dK = Math.max(1, Math.floor(dModel / nHeads));
+
+  // 1. Tokenize
+  renderTokens(tokens);
+
+  // 2. Embed
+  const E = embed(tokens, dModel);
+  document.getElementById("embedMatrix").innerHTML = renderMatrix(
+    E, tokens,
+    Array.from({length: dModel}, (_, i) => `d${i}`)
+  );
+
+  // Multi-head setup
+  const heads = [];
+  for (let h = 0; h < nHeads; h++) {
+    const rng = mulberry32(seed + h * 1000);
+    const WQ = makeMatrix(dModel, dK, rng);
+    const WK = makeMatrix(dModel, dK, rng);
+    const WV = makeMatrix(dModel, dK, rng);
+    const Q = matmul(E, WQ);
+    const K = matmul(E, WK);
+    const V = matmul(E, WV);
+    const scoresRaw = matmul(Q, transpose(K));
+    const scoresScaled = scale(scoresRaw, 1 / Math.sqrt(dK));
+    const weights = softmaxRows(scoresScaled);
+    const out = matmul(weights, V);
+    heads.push({ WQ, WK, WV, Q, K, V, scoresRaw, scoresScaled, weights, out });
+  }
+
+  // Display HEAD 0 as the primary example through steps 3-7
+  const h0 = heads[0];
+  const kCols = Array.from({length: dK}, (_, i) => `d${i}`);
+
+  // 3. Q, K, V
+  document.getElementById("qShape").textContent = `(${tokens.length} × ${dK})`;
+  document.getElementById("kShape").textContent = `(${tokens.length} × ${dK})`;
+  document.getElementById("vShape").textContent = `(${tokens.length} × ${dK})`;
+  document.getElementById("qMatrix").innerHTML = renderMatrix(h0.Q, tokens, kCols, {class: "q"});
+  document.getElementById("kMatrix").innerHTML = renderMatrix(h0.K, tokens, kCols, {class: "k"});
+  document.getElementById("vMatrix").innerHTML = renderMatrix(h0.V, tokens, kCols, {class: "v"});
+
+  // 4. Raw scores
+  document.getElementById("scoreMatrix").innerHTML = renderMatrix(h0.scoresRaw, tokens, tokens);
+
+  // 5. Scaled
+  document.getElementById("scaleFactor").textContent = `√${dK} ≈ ${Math.sqrt(dK).toFixed(3)}`;
+  document.getElementById("scaledMatrix").innerHTML = renderMatrix(h0.scoresScaled, tokens, tokens);
+
+  // 6. Weights heatmap
+  document.getElementById("weightsMatrix").innerHTML = renderHeatmap(h0.weights, tokens, tokens);
+  document.getElementById("readToken").textContent = tokens[Math.min(1, tokens.length - 1)];
+  document.getElementById("readToken2").textContent = tokens[Math.min(1, tokens.length - 1)];
+
+  // 7. Output + focus calc
+  document.getElementById("outputMatrix").innerHTML = renderMatrix(h0.out, tokens, kCols, {class: "v"});
+  populateFocus(tokens);
+  renderFocusCalc(h0, tokens, 0);
+
+  // 8. Multi-head
+  renderMultiHead(heads, tokens, dK, kCols);
+
+  // Token callout
+  document.getElementById("tokenCallout").innerHTML =
+    `Got <strong>${tokens.length}</strong> tokens. Vocabulary size in real models: 30,000 – 200,000. We're using a deterministic per-string embedding so identical words map to identical vectors.`;
+
+  STATE = { tokens, E, heads, dModel, dK, nHeads, kCols };
+}
+
+function renderTokens(tokens) {
+  let html = "";
+  tokens.forEach((t, i) => {
+    html += `<div class="token-badge">${t}<span class="id">id=${strHash(t) % 10000}</span></div>`;
+  });
+  document.getElementById("tokenRow").innerHTML = html;
+}
+
+function populateFocus(tokens) {
+  const sel = document.getElementById("focusToken");
+  sel.innerHTML = tokens.map((t, i) => `<option value="${i}">${t} (row ${i})</option>`).join("");
+  sel.onchange = () => renderFocusCalc(STATE.heads[0], STATE.tokens, parseInt(sel.value));
+}
+
+function renderFocusCalc(head, tokens, idx) {
+  const weights = head.weights[idx];
+  const V = head.V;
+  const out = head.out[idx];
+
+  // Build calculation text
+  let html = `<h4>Computing output for "${tokens[idx]}" (row ${idx})</h4>`;
+  html += `<div class="formula">output[${idx}] = `;
+  const parts = [];
+  for (let j = 0; j < tokens.length; j++) {
+    if (weights[j] >= 0.02) {
+      parts.push(`<span style="color: var(--coral); font-weight: 600;">${fmt(weights[j], 3)}</span> × V[${tokens[j]}]`);
+    }
+  }
+  html += parts.join("  +  ");
+  html += `</div>`;
+
+  // Show top 3 attended tokens
+  const ranked = weights.map((w, j) => ({w, j})).sort((a, b) => b.w - a.w).slice(0, 3);
+  html += `<div style="margin-top: 12px; font-size: 13px; color: var(--ink-2);">`;
+  html += `<strong>"${tokens[idx]}" pays most attention to:</strong> `;
+  html += ranked.map(r => `<span style="background: var(--coral-soft); color: var(--coral); padding: 2px 8px; border-radius: 4px; margin-right: 6px; font-family: 'JetBrains Mono', monospace;">${tokens[r.j]} (${(r.w * 100).toFixed(1)}%)</span>`).join("");
+  html += `</div>`;
+
+  // Output vector
+  html += `<div style="margin-top: 12px; font-size: 13px; color: var(--muted); margin-bottom: 6px;">Resulting context vector:</div>`;
+  html += `<div class="output-vec">${out.map(v => `<span class="v">${fmt(v)}</span>`).join("")}</div>`;
+
+  document.getElementById("focusDetail").innerHTML = html;
+}
+
+function renderMultiHead(heads, tokens, dK, kCols) {
+  const tabs = heads.map((_, h) => `<button class="head-tab ${h === 0 ? 'active' : ''}" onclick="showHead(${h})">Head ${h + 1}</button>`).join("");
+  document.getElementById("headTabs").innerHTML = tabs;
+
+  const panels = heads.map((head, h) => {
+    return `<div class="head-panel ${h === 0 ? 'active' : ''}" id="headPanel${h}">
+      <p style="font-size: 13px; color: var(--muted); margin-bottom: 10px;">Attention weights for head ${h + 1}:</p>
+      ${renderHeatmap(head.weights, tokens, tokens)}
+    </div>`;
+  }).join("");
+  document.getElementById("headPanels").innerHTML = panels;
+
+  // Concat all head outputs
+  const concat = concatCols(heads.map(h => h.out));
+  const concatCols2 = [];
+  for (let h = 0; h < heads.length; h++) {
+    for (let i = 0; i < dK; i++) concatCols2.push(`h${h}d${i}`);
+  }
+  document.getElementById("finalOutput").innerHTML = renderMatrix(concat, tokens, concatCols2, {class: "v"});
+}
+
+function showHead(h) {
+  document.querySelectorAll(".head-tab").forEach((t, i) => t.classList.toggle("active", i === h));
+  document.querySelectorAll(".head-panel").forEach((p, i) => p.classList.toggle("active", i === h));
+}
+
+function setSentence(s) {
+  document.getElementById("sentenceInput").value = s;
+  runAttention();
+}
+
+// Run on load
+runAttention();
+
+// Live update on enter
+document.getElementById("sentenceInput").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") runAttention();
+});
+</script>
+
+</body>
+</html>

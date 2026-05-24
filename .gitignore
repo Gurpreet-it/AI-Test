@@ -1,0 +1,21 @@
+# Maven / Java
+target/
+*.class
+*.jar
+*.war
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local Claude config
+.claude/

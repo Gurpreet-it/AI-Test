@@ -17,9 +17,13 @@ public abstract class BaseTest {
     public void setUp() {
         try {
             ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
             options.addArguments("--disable-notifications");
             options.addArguments("--remote-allow-origins=*");
-            options.addArguments("--start-maximized");
+            options.addArguments("--window-size=1920,1080");
 
             driver = new ChromeDriver(options);
             driver.manage().timeouts()

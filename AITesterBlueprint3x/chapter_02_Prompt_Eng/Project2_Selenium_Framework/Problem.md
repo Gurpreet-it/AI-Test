@@ -1,0 +1,1 @@
+We have to generate a Selenium automation framework from scratch where you need to add a two-page object model, proper production ready. 

@@ -19,3 +19,8 @@ Thumbs.db
 
 # Local Claude config
 .claude/
+
+# IDE / editor scratch
+.commandcode/
+.env
+env

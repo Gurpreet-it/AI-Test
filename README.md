@@ -9,6 +9,35 @@ Each chapter pairs concept material with a hands-on project, a prompt template, 
 
 ---
 
+## Curriculum Map
+
+```mermaid
+mindmap
+  root((AI Tester<br/>Blueprint 3.x))
+    Ch 01 - LLM Basics
+      Attention is All You Need
+      Self-attention visualiser
+      Why prompt phrasing matters
+    Ch 02 - Prompt Engineering
+      Anti-Hallucination Rules
+      RICE-POT Framework
+      Project 1 - Test Case Generation
+        Restful Booker API
+        DeepSeek CSV output
+      Project 2 - Selenium Framework
+        Maven + TestNG + Selenium 4
+        POM + PageFactory
+        Valid + Invalid login tests
+      6 Reusable Templates
+        Test cases from PRD
+        API tests
+        Negative-only
+        Security (OWASP)
+        Regression suite
+```
+
+---
+
 ## Repository Layout
 
 ```
@@ -53,7 +82,33 @@ Foundational material on how Large Language Models read text and decide what to 
 
 **Why a QA engineer should care:** the model's behaviour is deterministic-ish on a per-token level, but every word you add to a prompt shifts the attention weights. That is why structured prompt frameworks (next chapter) outperform free-form questions.
 
-Open the HTML files locally in any browser — no build step.
+**Q&A — why this matters for testing:**
+- **Q: Why does the same prompt give different test cases each run?** A: Sampling temperature plus floating-point non-determinism in attention. Pin `temperature=0` and set explicit constraints to flatten variance.
+- **Q: Why does adding "be thorough" rarely help?** A: Vague tokens add weight without direction. Replace with measurable constraints — "cover boundary, negative, and security cases" steers attention to specific output shape.
+- **Q: Do I need to read the original Transformer paper?** A: No — but understanding that the model weighs every token against every other token explains why irrelevant words in your prompt pollute the answer.
+
+**Mental model — how one prompt token influences the output:**
+
+```mermaid
+flowchart LR
+    P[Prompt tokens] --> E[Embeddings]
+    E --> A[Self-attention]
+    A --> W[Token-to-token weights]
+    W --> N[Next-token logits]
+    N --> S{Sampling}
+    S -->|temp=0| D[Deterministic-ish output]
+    S -->|temp>0| V[Variable output]
+```
+
+**Quick demo — try it locally:**
+
+```bash
+# clone, then just open the HTML files in a browser - no build, no install
+open chapter_01_LLM_Basics/attention_interactive.html
+open chapter_01_LLM_Basics/attention_is_all_you_need.html
+```
+
+Hover over tokens in `attention_interactive.html` to see the live attention matrix. Edit the input sentence to see weights shift in real time — that's the same mechanism that makes your prompt wording matter.
 
 ---
 
@@ -64,6 +119,34 @@ This chapter turns prompt engineering into a repeatable QA skill. Three pillars:
 1. **Anti-hallucination rules** — guardrails so the model only uses provided input.
 2. **RICE-POT framework** — a structured prompt template (Role, Instructions, Context, Example, Parameters, Output, Tone).
 3. **Two projects + six templates** — applied on real artifacts (a PRD-style API doc and a Selenium framework build).
+
+**Q&A — RICE-POT vs free-form prompting:**
+- **Q: I already get OK results from "write test cases for this PRD." Why bother with a framework?** A: "OK" is the ceiling. RICE-POT forces you to declare the persona, format, and constraints, which is what turns a 60% useful answer into a 95% useful one — every time, not just on lucky runs.
+- **Q: Isn't this just over-engineering a chat message?** A: For one-offs, yes. For repeatable QA tasks (regression suites, security checklists, daily test-case generation), the template pays for itself within three uses.
+- **Q: Which letter is most often skipped — and what breaks?** A: `P` (Parameters). Without the anti-hallucination block, the model invents fields, IDs, and error codes that don't exist in your PRD. Output looks plausible but ships bugs.
+
+**RICE-POT prompt flow — from goal to copy-pasteable prompt:**
+
+```mermaid
+flowchart TD
+    G[Goal: what should AI produce?] --> R[R - Role: persona]
+    G --> I[I - Instructions + Don't list]
+    G --> C[C - Context: PRD / API doc]
+    G --> E[E - Example: one sample row]
+    G --> P[P - Parameters: anti-hallucination]
+    G --> O[O - Output: format spec]
+    G --> T[T - Tone: technical / output-only]
+    R --> A[Assemble template]
+    I --> A
+    C --> A
+    E --> A
+    P --> A
+    O --> A
+    T --> A
+    A --> X[Copy-pasteable prompt]
+    X --> Y{Run on LLM}
+    Y --> Z[Refine: tighten Don't list, dedupe columns]
+```
 
 ### Anti-Hallucination Rules (`Anti_Hallucinations_Rules.md`)
 
@@ -85,6 +168,18 @@ Goal: turn an API PDF (`Restful-booker.pdf`) into a CSV of enterprise-grade test
 - `Restful-booker.pdf` + `Restful_Booker_API_Test_Cases.md` — input PDF and the generated test-case set.
 - `output/deepseek_csv_20260524_0d9b7c.csv` — actual model output produced from the prompt.
 
+**Q&A — Project 1 design choices:**
+- **Q: Why a PDF input and not just pasted text?** A: PDFs mirror how QA actually receives PRDs and API specs. Forcing the model to extract from the document tests whether the prompt's anti-hallucination block holds under realistic input noise.
+- **Q: Why CSV output instead of Markdown?** A: CSV imports cleanly into Jira, TestRail, qTest, and Zephyr. The model is told the exact column order so the file drops straight into a test-management tool.
+- **Q: How do I trust the output?** A: Cross-check the `Traceability` column — every test case row must cite a section of the source PDF. Rows without traceability fail review.
+
+**Sample output row (from `deepseek_csv_20260524_0d9b7c.csv`):**
+
+```csv
+TC_ID,Title,Preconditions,Steps,Test Data,Expected Result,Type,Priority,Traceability
+TC_API_007,Create booking with valid payload,"Auth token obtained","POST /booking with required fields","firstname=Jim, lastname=Brown, totalprice=111, depositpaid=true","HTTP 200 + bookingid + booking object echoed back",Positive,High,"Restful-booker.pdf §Booking → CreateBooking"
+```
+
 **How to exercise it:**
 1. Open `RICE-POT-TestCase-Prompt.md` in any AI tool (ChatGPT, Claude, Gemini, DeepSeek).
 2. Attach `Restful-booker.pdf` (or your own PRD).
@@ -104,6 +199,52 @@ Goal: prove RICE-POT can build production code, not just test cases.
   - `ConfigReader.java` — `config.properties` loader.
   - `ValidLoginTest.java` / `InvalidLoginTest.java` — positive + negative TestNG cases.
   - `testng.xml` / `testng-smoke.xml` — full and smoke suites.
+
+**Q&A — Project 2 design choices:**
+- **Q: Why XPath only?** A: The prompt locked it to one locator strategy on purpose — consistency makes generated code reviewable. In production you'd mix CSS + XPath, but the discipline of "one strategy" is what the prompt enforces.
+- **Q: Where do real credentials go?** A: `src/main/resources/config.properties`. Placeholders `REPLACE_WITH_...` fail fast in `@BeforeTest` so a forgotten config never silently passes a test.
+- **Q: Why headless Chrome by default?** A: macOS 26.1 + Chrome 148 dropped windowed sessions mid-test in this repo. Headless avoids the focus/sandbox issue and is what CI uses anyway.
+
+**Framework architecture — what the prompt generated:**
+
+```mermaid
+flowchart TD
+    CFG[config.properties] --> CR[ConfigReader]
+    CR --> BT[BaseTest]
+    BT -->|@BeforeMethod| D[ChromeDriver headless]
+    BT -->|@AfterMethod| Q[driver.quit]
+    LP[LoginPage - POM + PageFactory] --> XP["@FindBy xpath only"]
+    VT[ValidLoginTest] --> LP
+    IT[InvalidLoginTest + @DataProvider] --> LP
+    VT -.extends.-> BT
+    IT -.extends.-> BT
+    SUITE[testng.xml] --> VT
+    SUITE --> IT
+    SMOKE[testng-smoke.xml] --> IT
+```
+
+**LoginPage snippet (XPath + explicit waits, no Thread.sleep):**
+
+```java
+public class LoginPage {
+    @FindBy(xpath = "//input[@id='username']") private WebElement usernameField;
+    @FindBy(xpath = "//input[@id='password']") private WebElement passwordField;
+    @FindBy(xpath = "//input[@id='Login']")    private WebElement loginButton;
+    @FindBy(xpath = "//div[@id='error']")      private WebElement errorMessage;
+
+    public LoginPage(WebDriver driver) {
+        this.wait = new WebDriverWait(driver,
+            Duration.ofSeconds(ConfigReader.getInt("timeout.explicit")));
+        PageFactory.initElements(driver, this);
+    }
+
+    public void loginAs(String user, String pass) {
+        wait.until(ExpectedConditions.visibilityOf(usernameField)).sendKeys(user);
+        passwordField.sendKeys(pass);
+        wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
+    }
+}
+```
 
 **Run it:**
 ```bash

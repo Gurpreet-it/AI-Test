@@ -92,3 +92,6 @@ Output rendered in UI + downloadable to `output/test-plan-<jiraId>.md`.
 - **Express pinned to v4**; catch-all route uses regex `/^(?!\/api).*/` (express 5 breaks `app.get('*')`).
 - **Live API path unverified** until `.env` creds added → run `npm run handshake`.
 - Self-anneal protocol: on a tool failure, read the error, patch the `tools/` file, re-test, then record the learning in the matching `architecture/*.md`.
+- 2026-06-06: Live handshake PASS (Jira VWO-48 + GROQ). End-to-end generate verified locally.
+- 2026-06-06: **Deployed to Vercel** → https://testplanbuddy.vercel.app (project `testplanbuddy`). Express proxy converted to serverless functions in `api/`; `/api/save` disabled on serverless (use client Download .md). Production env vars must be set in the Vercel dashboard (or entered in the Settings tab at runtime).
+- Note: this file was `gemini.md` (BLAST default name); renamed to `LLM.md` for this Claude-based project. Still the constitution / law.

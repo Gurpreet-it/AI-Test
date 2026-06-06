@@ -36,8 +36,8 @@
 ## Phase 5 — T: Trigger (Deploy)
 - [x] `package.json` scripts (`dev`, `build`, `start`)
 - [x] README run instructions
-- [x] Maintenance Log in `gemini.md`
-- [ ] Optional cloud deploy
+- [x] Maintenance Log in `LLM.md` (was `gemini.md`)
+- [x] Cloud deploy — Vercel serverless (`api/`), live at https://testplanbuddy.vercel.app
 
 ## Done-when
 - `npm install && npm run dev`, open UI, enter creds + `VWO-48`, get a formal Markdown test plan.

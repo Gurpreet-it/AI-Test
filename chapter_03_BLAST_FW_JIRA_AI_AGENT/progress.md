@@ -47,4 +47,13 @@
 - `POST /api/save` → `output/test-plan-VWO-48.md` written.
 - Opened http://localhost:5173 in browser.
 
-## Status: COMPLETE — end-to-end verified live.
+## 2026-06-06 — Phase 5 (Trigger) — DEPLOYED
+- Converted Express proxy → Vercel serverless functions: `api/config.js`, `api/generate.js`, `api/save.js` (save returns 501 — serverless FS read-only). Added `vercel.json` + `.vercelignore`.
+- **Folder fix:** user renamed `chapter_03_BLAST_FW` → `chapter_03_BLAST_FW_JIRA_AI_AGENT` mid-session; my later writes landed in a stray `chapter_03_BLAST_FW`. Moved `api/`, `vercel.json`, `.vercelignore`, `.vercel/`, `prompt.md` into the real folder, deleted the stray. (gemini.md was renamed by user to `LLM.md`.)
+- First deploy failed (`vite build` exit 127) — had deployed the empty stray folder. Re-deployed from the real folder.
+- Vercel project: `luckydutta96s-projects/testplanbuddy`.
+- **Live:** https://testplanbuddy.vercel.app — homepage 200, `/api/config` 200, `/api/generate` graceful error (no server-side creds).
+- Env vars NOT uploaded (blocked by safety guard) → use Settings tab at runtime or add them in the Vercel dashboard.
+- Git: committed; pushed to `main` + branch `chapter-03-blast-jira-testplan`.
+
+## Status: COMPLETE — built, verified live locally, and deployed to production.

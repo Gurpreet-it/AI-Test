@@ -24,3 +24,6 @@ Thumbs.db
 .commandcode/
 .env
 env
+
+# Local browser verification artifacts
+.playwright-mcp/

@@ -44,6 +44,11 @@ mindmap
       Jira ticket creation agent
       PRD to test cases to Google Sheets
       CSV-driven batch workflow
+    Project - Job Tracker AI
+      Local-first React Kanban board
+      IndexedDB persistence
+      Drag-and-drop job cards
+      JSON backup and restore
 ```
 
 ---
@@ -88,13 +93,23 @@ mindmap
 │   ├── server.js                  Local Express proxy
 │   └── package.json
 │
-└── chapter_04_AI_Agents_n8n/      Importable n8n QA agent workflows
+├── chapter_04_AI_Agents_n8n/      Importable n8n QA agent workflows
+│   ├── README.md
+│   └── n8n_AIAgent/
+│       ├── AI_3X_01_QA_Buddy.json
+│       ├── AI_3X_02_JIRA_Agent.json
+│       ├── AI_3X_03_Read_PRD_TestCases_Excel.json
+│       └── AI_3X_04_Read_PRD_TestCases_Excel_v2.json
+│
+└── Project_Job_TRACKERAI/         Local-first job application tracker
     ├── README.md
-    └── n8n_AIAgent/
-        ├── AI_3X_01_QA_Buddy.json
-        ├── AI_3X_02_JIRA_Agent.json
-        ├── AI_3X_03_Read_PRD_TestCases_Excel.json
-        └── AI_3X_04_Read_PRD_TestCases_Excel_v2.json
+    ├── package.json
+    ├── src/
+    │   ├── App.jsx
+    │   ├── constants.js
+    │   └── db.js
+    └── public/
+        └── favicon.svg
 ```
 
 ---
@@ -344,6 +359,28 @@ This chapter adds importable **n8n** workflows for practical QA automation. The 
 
 ---
 
+## Project - Job Tracker AI
+
+`Project_Job_TRACKERAI/` is a local-first job application tracker built as a Vite + React single-page app. It stores every job card in the browser with IndexedDB through the `idb` library, so there is no backend, authentication, or external database.
+
+**What's here:**
+- Six Kanban columns: Wishlist, Applied, Follow-up, Interview, Offer, and Rejected.
+- Drag-and-drop cards between columns with `@dnd-kit/core`.
+- Add, edit, delete, search, and sort job cards.
+- Resume-name reuse, LinkedIn job links, days-since-applied labels, salary notes, and status color accents.
+- Light/dark mode plus JSON export/import for backups.
+
+**Run it locally:**
+```bash
+cd Project_Job_TRACKERAI
+npm install
+npm run dev
+```
+
+Open the local Vite URL and use the app directly in the browser. Data persists in the browser's IndexedDB database named `job-tracker-ai`.
+
+---
+
 ## How to Use This Repo
 
 You can read it linearly (chapter 01 → 04) or jump straight to a project:
@@ -354,6 +391,7 @@ You can read it linearly (chapter 01 → 04) or jump straight to a project:
 - **"I want my model to stop making things up."** → `chapter_02_Prompt_Eng/Anti_Hallucinations_Rules.md`.
 - **"I want to generate a test plan from Jira."** → `chapter_03_BLAST_FW_JIRA_AI_AGENT/`.
 - **"I want reusable QA automation agents."** → `chapter_04_AI_Agents_n8n/`.
+- **"I want to track job applications locally."** → `Project_Job_TRACKERAI/`.
 
 ## Requirements
 
@@ -361,6 +399,7 @@ You can read it linearly (chapter 01 → 04) or jump straight to a project:
 - For Project 2 only: **JDK 11+** and **Maven 3.9+** to compile and run the Selenium framework.
 - For Chapter 3: **Node.js 18+**, npm, Jira API credentials, and a GROQ API key.
 - For Chapter 4: n8n Cloud or self-hosted n8n, plus credentials for whichever workflow nodes you enable.
+- For Job Tracker AI: **Node.js 20.19+ or 22.12+** and npm for Vite 8.
 
 ## Chapter History
 

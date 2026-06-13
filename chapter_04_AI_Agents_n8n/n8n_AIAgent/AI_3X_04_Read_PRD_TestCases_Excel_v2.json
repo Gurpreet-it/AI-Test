@@ -1,0 +1,628 @@
+{
+  "name": "AI_3X_04_Read_PRD_TestCases_Excel_v2",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Objective\nWe want to read the requirement, and based on the requirement, we want to create test cases. "
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1456,
+        -80
+      ],
+      "typeVersion": 1,
+      "id": "9f87ba22-eda8-41f7-98f4-5b6c8ac1a421",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -1136,
+        256
+      ],
+      "id": "21dd5a25-1746-42a7-bb49-40db9d970af8",
+      "name": "When chat message received",
+      "webhookId": "492bbede-7019-4f01-acbf-50f89baefb2c",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1136,
+        1008
+      ],
+      "id": "b9292f7e-2399-4830-a350-a0dfe704f760",
+      "name": "Schedule Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "trigger": [
+          "message"
+        ],
+        "channelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.slackTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        1232
+      ],
+      "id": "6ddc207e-e4be-4729-9b90-f7f9d11f987d",
+      "name": "Slack Trigger",
+      "webhookId": "1d7eb35e-c543-43c3-90d3-a60a29ced33f",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "event": "newChatMessage",
+        "chatId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.microsoftTeamsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        576
+      ],
+      "id": "e25983b6-d1bc-428e-bbc5-84995e810c88",
+      "name": "Microsoft Teams Trigger",
+      "webhookId": "74298b5c-bb3f-48da-b874-9640b54dad10",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# ROLE\nYou are JiraTestForge, a QA test-case generation agent. You turn a Jira ticket into structured, executable test cases and write them into the connected sheet.\n\n# WHEN TO ACT\nTrigger the full workflow only when the user's message expresses intent to create test cases (e.g. \"create test case\", \"generate test cases\", \"make TCs\"). For any other message, reply conversationally and do NOT call any tool.\n\n# WORKFLOW — follow in this exact order\n1. EXTRACT KEY\n   - Find the Jira issue key in the user's message. It matches the pattern [A-Z]+-[0-9]+ (e.g. VWO-1234, PROJ-87).\n   - If no key is present, ask the user for the ticket key and stop. Never invent a key.\n   - If multiple keys are present, process each one in turn.\n\n2. FETCH TICKET\n   - Call the \"Fetch PRD by Ticket ID\" tool with the extracted key.\n   - Read the summary, description, and acceptance criteria from the response.\n\n3. GENERATE TEST CASES (ground them ONLY in the fetched ticket)\n   - Do not assume requirements, fields, or flows that are not in the ticket.\n   - Cover: positive / happy path, negative / invalid input, boundary & edge conditions, and every acceptance criterion explicitly listed.\n   - Produce 5–10 test cases depending on ticket size. If the ticket lacks detail, generate only what the content supports and note the gap in your final reply.\n\n4. WRITE TO SHEET\n   - For EACH test case, make ONE call to the \"Append or update row in sheet\" tool.\n   - One row per test case. Never pack multiple test cases into a single field.\n\n# COLUMN SCHEMA (must match the sheet's header row)\n- Test Case ID : <KEY>-TC-01, <KEY>-TC-02, ... (sequential)\n- Jira Key     : the ticket key\n- Title        : what is being tested, in one line\n- Preconditions: state required before execution (or \"None\")\n- Test Steps   : numbered steps, one action per line\n- Test Data    : inputs used (or \"N/A\")\n- Expected Result : precise expected outcome\n- Type         : Positive | Negative | Edge | Boundary\n- Priority     : P1 | P2 | P3\n- Status       : Not Executed\n\n# RULES\n- Every test case must trace back to the ticket. No hallucinated features.\n- Steps must be atomic and concrete — a tester follows them without guessing.\n- After writing all rows, reply with a short summary: ticket key, count of test cases created, and a one-line list of their titles."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -912,
+        256
+      ],
+      "id": "ff69abc3-ad95-480c-b37c-5e81e878c61e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        -1136,
+        800
+      ],
+      "id": "f3bdf1ab-c7e5-4d22-b98d-bff640b234b6",
+      "name": "Brain",
+      "credentials": {
+        "groqApi": {
+          "id": "rotHXFgDZ2gHUueO",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "issueKey": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Issue_Key', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.jiraTool",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        480
+      ],
+      "id": "fbb3b55a-897b-4188-9780-b22324898c93",
+      "name": "Fetch PRD by Ticket ID",
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "ez9qdNyEbmagXm0x",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Z9tJpHFKk91KBuF6RAbz3F8fuKx14S5DQgzvjWXunEY",
+          "mode": "list",
+          "cachedResultName": "VWO PRD TestCases",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z9tJpHFKk91KBuF6RAbz3F8fuKx14S5DQgzvjWXunEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Z9tJpHFKk91KBuF6RAbz3F8fuKx14S5DQgzvjWXunEY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Test Case ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Test_Case_ID__using_to_match_', ``, 'string') }}",
+            "Summary / Title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary___Title', ``, 'string') }}",
+            "Preconditions": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Preconditions', ``, 'string') }}",
+            "Test Steps": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Test_Steps', ``, 'string') }}",
+            "Expected Result": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Expected_Result', ``, 'string') }}",
+            "Actual Result": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Actual_Result', ``, 'string') }}",
+            "Status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Status', ``, 'string') }}",
+            "Priority": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Priority', ``, 'string') }}",
+            "Assignee": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Assignee', ``, 'string') }}",
+            "Execution Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Execution_Date', ``, 'string') }}",
+            "Comments / Notes": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Comments___Notes', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "Test Case ID"
+          ],
+          "schema": [
+            {
+              "id": "Test Case ID",
+              "displayName": "Test Case ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Summary / Title",
+              "displayName": "Summary / Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Preconditions",
+              "displayName": "Preconditions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Test Steps",
+              "displayName": "Test Steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Expected Result",
+              "displayName": "Expected Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Actual Result",
+              "displayName": "Actual Result",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Priority",
+              "displayName": "Priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Assignee",
+              "displayName": "Assignee",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Execution Date",
+              "displayName": "Execution Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comments / Notes",
+              "displayName": "Comments / Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        64,
+        224
+      ],
+      "id": "61369f73-056b-45f6-a2df-45bb4513402e",
+      "name": "Append or update row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "iZU1Fv8HgOGAyQ1x",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek-v4-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        192
+      ],
+      "id": "fa428371-cde1-4fce-b313-3c80f6344e6e",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "YWHDwkGa1ChnOhI7",
+          "name": "DeepSeek account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## CSV Upload Flow\nUpload a CSV file with JIRA IDs → Extract IDs → Loop through each → Fetch ticket → Generate test cases with AI → Write to Google Sheets",
+        "height": 240,
+        "width": 1520,
+        "color": 2
+      },
+      "id": "b3f7674b-77e4-4c67-9635-794968375cff",
+      "name": "CSV Upload Flow",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        -352
+      ]
+    },
+    {
+      "parameters": {
+        "formTitle": "Upload JIRA IDs for Test Case Generation",
+        "formDescription": "Upload a CSV file containing JIRA ticket IDs. The workflow will generate test cases for each ticket.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "CSV File with JIRA IDs",
+              "fieldType": "file",
+              "fieldName": "csvFile",
+              "multipleFiles": false,
+              "acceptFileTypes": ".csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false,
+          "buttonLabel": "Generate Test Cases",
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "Processing your JIRA IDs. Test cases will be generated shortly."
+            }
+          }
+        }
+      },
+      "id": "b3207135-4d2c-446a-947f-9254202d52f9",
+      "name": "Upload CSV with JIRA IDs",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -1040,
+        -192
+      ],
+      "webhookId": "csv-upload-form"
+    },
+    {
+      "parameters": {
+        "binaryPropertyName": "csvFile",
+        "options": {
+          "delimiter": ",",
+          "headerRow": true,
+          "includeEmptyCells": false
+        }
+      },
+      "id": "8c49a0bf-67db-4696-8936-1bd916145ab5",
+      "name": "Extract JIRA IDs from CSV",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -848,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "summary",
+              "name": "summary",
+              "value": "={{ \"All JIRA tickets processed. Test cases generated.\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ca894b77-911f-4093-9119-2a70092251f1",
+      "name": "All Tickets Processed",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -336,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "issueKey": "={{ $json.jiraId }}",
+        "additionalFields": {}
+      },
+      "id": "de0fd69d-627a-40df-85da-19075d9be7c4",
+      "name": "Fetch Ticket Details",
+      "type": "n8n-nodes-base.jira",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        -208
+      ],
+      "credentials": {
+        "jiraSoftwareCloudApi": {
+          "id": "ez9qdNyEbmagXm0x",
+          "name": "Jira SW Cloud account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate test cases for this Jira ticket:\n\nKey: {{ $json.key }}\nSummary: {{ $json.fields.summary }}\nDescription: {{ $json.fields.description }}\n\nCreate 5-10 test cases covering positive, negative, boundary, and edge cases. Write each test case to the Google Sheet using the tool.",
+        "options": {
+          "systemMessage": "# ROLE\nYou are JiraTestForge, a QA test-case generation agent. You turn a Jira ticket into structured, executable test cases and write them into the connected sheet.\n\n# WORKFLOW\n1. READ the ticket data provided in the user message (key, summary, description, acceptance criteria).\n2. GENERATE 5–10 test cases grounded ONLY in the ticket content:\n   - Positive / happy path\n   - Negative / invalid input\n   - Boundary & edge conditions\n   - Every acceptance criterion explicitly listed\n3. WRITE TO SHEET\n   - For EACH test case, make ONE call to the \"Append or update row in sheet\" tool.\n   - One row per test case. Never pack multiple test cases into a single field.\n\n# COLUMN SCHEMA\n- Test Case ID : <KEY>-TC-01, <KEY>-TC-02, ... (sequential)\n- Summary / Title : what is being tested, in one line\n- Preconditions: state required before execution (or \"None\")\n- Test Steps   : numbered steps, one action per line\n- Expected Result : precise expected outcome\n- Actual Result : leave empty\n- Status       : Not Executed\n- Priority     : P1 | P2 | P3\n- Assignee     : leave empty\n- Execution Date : leave empty\n- Comments / Notes : leave empty\n\n# RULES\n- Every test case must trace back to the ticket. No hallucinated features.\n- Steps must be atomic and concrete.\n- After writing all rows, reply with: \"Generated N test cases for <KEY>\""
+        }
+      },
+      "id": "3a4396c3-2cb3-4b98-8985-8d1597170d6e",
+      "name": "Generate Test Cases with AI",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -112,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f2dd1267-3d76-4e72-8943-048bcb133063",
+      "name": "Loop Over JIRA IDs",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -560,
+        -48
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brain": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Microsoft Teams Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Slack Trigger": {
+      "main": [
+        []
+      ]
+    },
+    "Fetch PRD by Ticket ID": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          },
+          {
+            "node": "Generate Test Cases with AI",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Generate Test Cases with AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload CSV with JIRA IDs": {
+      "main": [
+        [
+          {
+            "node": "Extract JIRA IDs from CSV",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract JIRA IDs from CSV": {
+      "main": [
+        [
+          {
+            "node": "Loop Over JIRA IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Ticket Details": {
+      "main": [
+        [
+          {
+            "node": "Generate Test Cases with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Test Cases with AI": {
+      "main": [
+        [
+          {
+            "node": "Loop Over JIRA IDs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over JIRA IDs": {
+      "main": [
+        [
+          {
+            "node": "All Tickets Processed",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Fetch Ticket Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "242a2607-023e-404f-83bd-6e6d6cfb3deb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8005f0069f1cf5df4dc00f46deab8c0ac930550c19a54f961b19bfd4aafa7bab"
+  },
+  "nodeGroups": [],
+  "id": "hGd7mGInCllJsJZ0",
+  "tags": [
+    {
+      "updatedAt": "2026-06-07T06:31:53.552Z",
+      "createdAt": "2026-06-07T06:31:53.552Z",
+      "id": "gSluiPjvWIAcdvbE",
+      "name": "AI3X"
+    }
+  ]
+}

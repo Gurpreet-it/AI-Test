@@ -34,6 +34,16 @@ mindmap
         Negative-only
         Security (OWASP)
         Regression suite
+    Ch 03 - BLAST Jira Test Plan Agent
+      React + Express app
+      Jira REST proxy
+      GROQ test-plan generator
+      Vercel deployment
+    Ch 04 - n8n AI Agents
+      QA Buddy chat agent
+      Jira ticket creation agent
+      PRD to test cases to Google Sheets
+      CSV-driven batch workflow
 ```
 
 ---
@@ -47,26 +57,44 @@ mindmap
 │   ├── attention_is_all_you_need.html
 │   └── Notes.md
 │
-└── chapter_02_Prompt_Eng/         Prompt engineering for QA work
-    ├── Anti_Hallucinations_Rules.md
-    ├── Project1_TC_Gen/           Test case generation from a PRD/API doc
-    │   ├── RICE-POT-TestCase-Prompt.md
-    │   ├── RICE_POT_FRAMEWORK/
-    │   ├── Restful-booker.pdf
-    │   ├── Restful_Booker_API_Test_Cases.md
-    │   └── output/
-    ├── Project2_Selenium_Framework/   POM-based Selenium framework built from a prompt
-    │   ├── Problem.md
-    │   ├── SKILL.md                   RICE-POT prompt-builder skill
-    │   ├── blank-template-rice-pot.md
-    │   └── AdvanceSeleniumFramework/  Maven + TestNG + Selenium 4
-    └── templates/                 Reusable prompt templates (RTCFR / RICE-POT)
-        ├── 01_TestCaseGeneration_Prompt.md
-        ├── 02_TestCases_from_prd
-        ├── 03_API_Test_Generation.md
-        ├── 04_Negative_TC_Only.md
-        ├── 05_Secuirty_Test.md
-        └── 06_Regression_Suite.md
+├── chapter_02_Prompt_Eng/         Prompt engineering for QA work
+│   ├── Anti_Hallucinations_Rules.md
+│   ├── Project1_TC_Gen/           Test case generation from a PRD/API doc
+│   │   ├── RICE-POT-TestCase-Prompt.md
+│   │   ├── RICE_POT_FRAMEWORK/
+│   │   ├── Restful-booker.pdf
+│   │   ├── Restful_Booker_API_Test_Cases.md
+│   │   └── output/
+│   ├── Project2_Selenium_Framework/   POM-based Selenium framework built from a prompt
+│   │   ├── Problem.md
+│   │   ├── SKILL.md                   RICE-POT prompt-builder skill
+│   │   ├── blank-template-rice-pot.md
+│   │   └── AdvanceSeleniumFramework/  Maven + TestNG + Selenium 4
+│   └── templates/                 Reusable prompt templates (RTCFR / RICE-POT)
+│       ├── 01_TestCaseGeneration_Prompt.md
+│       ├── 02_TestCases_from_prd
+│       ├── 03_API_Test_Generation.md
+│       ├── 04_Negative_TC_Only.md
+│       ├── 05_Secuirty_Test.md
+│       └── 06_Regression_Suite.md
+│
+├── chapter_03_BLAST_FW_JIRA_AI_AGENT/   Jira to test-plan generator
+│   ├── README.md
+│   ├── B.L.A.S.T.md
+│   ├── architecture/              Layer 1 SOPs and test-plan template
+│   ├── api/                       Vercel serverless endpoints
+│   ├── src/                       React UI
+│   ├── tools/                     Jira, GROQ, and Markdown engines
+│   ├── server.js                  Local Express proxy
+│   └── package.json
+│
+└── chapter_04_AI_Agents_n8n/      Importable n8n QA agent workflows
+    ├── README.md
+    └── n8n_AIAgent/
+        ├── AI_3X_01_QA_Buddy.json
+        ├── AI_3X_02_JIRA_Agent.json
+        ├── AI_3X_03_Read_PRD_TestCases_Excel.json
+        └── AI_3X_04_Read_PRD_TestCases_Excel_v2.json
 ```
 
 ---
@@ -274,24 +302,71 @@ Six copy-paste prompt templates for the most common QA tasks. Each follows the *
 
 ---
 
+## Chapter 03 — B.L.A.S.T. Jira Test Plan Generator
+
+This chapter turns a Jira ticket into a formal QA test plan through a lightweight **React + Express** app. It uses the **B.L.A.S.T.** protocol (Blueprint, Link, Architect, Stylize, Trigger) and an **A.N.T.** 3-layer architecture.
+
+**What's here:**
+- `README.md` — setup, local run, production run, and Vercel deployment notes.
+- `src/` — React UI for Settings, Generate, and Test Plan views.
+- `server.js` + `tools/` — local Express proxy, Jira fetcher, GROQ client, and deterministic Markdown renderer.
+- `api/` + `vercel.json` — serverless production deployment path.
+- `architecture/` — SOPs for Jira fetch, GROQ generation, and the 13-section test-plan template.
+
+**Why a QA engineer should care:** Jira tickets are often the real source of truth. This project shows how to keep credentials out of the browser, fetch ticket context safely, ask an LLM for structured JSON, and render a repeatable test plan without relying on free-form chat output.
+
+**Run it locally:**
+```bash
+cd chapter_03_BLAST_FW_JIRA_AI_AGENT
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173`, add Jira + GROQ credentials in the Settings tab, then generate a plan from a Jira ID.
+
+---
+
+## Chapter 04 — n8n AI Agents for QA
+
+This chapter adds importable **n8n** workflows for practical QA automation. The workflows show how to connect chat triggers, LLM nodes, Jira tools, Google Sheets output, Slack/Teams triggers, and CSV-driven batch processing.
+
+**What's here:**
+- `AI_3X_01_QA_Buddy.json` — chat-triggered QA assistant using a GROQ-backed LLM node.
+- `AI_3X_02_JIRA_Agent.json` — chat agent that can create Jira tickets.
+- `AI_3X_03_Read_PRD_TestCases_Excel.json` — fetches PRD/ticket context and writes generated test cases into Google Sheets.
+- `AI_3X_04_Read_PRD_TestCases_Excel_v2.json` — extends the PRD-to-test-cases flow with CSV upload and batch Jira processing.
+
+**How to use it:**
+1. Open n8n Cloud or a self-hosted n8n instance.
+2. Import the JSON workflow from `chapter_04_AI_Agents_n8n/n8n_AIAgent/`.
+3. Reconnect credentials for the nodes you use: GROQ, DeepSeek, Jira, Google Sheets, Slack, or Microsoft Teams.
+4. Run the chat trigger, form trigger, schedule trigger, or team-channel trigger depending on the workflow.
+
+---
+
 ## How to Use This Repo
 
-You can read it linearly (chapter 01 → 02) or jump straight to a project:
+You can read it linearly (chapter 01 → 04) or jump straight to a project:
 
 - **"I want better test cases now."** → `chapter_02_Prompt_Eng/templates/01_TestCaseGeneration_Prompt.md` or `02_TestCases_from_prd`.
 - **"I want to write tests from a PDF/API doc."** → `chapter_02_Prompt_Eng/Project1_TC_Gen/`.
 - **"I want to scaffold a Selenium project."** → `chapter_02_Prompt_Eng/Project2_Selenium_Framework/SKILL.md`, then run the Maven project under `AdvanceSeleniumFramework/`.
 - **"I want my model to stop making things up."** → `chapter_02_Prompt_Eng/Anti_Hallucinations_Rules.md`.
+- **"I want to generate a test plan from Jira."** → `chapter_03_BLAST_FW_JIRA_AI_AGENT/`.
+- **"I want reusable QA automation agents."** → `chapter_04_AI_Agents_n8n/`.
 
 ## Requirements
 
 - Any modern LLM (Claude / GPT / Gemini / DeepSeek). No specific provider required.
 - For Project 2 only: **JDK 11+** and **Maven 3.9+** to compile and run the Selenium framework.
+- For Chapter 3: **Node.js 18+**, npm, Jira API credentials, and a GROQ API key.
+- For Chapter 4: n8n Cloud or self-hosted n8n, plus credentials for whichever workflow nodes you enable.
 
-## Previous Chapters
+## Chapter History
 
 `a2eb280` — chapter 01 LLM basics with interactive attention visualisations.
 `dfe2653` — chapter 02 prompt engineering with RICE-POT framework + Selenium project.
+`187a77f` — chapter 03 B.L.A.S.T. Jira to Test Plan generator.
 
 ---
 

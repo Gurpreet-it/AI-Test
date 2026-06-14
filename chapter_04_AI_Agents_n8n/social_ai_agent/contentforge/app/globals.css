@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  background: #f6f5f2;
+  color: #171717;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(250, 250, 249, 0.95), rgba(246, 245, 242, 1)),
+    #f6f5f2;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+pre,
+code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.markdown-body h1 {
+  margin: 1rem 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.markdown-body h2 {
+  margin: 1rem 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 750;
+}
+
+.markdown-body h3 {
+  margin: 0.85rem 0 0.45rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.markdown-body p,
+.markdown-body li {
+  margin: 0.5rem 0;
+  line-height: 1.65;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin: 0.75rem 0 0.75rem 1.25rem;
+}
+
+.markdown-body pre {
+  margin: 0.75rem 0;
+  border-radius: 0.5rem;
+  background: #111827;
+  color: #f9fafb;
+  padding: 1rem;
+  overflow-x: auto;
+}

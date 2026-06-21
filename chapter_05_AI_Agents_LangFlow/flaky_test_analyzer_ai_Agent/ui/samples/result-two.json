@@ -1,0 +1,55 @@
+{
+  "config": { "version": "1.60.0" },
+  "suites": [
+    {
+      "title": "checkout.spec.ts",
+      "specs": [
+        {
+          "title": "user can add item to cart",
+          "ok": true,
+          "tests": [{ "status": "expected", "results": [{ "status": "passed", "duration": 1905, "retry": 0 }] }]
+        },
+        {
+          "title": "user can apply coupon",
+          "ok": true,
+          "tests": [
+            {
+              "status": "flaky",
+              "results": [
+                { "status": "failed", "duration": 5005, "retry": 0, "error": { "message": "Timeout 5000ms exceeded waiting for coupon banner" } },
+                { "status": "passed", "duration": 1120, "retry": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "user can complete payment",
+          "ok": false,
+          "tests": [
+            {
+              "status": "unexpected",
+              "results": [
+                { "status": "failed", "duration": 4302, "retry": 0, "error": { "message": "expect(received).toHaveText(expected)\n\nExpected: \"Payment successful\"\nReceived: \"Gateway error 502\"" } },
+                { "status": "failed", "duration": 4410, "retry": 1, "error": { "message": "Gateway error 502" } }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "guest checkout works",
+          "ok": true,
+          "tests": [{ "status": "skipped", "results": [{ "status": "skipped", "duration": 0, "retry": 0 }] }]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-21T05:55:00.000Z",
+    "duration": 20842,
+    "expected": 1,
+    "skipped": 1,
+    "unexpected": 1,
+    "flaky": 1
+  }
+}

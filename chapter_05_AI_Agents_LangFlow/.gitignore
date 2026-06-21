@@ -1,0 +1,6 @@
+# Local LangFlow Python install (2.9G venv) — not source
+install/
+
+# OS cruft
+.DS_Store
+**/.DS_Store

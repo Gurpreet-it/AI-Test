@@ -1,0 +1,2035 @@
+{
+  "config": {
+    "configFile": "/Users/promode/Documents/AdvancePlaywrightFramework1x/playwright.config.ts",
+    "rootDir": "/Users/promode/Documents/AdvancePlaywrightFramework1x/src/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 4
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/promode/Documents/AdvancePlaywrightFramework1x/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 4
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/promode/Documents/AdvancePlaywrightFramework1x/src/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        {
+          "outputFolder": "playwright-report"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "list",
+        null
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.60.0",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "loginTests/auth.spec.ts",
+      "file": "loginTests/auth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "@P0 Login",
+          "file": "loginTests/auth.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders the login form with email and password fields",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1334,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.792Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bdd640fb06671ad1-3eb13b9046685257",
+              "file": "loginTests/auth.spec.ts",
+              "line": 18,
+              "column": 9
+            },
+            {
+              "title": "shows validation error when email is empty",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 550,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.323Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "16419f828b9d2434-6c031199972a8469",
+              "file": "loginTests/auth.spec.ts",
+              "line": 24,
+              "column": 9
+            },
+            {
+              "title": "shows validation error when password is empty",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.703Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "06cb0fb39a1de644-32e706298fadc1a6",
+              "file": "loginTests/auth.spec.ts",
+              "line": 30,
+              "column": 9
+            },
+            {
+              "title": "shows error for invalid email format",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1073,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.384Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "01a9e71fde8a774b-ce4a2bbdc241330b",
+              "file": "loginTests/auth.spec.ts",
+              "line": 36,
+              "column": 9
+            },
+            {
+              "title": "rejects login with incorrect password",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 799,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.467Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c37459eef50bea63-1a2a73ed562b0f79",
+              "file": "loginTests/auth.spec.ts",
+              "line": 42,
+              "column": 9
+            },
+            {
+              "title": "rejects login with unregistered email",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2301,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.180Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "43b7a3a69a8dca03-0b1f9163ce9ff57f",
+              "file": "loginTests/auth.spec.ts",
+              "line": 48,
+              "column": 9
+            },
+            {
+              "title": "logs in successfully with valid credentials",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1901,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.146Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a0ee89aed453dd32-e2acf72f9e574f7a",
+              "file": "loginTests/auth.spec.ts",
+              "line": 54,
+              "column": 9
+            },
+            {
+              "title": "redirects to dashboard after successful login",
+              "ok": false,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 1373,
+                      "errors": [
+                        {
+                          "message": "TimeoutError: page.waitForURL: Timeout 60000ms exceeded.\n    waiting for navigation to \"**/dashboard\" until \"load\"\n\n      at LoginPage.login (src/tests/loginTests/auth.spec.ts:67:18)"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "TimeoutError: page.waitForURL: Timeout 60000ms exceeded.\n    waiting for navigation to \"**/dashboard\" until \"load\"\n\n      at LoginPage.login (src/tests/loginTests/auth.spec.ts:67:18)\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.384Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "4a15544dc5e7ce8a-146d3f31fc377a4c",
+              "file": "loginTests/auth.spec.ts",
+              "line": 60,
+              "column": 9
+            },
+            {
+              "title": "persists session with remember-me checkbox",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1875,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.818Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d65a441d58842de-5ec42e0829a3b2e9",
+              "file": "loginTests/auth.spec.ts",
+              "line": 66,
+              "column": 9
+            },
+            {
+              "title": "masks the password input by default",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1120,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.573Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "12476f57a5e5a5ab-a28defe39bf00273",
+              "file": "loginTests/auth.spec.ts",
+              "line": 72,
+              "column": 9
+            },
+            {
+              "title": "toggles password visibility when eye icon clicked",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1319,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.334Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ece66fa2fd5166e6-b02b61c4a3d70628",
+              "file": "loginTests/auth.spec.ts",
+              "line": 78,
+              "column": 9
+            },
+            {
+              "title": "disables submit button while request is in flight",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 691,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.317Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "50c187fcce177b4e-448aaa9e66b2bc5b",
+              "file": "loginTests/auth.spec.ts",
+              "line": 84,
+              "column": 9
+            },
+            {
+              "title": "shows loading spinner during authentication",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2299,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.242Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e27a984d654821d0-a491f0b2ea1fca65",
+              "file": "loginTests/auth.spec.ts",
+              "line": 90,
+              "column": 9
+            },
+            {
+              "title": "rejects login with expired session token",
+              "ok": false,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 2,
+                      "status": "failed",
+                      "duration": 2174,
+                      "errors": [
+                        {
+                          "message": "Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: 401\n    Received: 500\n\n      at LoginPage.assertExpiredToken (src/tests/loginTests/auth.spec.ts:142:34)"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "Error: expect(received).toBe(expected) // Object.is equality\n\n    Expected: 401\n    Received: 500\n\n      at LoginPage.assertExpiredToken (src/tests/loginTests/auth.spec.ts:142:34)\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.324Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "89fa6a688fb5d27b-bf3c4c06434308bc",
+              "file": "loginTests/auth.spec.ts",
+              "line": 96,
+              "column": 9
+            },
+            {
+              "title": "locks account after five failed attempts",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 612,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.742Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "827050a82369b584-1745d6d87e570ddf",
+              "file": "loginTests/auth.spec.ts",
+              "line": 102,
+              "column": 9
+            },
+            {
+              "title": "shows captcha after three failed attempts",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1996,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.641Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6c12ace8ae340454-10435a1098ae4334",
+              "file": "loginTests/auth.spec.ts",
+              "line": 108,
+              "column": 9
+            },
+            {
+              "title": "navigates to forgot-password page",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 889,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.214Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dc5c0eed8da0365b-02f06b90f143262f",
+              "file": "loginTests/auth.spec.ts",
+              "line": 114,
+              "column": 9
+            },
+            {
+              "title": "sends password reset email for valid account",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.740Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "74273ca3287d06ca-f42d47cc00d4af59",
+              "file": "loginTests/auth.spec.ts",
+              "line": 120,
+              "column": 9
+            },
+            {
+              "title": "rejects login when account is deactivated",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1046,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.652Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "81f631d4a39231a7-32ebd6899be578c7",
+              "file": "loginTests/auth.spec.ts",
+              "line": 126,
+              "column": 9
+            },
+            {
+              "title": "trims leading and trailing spaces in email",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1747,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.214Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87c5421eec24a3c5-00257ad1eb2263dd",
+              "file": "loginTests/auth.spec.ts",
+              "line": 132,
+              "column": 9
+            },
+            {
+              "title": "honours SSO login redirect",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1679,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.346Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fc3e058be0f3eab0-ce88cb2dd4e80839",
+              "file": "loginTests/auth.spec.ts",
+              "line": 138,
+              "column": 9
+            },
+            {
+              "title": "clears error message on new input",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2410,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.231Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "14296c07f26b4776-bb5e4bcf15ed6269",
+              "file": "loginTests/auth.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "blocks login for unverified email",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2581,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.652Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8cbfedb0f264accc-43dac0432a45c2ab",
+              "file": "loginTests/auth.spec.ts",
+              "line": 150,
+              "column": 9
+            },
+            {
+              "title": "enforces minimum password length on submit",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2054,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.629Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "337ea2dfb09b2a5c-4fcca39ab683d2e6",
+              "file": "loginTests/auth.spec.ts",
+              "line": 156,
+              "column": 9
+            },
+            {
+              "title": "logs out and clears the auth cookie",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.107Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3985c3cf3f76be1d-568cc69b1064005c",
+              "file": "loginTests/auth.spec.ts",
+              "line": 162,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dashboardTests/dashboard.spec.ts",
+      "file": "dashboardTests/dashboard.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "@P0 Dashboard",
+          "file": "dashboardTests/dashboard.spec.ts",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "renders the dashboard shell after login",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 548,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.626Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f1259e0a18ff6b6-114125c63a9bedd4",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 168,
+              "column": 9
+            },
+            {
+              "title": "displays the welcome banner with user name",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 961,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.584Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "7c441fe7ab4220a7-8a0b3c3336d8393a",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 174,
+              "column": 9
+            },
+            {
+              "title": "loads the KPI summary cards",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2185,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.520Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1825bc5430beb45f-a8b317fa18d0752b",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 180,
+              "column": 9
+            },
+            {
+              "title": "renders revenue chart with correct totals",
+              "ok": false,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 3,
+                      "status": "failed",
+                      "duration": 823,
+                      "errors": [
+                        {
+                          "message": "Error: expect(locator).toHaveText(expected)\n\n    Expected string: \"$48,250\"\n    Received string: \"$0\"\n\n    Call log:\n      - waiting for getByTestId('revenue-total')\n\n      at DashboardPage.assertRevenue (src/tests/dashboardTests/widgets.spec.ts:88:41)"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [
+                        {
+                          "text": "Error: expect(locator).toHaveText(expected)\n\n    Expected string: \"$48,250\"\n    Received string: \"$0\"\n\n    Call log:\n      - waiting for getByTestId('revenue-total')\n\n      at DashboardPage.assertRevenue (src/tests/dashboardTests/widgets.spec.ts:88:41)\n"
+                        }
+                      ],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.845Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0dde29a6baa4b71a-a748dbcfac619e63",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 186,
+              "column": 9
+            },
+            {
+              "title": "renders the orders-over-time line chart",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1199,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.532Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1bf90e27dc96925e-310c0c003fa7f104",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 192,
+              "column": 9
+            },
+            {
+              "title": "shows the recent activity feed",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 728,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.151Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3ff350bf766ecb15-ec5b227cdfde4fbf",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 198,
+              "column": 9
+            },
+            {
+              "title": "paginates the recent orders table",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 802,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.516Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d605e7708a63f881-f810238303c72ba8",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 204,
+              "column": 9
+            },
+            {
+              "title": "sorts the orders table by date descending",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 660,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.102Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "dd59ba7136b82481-e7067ef466aa9385",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 210,
+              "column": 9
+            },
+            {
+              "title": "filters orders by status dropdown",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 2283,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.813Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ed3049cf43e458fc-c8fe3ccdc8b8d9c6",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 216,
+              "column": 9
+            },
+            {
+              "title": "searches orders by customer name",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2413,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.403Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "c88a618efed4057d-a97065e18e46d534",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 222,
+              "column": 9
+            },
+            {
+              "title": "opens the order detail drawer on row click",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 669,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.151Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "944528c00ef8c2d6-8acd4e10bc594585",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 228,
+              "column": 9
+            },
+            {
+              "title": "refreshes widgets on manual refresh click",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1064,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.290Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "eb5cf46780bacd64-87f7e1fbda4bd9ca",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 234,
+              "column": 9
+            },
+            {
+              "title": "shows empty state when no data available",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2073,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.692Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "acdabacc1165e210-3c365296dca02eec",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 240,
+              "column": 9
+            },
+            {
+              "title": "renders the notifications bell with unread count",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2561,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.309Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "14fcdd549e8fc965-a8499b926b5252e3",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 246,
+              "column": 9
+            },
+            {
+              "title": "marks a notification as read",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 956,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.423Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3d1a85dd506e5a9a-655238a643ff5011",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 252,
+              "column": 9
+            },
+            {
+              "title": "switches between day and week view tabs",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 829,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.618Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "12922f83ef8c485b-7552332702627f73",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 258,
+              "column": 9
+            },
+            {
+              "title": "exports the report as CSV",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1420,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.261Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5958a499eeea163e-119c4ea3e1805081",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 264,
+              "column": 9
+            },
+            {
+              "title": "renders the user avatar menu",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 2586,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.779Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b41b31438b10550c-9c96e9ec4d71c366",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 270,
+              "column": 9
+            },
+            {
+              "title": "navigates to settings from the side nav",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 858,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.388Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2260e70fe0ccedc5-1d8cbbac43b409ef",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 276,
+              "column": 9
+            },
+            {
+              "title": "collapses and expands the side navigation",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1501,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.152Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "57c700aab7b56ea7-afffcfd2341ef40b",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 282,
+              "column": 9
+            },
+            {
+              "title": "shows skeleton loaders while data loads",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 434,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.752Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d450281c6c6f7633-0b49452d46d483f3",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 288,
+              "column": 9
+            },
+            {
+              "title": "displays correct currency formatting in totals",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2171,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.177Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bdc14f1f295d6fbf-8d3aed99711c21c9",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 294,
+              "column": 9
+            },
+            {
+              "title": "updates the chart when date range changes",
+              "ok": true,
+              "tags": [
+                "P0",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 567,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.540Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "e767dceab0e6a969-8babce3b26286bfb",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 300,
+              "column": 9
+            },
+            {
+              "title": "shows error toast when widget fetch fails",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 583,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.798Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5d59cd2a4eea04e7-eededb07e623a689",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 306,
+              "column": 9
+            },
+            {
+              "title": "renders the footer with version info",
+              "ok": true,
+              "tags": [
+                "P1",
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 2084,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "steps": [],
+                      "startTime": "2026-06-18T02:44:28.266Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "5a8aaeca1a50aec3-8f5486b7c7b5b2bc",
+              "file": "dashboardTests/dashboard.spec.ts",
+              "line": 312,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-06-18T02:44:27.764Z",
+    "duration": 41666.884,
+    "expected": 47,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

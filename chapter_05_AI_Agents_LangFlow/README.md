@@ -7,7 +7,10 @@ LangFlow is a visual, low-code builder for LLM apps and AI agents. You wire comp
 expose it as an HTTP API. Every published flow gets a REST endpoint
 (`POST /api/v1/run/{flowId}`) so any front-end — or a CI job — can call it.
 
-This chapter builds a real agent and a UI on top of that API.
+This chapter builds real QA agents on top of that API:
+
+1. **Flaky Test Analyzer** — compares two Playwright runs, with a React UI.
+2. **API Contract Validator** — fetches a live endpoint and validates the response against a JSON schema.
 
 ---
 
@@ -71,3 +74,68 @@ Two builds compared in the screenshot above:
 > expired-session-token failure to engineering (reproducible, not flaky).
 
 See `flaky_test_analyzer_ai_Agent/ui/README.md` for the UI internals.
+
+---
+
+## API Contract Validator (AI Agent)
+
+A LangFlow agent that checks whether a live API response still matches its agreed contract.
+You give it a **GET request** and a **JSON Schema**; the flow uses the **API Request** component
+to call the endpoint, then asks an **OpenRouter** model (**DeepSeek V4 Flash**) to validate the
+real response against the schema and report any drift (missing fields, wrong types, extra keys).
+
+This catches breaking API changes that silently slip past tests — without writing or maintaining
+assertion code per endpoint.
+
+### Flow
+
+```
+[ GET URL ] ──► API Request component ──► response JSON ─┐
+                                                         ├─► OpenRouter (deepseek v4 flash) ──► PASS / FAIL + diff
+[ JSON Schema ] ─────────────────────────────────────────┘
+```
+
+### Example
+
+**Request**
+
+```
+GET https://gorest.co.in/public/v2/users
+```
+
+**Response (sample)**
+
+```json
+[
+  { "id": 8509253, "name": "Mr. Gitanjali Sethi", "email": "mr_sethi_gitanjali@gislason-schinner.test", "gender": "male", "status": "active" },
+  { "id": 8509251, "name": "Sucheta Kaniyar DDS",  "email": "dds_kaniyar_sucheta@bruen-grady.test",      "gender": "female", "status": "active" }
+]
+```
+
+**JSON Schema** (draft-04 — every array item is an object with the five required fields)
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id":     { "type": "integer" },
+      "name":   { "type": "string" },
+      "email":  { "type": "string" },
+      "gender": { "type": "string" },
+      "status": { "type": "string" }
+    },
+    "required": ["id", "name", "email", "gender", "status"]
+  }
+}
+```
+
+**Verdict (agent output)**
+
+> ✅ **PASS** — all 10 objects conform to the schema. Every item has `id` (integer) and
+> `name`, `email`, `gender`, `status` (string); no required field is missing and no type
+> mismatch was found. The contract holds.
+
+The full per-item schema and prompt live in `Project/AI3X_004_API_Contract_Validator,.md`.

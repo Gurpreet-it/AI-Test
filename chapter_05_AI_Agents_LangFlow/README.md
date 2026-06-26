@@ -138,4 +138,4 @@ GET https://gorest.co.in/public/v2/users
 > `name`, `email`, `gender`, `status` (string); no required field is missing and no type
 > mismatch was found. The contract holds.
 
-The full per-item schema and prompt live in `Project/AI3X_004_API_Contract_Validator,.md`.
+The full per-item schema and prompt live in `Project/AI3X_004_API_Contract_Validator.md`.

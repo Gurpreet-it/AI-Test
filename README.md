@@ -50,7 +50,23 @@ mindmap
         Excel content calendar
       Skillfile content generation
         The Testing Academy voice
+        Brand voice + 8-beat video script
         Dated output packs
+      Social Media AI Agent
+        Schedule trigger
+        DeepSeek / Gemini / OpenAI
+        Google Sheets + Drive
+      Resume Tailor skill
+        Score + ATS gap check
+        No-fabrication gate
+        Clean .docx build
+    Ch 05 - AI Agents with LangFlow
+      Visual low-code flows
+      Published flow = REST API
+      Flaky Test Analyzer + React UI
+      API Contract Validator
+      Bug Triage agent
+      LangFlow vs LangGraph vs LangSmith
     Project - Job Tracker AI
       Local-first React Kanban board
       IndexedDB persistence
@@ -106,12 +122,30 @@ mindmap
 │   │   ├── AI_3X_01_QA_Buddy.json
 │   │   ├── AI_3X_02_JIRA_Agent.json
 │   │   ├── AI_3X_03_Read_PRD_TestCases_Excel.json
-│   │   └── AI_3X_04_Read_PRD_TestCases_Excel_v2.json
+│   │   ├── AI_3X_04_Read_PRD_TestCases_Excel_v2.json
+│   │   └── AI_3X_05_Social_media_AI agent.json   Scheduled social-post agent
 │   ├── social_ai_agent/
 │   │   └── contentforge/          Next.js local content pipeline dashboard
+│   ├── resume-tailor/             Resume scoring + ATS tailoring skill
+│   │   ├── SKILL.md
+│   │   ├── references/            ATS analysis, docx build, input reading
+│   │   └── scripts/build_resume.js
 │   └── skillfile_content_generation/
 │       ├── SKILL.md               The Testing Academy content engine
+│       ├── brand-voice.md         Brand voice + 8-beat video script guide
 │       └── output/                Dated publish-ready content packs
+│
+├── chapter_05_AI_Agents_LangFlow/ Visual low-code AI agents (LangFlow)
+│   ├── README.md
+│   ├── LangFlow vs LangGraph vs LangSmith.md
+│   ├── Project/
+│   │   ├── AI3X_001_HelloWorld.json
+│   │   ├── AI3X_002_Flaky_Test_AIAgent.json
+│   │   ├── AI3X_003_Bug_Triage_AI_Agent.json
+│   │   └── AI3X_004_API_Contract_Validator.md
+│   └── flaky_test_analyzer_ai_Agent/
+│       ├── result1.json / result2.json   Sample Playwright runs
+│       └── ui/                    React UI proxied to the LangFlow API
 │
 └── Project_Job_TRACKERAI/         Local-first job application tracker
     ├── README.md
@@ -399,6 +433,158 @@ Those local files are ignored and should not be committed.
 
 Open `chapter_04_AI_Agents_n8n/skillfile_content_generation/output/2026-06-14/` for separate Markdown files covering the topic, LinkedIn post, Medium article, YouTube script, Instagram carousel copy, and image prompts.
 
+### Social Media AI Agent (`n8n_AIAgent/AI_3X_05_Social_media_AI agent.json`)
+
+**Concept:** A scheduled n8n agent that wakes on a timer, asks an LLM agent node to draft social posts, parses them into a fixed structure, and writes the result to Google Sheets and Google Drive — fully unattended.
+
+**Why:** Manual daily posting does not scale. This workflow turns "post every day" into a cron-driven pipeline that produces consistent, on-brand content while you sleep.
+
+**Q&A — running an autonomous content agent:**
+- **Q: Why three model nodes (DeepSeek, Gemini, OpenAI)?** A: They are swappable backends on the same agent — pick the one with the best price/quality for your account, or fall back when one rate-limits.
+- **Q: Why a structured output parser?** A: Free-form text breaks the Sheets/Drive write. The parser forces the agent into a typed shape (e.g. platform, caption, hashtags) so downstream nodes get clean columns.
+- **Q: Where do drafts land?** A: Rows in Google Sheets for review and assets in Google Drive — so a human approves before anything publishes.
+
+```mermaid
+flowchart LR
+    T[Schedule Trigger] --> AG[Agent node]
+    M["DeepSeek / Gemini / OpenAI"] --> AG
+    AG --> P[Structured Output Parser]
+    P --> S[Set / shape fields]
+    S --> GS[Google Sheets row]
+    S --> GD[Google Drive asset]
+```
+
+**Import + run:**
+1. Import `AI_3X_05_Social_media_AI agent.json` into n8n.
+2. Reconnect credentials for one chat model (DeepSeek / Gemini / OpenAI), Google Sheets, and Google Drive.
+3. Set the Schedule Trigger cadence, then activate the workflow.
+
+### Resume Tailor Skill (`resume-tailor/`)
+
+**Concept:** A reusable skill that scores a resume, runs an ATS keyword gap analysis against a target job description, and rebuilds a clean, ATS-parseable `.docx` — without ever inventing experience.
+
+**Why:** Generic resumes get filtered out by ATS keyword matching; fabricated ones get the candidate caught in the interview. This skill tailors honestly: it only adds skills the candidate confirms they actually have.
+
+**Q&A — tailoring without lying:**
+- **Q: What stops it from stuffing keywords?** A: A hard confirmation gate (Phase 3). Any skill not already evidenced on the resume is held back until the candidate explicitly confirms they have it.
+- **Q: What does it output?** A: A 6-point scored review, an ATS table with a match %, and a rebuilt single-column `.docx` (`scripts/build_resume.js`) with no leftover `[ ]` placeholders.
+- **Q: Can I re-run it for a new JD?** A: Yes — it rebuilds incrementally and re-confirms only what is newly uncertain.
+
+```mermaid
+flowchart TD
+    R[Resume + JD] --> SC[Phase 1: Score /10]
+    SC --> ATS[Phase 2: ATS keyword gap]
+    ATS --> G{Phase 3: skill evidenced?}
+    G -->|Yes| ADD[Safe to add]
+    G -->|No| ASK[Ask candidate to confirm]
+    ASK -->|confirmed| ADD
+    ASK -->|denied| GAP[Report as honest gap]
+    ADD --> BUILD[Phase 4: build clean .docx]
+```
+
+Read `resume-tailor/SKILL.md` for the full 4-phase workflow and the no-fabrication rule.
+
+### Brand Voice + Video Script Guide (`skillfile_content_generation/brand-voice.md`)
+
+**Concept:** A reverse-engineered brand-voice template plus an 8-beat YouTube video skeleton — a repeatable structure for scripting videos that hook, teach, and convert.
+
+**Why:** Consistency is what makes a channel recognisable. This guide encodes the tone (plain-spoken practitioner, honest trade-offs, household analogies) and a beat-by-beat structure so every script follows the same proven shape.
+
+**Q&A — using the voice guide:**
+- **Q: What are the 8 beats?** A: Personal Hook → Promise/Roadmap → Why Now → Plain-English Definition → Practical How-To → Payoff/Ideas → Reframe/Lesson → Empowering CTA.
+- **Q: What is the one-line voice summary?** A: "Talk like a smart friend who's figuring it out in real time — dead-simple ideas, household analogies, honest pros and cons, numbered steps, and a send-off that leaves people feeling capable."
+- **Q: How do I use it?** A: Feed it to a content skill or LLM as the style contract, then check your draft against the Part 3 scripting checklist before recording.
+
+---
+
+## Chapter 05 — AI Agents with LangFlow
+
+LangFlow is a **visual, low-code builder** for LLM apps and AI agents. You wire components (models, prompts, tools, file loaders, parsers) on a canvas, test the flow live, then publish it as an HTTP API — every flow gets `POST /api/v1/run/{flowId}`, so any front-end or CI job can call it.
+
+This chapter builds real QA agents on top of that API and contrasts LangFlow with LangGraph and LangSmith (`LangFlow vs LangGraph vs LangSmith.md`).
+
+**What's here:**
+- `Project/AI3X_001_HelloWorld.json` — the minimal "first flow" to confirm the canvas and API work.
+- `Project/AI3X_002_Flaky_Test_AIAgent.json` — the Flaky Test Analyzer flow.
+- `Project/AI3X_003_Bug_Triage_AI_Agent.json` — a bug-triage flow (API Request → Prompt → OpenRouter → Parser → Chat output).
+- `Project/AI3X_004_API_Contract_Validator.md` — the GET request + JSON Schema spec the validator flow runs on.
+- `flaky_test_analyzer_ai_Agent/ui/` — a React UI that drives the Flaky Test Analyzer through a Vite proxy.
+
+**Why a QA engineer should care:** LangFlow turns an agent into a callable endpoint without backend boilerplate. The same flow you prototype on the canvas becomes the API your test harness, CI pipeline, or internal tool calls — no rewrite.
+
+**Q&A — LangFlow for QA agents:**
+- **Q: Why proxy the UI through Vite instead of calling LangFlow directly?** A: LangFlow's file-upload endpoint does not answer the browser's CORS preflight, so a direct cross-origin upload fails with *"Failed to fetch."* Routing through Vite makes every request same-origin.
+- **Q: How does a file actually reach the flow?** A: Two calls — upload each file to `POST /api/v1/files/upload/{flowId}` to get a server `file_path`, then run the flow with those paths injected as `tweaks` on the flow's File components.
+- **Q: LangFlow vs LangGraph vs LangSmith?** A: LangFlow = visual flow builder + API; LangGraph = code-first stateful agent graphs; LangSmith = tracing/eval/observability. They compose; they don't compete.
+
+**How a published flow is called:**
+
+```mermaid
+flowchart LR
+    C[UI / CI job] -->|upload| U["POST /api/v1/files/upload/{flowId}"]
+    U --> FP[server file_path]
+    FP -->|run + tweaks| RUN["POST /api/v1/run/{flowId}?stream=false"]
+    RUN --> FLOW[LangFlow canvas]
+    FLOW --> OUT[JSON result / markdown]
+```
+
+### Flaky Test Analyzer (`AI3X_002` + `ui/`)
+
+**Concept:** A LangFlow agent that ingests two Playwright `results.json` files (baseline vs. candidate build) and reports which build is flakier — separating genuine flaky tests from consistent failures, with rerun / send-to-engineering recommendations. A React UI renders the diagnosis as markdown.
+
+**Why:** "Re-run until green" hides real regressions. This agent distinguishes a non-deterministic flake from a reproducible failure so you quarantine the former and escalate the latter.
+
+**Q&A — flaky vs. consistent:**
+- **Q: How does it decide something is flaky?** A: If a test fails in one build but passes in the other with no code change, it is flagged as a flake hypothesis (e.g. navigation timeout, parallel-worker contention).
+- **Q: What is a consistent failure?** A: The same assertion failing in both builds (e.g. expected 401, got 500) — reproducible, so it goes to engineering, not the rerun queue.
+- **Q: Do I need to write assertion code?** A: No. You drag in two result files; the agent does the comparison and writes the report.
+
+**Run the UI:**
+```bash
+cd chapter_05_AI_Agents_LangFlow/flaky_test_analyzer_ai_Agent/ui
+npm install
+npm run dev          # http://localhost:5173
+```
+
+LangFlow must be running at `http://localhost:7861` with the agent flow imported. Connection settings (base URL, `x-api-key`, flow ID, File component IDs) are prefilled and editable in the **Connection** panel; sample inputs live in `ui/samples/`.
+
+### API Contract Validator (`AI3X_004`)
+
+**Concept:** A LangFlow agent that checks whether a live API response still matches its agreed contract. Give it a GET request and a JSON Schema; the flow uses the **API Request** component to call the endpoint, then asks an **OpenRouter** model (**DeepSeek V4 Flash**) to validate the real response against the schema and report drift — missing fields, wrong types, extra keys.
+
+**Why:** Breaking API changes slip silently past tests. This catches contract drift without writing or maintaining per-endpoint assertion code.
+
+**Q&A — contract validation by LLM:**
+- **Q: Why an LLM instead of a schema validator library?** A: The LLM gives a human-readable diff ("`status` is now a number, was a string") alongside PASS/FAIL — useful in a triage channel, no per-endpoint code to maintain.
+- **Q: What does PASS look like?** A: A verdict that every array item conforms — all required fields present, types correct, no drift.
+- **Q: Where's the spec?** A: `Project/AI3X_004_API_Contract_Validator.md` holds the GET URL, sample response, and full JSON Schema.
+
+```
+[ GET URL ] ──► API Request component ──► response JSON ─┐
+                                                         ├─► OpenRouter (deepseek v4 flash) ──► PASS / FAIL + diff
+[ JSON Schema ] ─────────────────────────────────────────┘
+```
+
+```json
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "id":     { "type": "integer" },
+      "name":   { "type": "string" },
+      "email":  { "type": "string" },
+      "gender": { "type": "string" },
+      "status": { "type": "string" }
+    },
+    "required": ["id", "name", "email", "gender", "status"]
+  }
+}
+```
+
+See `chapter_05_AI_Agents_LangFlow/README.md` for the full walkthrough, screenshots, and example agent output.
+
 ---
 
 ## Project - Job Tracker AI
@@ -425,7 +611,7 @@ Open the local Vite URL and use the app directly in the browser. Data persists i
 
 ## How to Use This Repo
 
-You can read it linearly (chapter 01 → 04) or jump straight to a project:
+You can read it linearly (chapter 01 → 05) or jump straight to a project:
 
 - **"I want better test cases now."** → `chapter_02_Prompt_Eng/templates/01_TestCaseGeneration_Prompt.md` or `02_TestCases_from_prd`.
 - **"I want to write tests from a PDF/API doc."** → `chapter_02_Prompt_Eng/Project1_TC_Gen/`.
@@ -435,6 +621,11 @@ You can read it linearly (chapter 01 → 04) or jump straight to a project:
 - **"I want reusable QA automation agents."** → `chapter_04_AI_Agents_n8n/n8n_AIAgent/`.
 - **"I want a local AI content dashboard."** → `chapter_04_AI_Agents_n8n/social_ai_agent/contentforge/`.
 - **"I want publish-ready Testing Academy content."** → `chapter_04_AI_Agents_n8n/skillfile_content_generation/output/`.
+- **"I want a scheduled social-post agent."** → `chapter_04_AI_Agents_n8n/n8n_AIAgent/AI_3X_05_Social_media_AI agent.json`.
+- **"I want to tailor my resume to a job (ATS)."** → `chapter_04_AI_Agents_n8n/resume-tailor/SKILL.md`.
+- **"I want to build AI agents visually (low-code)."** → `chapter_05_AI_Agents_LangFlow/`.
+- **"I want to tell flaky tests from real failures."** → `chapter_05_AI_Agents_LangFlow/flaky_test_analyzer_ai_Agent/`.
+- **"I want to validate an API response against a JSON schema."** → `chapter_05_AI_Agents_LangFlow/Project/AI3X_004_API_Contract_Validator.md`.
 - **"I want to track job applications locally."** → `Project_Job_TRACKERAI/`.
 
 ## Requirements
@@ -444,6 +635,8 @@ You can read it linearly (chapter 01 → 04) or jump straight to a project:
 - For Chapter 3: **Node.js 18+**, npm, Jira API credentials, and a GROQ API key.
 - For Chapter 4 n8n workflows: n8n Cloud or self-hosted n8n, plus credentials for whichever workflow nodes you enable.
 - For Chapter 4 ContentForge: **Node.js 20+**, npm, `GROQ_API_KEY`, and `GEMINI_API_KEY`.
+- For Chapter 4 Social Media Agent: n8n plus credentials for a chat model (DeepSeek / Gemini / OpenAI), Google Sheets, and Google Drive.
+- For Chapter 5 LangFlow: a running LangFlow instance (default `http://localhost:7861`) and an OpenRouter (or compatible) API key; **Node.js 20+** and npm to run the Flaky Test Analyzer UI.
 - For Job Tracker AI: **Node.js 20.19+ or 22.12+** and npm for Vite 8.
 
 ## Chapter History
@@ -452,6 +645,8 @@ You can read it linearly (chapter 01 → 04) or jump straight to a project:
 `dfe2653` — chapter 02 prompt engineering with RICE-POT framework + Selenium project.
 `187a77f` — chapter 03 B.L.A.S.T. Jira to Test Plan generator.
 `f67b4f6` — chapter 04 ContentForge local content pipeline + skill output pack.
+`bbc77dc` — chapter 05 LangFlow Flaky Test Analyzer agent + React UI.
+`e98d376` — chapter 05 API Contract Validator agent.
 
 ---
 

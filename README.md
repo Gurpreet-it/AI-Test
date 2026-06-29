@@ -67,6 +67,11 @@ mindmap
       API Contract Validator
       Bug Triage agent
       LangFlow vs LangGraph vs LangSmith
+    Ch 06 - AI Social Media Content
+      Hook - Story - Offer planning
+      YouTube + Reel + Post + Carousel
+      Medium + Blog + LinkedIn
+      Plan once, repurpose everywhere
     Project - Job Tracker AI
       Local-first React Kanban board
       IndexedDB persistence
@@ -144,8 +149,20 @@ mindmap
 │   │   ├── AI3X_003_Bug_Triage_AI_Agent.json
 │   │   └── AI3X_004_API_Contract_Validator.md
 │   └── flaky_test_analyzer_ai_Agent/
+│       ├── PROMPTS.md             Agent prompt + UI build prompt (shareable)
 │       ├── result1.json / result2.json   Sample Playwright runs
 │       └── ui/                    React UI proxied to the LangFlow API
+│
+├── chapter_06_AI_Social_Media_Content_Creation/   One idea to a full content pack
+│   ├── README.md
+│   ├── 00_Hook_Story_Offer_Planning.md    Plan any idea before writing
+│   ├── 01_YouTube_Video_Template.md
+│   ├── 02_Instagram_Reel_Template.md
+│   ├── 03_Instagram_Post_Template.md
+│   ├── 04_Instagram_Carousel_Template.md
+│   ├── 05_Medium_Article_Template.md
+│   ├── 06_Blog_Post_Template.md
+│   └── 07_LinkedIn_Post_Template.md
 │
 └── Project_Job_TRACKERAI/         Local-first job application tracker
     ├── README.md
@@ -583,7 +600,48 @@ LangFlow must be running at `http://localhost:7861` with the agent flow imported
 }
 ```
 
-See `chapter_05_AI_Agents_LangFlow/README.md` for the full walkthrough, screenshots, and example agent output.
+See `chapter_05_AI_Agents_LangFlow/README.md` for the full walkthrough, screenshots, and example agent output. The prompts used to build the agent and its UI — both the run-time agent prompt and the full UI-build prompt — are captured in `flaky_test_analyzer_ai_Agent/PROMPTS.md` so students can reproduce or remix them.
+
+---
+
+## Chapter 06 — AI Social Media Content Creation
+
+**Concept:** A set of fill-in-the-blank Markdown templates that turn **one idea** into a full, publish-ready content pack — YouTube video, Instagram Reel, Instagram post, carousel, Medium article, blog post, and LinkedIn post — all in The Testing Academy voice.
+
+**Why:** Creators burn out writing seven separate things per idea. The fix is *plan once, repurpose everywhere*: you write a single Hook · Story · Offer, then bend it into every platform format. The templates encode the voice rules (no banned phrases, real numbers only, senior-colleague-over-chai tone) so quality stays constant across channels.
+
+**Q&A — using the content templates:**
+- **Q: Where do I start?** A: Always `00_Hook_Story_Offer_Planning.md`. It is the source of truth — every platform template pulls its hook, proof, and CTA from that one plan.
+- **Q: What's in each platform template?** A: The format, the voice rules, the hook patterns, a copy-paste skeleton, and a pre-publish checklist. Fill the skeleton, run the checklist, ship.
+- **Q: How do I use these with an AI assistant?** A: Paste the filled-in Hook · Story · Offer plus the platform template and say "write the [platform] piece using this plan and these rules — no banned phrases." The plan is the content; the template is the spec.
+
+**Plan once, repurpose everywhere:**
+
+```mermaid
+flowchart TD
+    P[00 - Hook / Story / Offer<br/>plan the idea ONCE] --> YT[01 YouTube]
+    P --> RE[02 IG Reel]
+    P --> PO[03 IG Post]
+    P --> CA[04 Carousel]
+    P --> ME[05 Medium]
+    P --> BL[06 Blog]
+    P --> LI[07 LinkedIn]
+```
+
+**The planning skeleton (from `00_Hook_Story_Offer_Planning.md`):**
+
+```markdown
+IDEA: __________________________________  (one sentence — if you can't, it's not ready)
+
+HOOK   (stop the scroll in 3s — never a stat):  ____________________
+STORY  (Problem -> Tension -> Turn -> Proof):   ____________________
+OFFER  (exactly ONE ask):                       ____________________
+
+SCREENSHOT LINE (the quotable truth): _______________________________
+HONEST CAVEAT  (cuts against you):    _______________________________
+```
+
+Open `chapter_06_AI_Social_Media_Content_Creation/README.md` for the workflow, the universal voice rules, and the full template index.
 
 ---
 
@@ -611,7 +669,7 @@ Open the local Vite URL and use the app directly in the browser. Data persists i
 
 ## How to Use This Repo
 
-You can read it linearly (chapter 01 → 05) or jump straight to a project:
+You can read it linearly (chapter 01 → 06) or jump straight to a project:
 
 - **"I want better test cases now."** → `chapter_02_Prompt_Eng/templates/01_TestCaseGeneration_Prompt.md` or `02_TestCases_from_prd`.
 - **"I want to write tests from a PDF/API doc."** → `chapter_02_Prompt_Eng/Project1_TC_Gen/`.
@@ -626,6 +684,8 @@ You can read it linearly (chapter 01 → 05) or jump straight to a project:
 - **"I want to build AI agents visually (low-code)."** → `chapter_05_AI_Agents_LangFlow/`.
 - **"I want to tell flaky tests from real failures."** → `chapter_05_AI_Agents_LangFlow/flaky_test_analyzer_ai_Agent/`.
 - **"I want to validate an API response against a JSON schema."** → `chapter_05_AI_Agents_LangFlow/Project/AI3X_004_API_Contract_Validator.md`.
+- **"I want to turn one idea into content for every platform."** → `chapter_06_AI_Social_Media_Content_Creation/` (start at `00_Hook_Story_Offer_Planning.md`).
+- **"I want to publish a LinkedIn post that actually gets reach."** → `chapter_06_AI_Social_Media_Content_Creation/07_LinkedIn_Post_Template.md`.
 - **"I want to track job applications locally."** → `Project_Job_TRACKERAI/`.
 
 ## Requirements
@@ -637,6 +697,7 @@ You can read it linearly (chapter 01 → 05) or jump straight to a project:
 - For Chapter 4 ContentForge: **Node.js 20+**, npm, `GROQ_API_KEY`, and `GEMINI_API_KEY`.
 - For Chapter 4 Social Media Agent: n8n plus credentials for a chat model (DeepSeek / Gemini / OpenAI), Google Sheets, and Google Drive.
 - For Chapter 5 LangFlow: a running LangFlow instance (default `http://localhost:7861`) and an OpenRouter (or compatible) API key; **Node.js 20+** and npm to run the Flaky Test Analyzer UI.
+- For Chapter 6 Content Templates: nothing but a Markdown editor and any LLM — the templates are tooling-free.
 - For Job Tracker AI: **Node.js 20.19+ or 22.12+** and npm for Vite 8.
 
 ## Chapter History
@@ -647,6 +708,7 @@ You can read it linearly (chapter 01 → 05) or jump straight to a project:
 `f67b4f6` — chapter 04 ContentForge local content pipeline + skill output pack.
 `bbc77dc` — chapter 05 LangFlow Flaky Test Analyzer agent + React UI.
 `e98d376` — chapter 05 API Contract Validator agent.
+`d81aef0` — chapter 05 LangFlow agents (Hello World, Bug Triage) + chapter 04 skills.
 
 ---
 

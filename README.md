@@ -72,6 +72,12 @@ mindmap
       YouTube + Reel + Post + Carousel
       Medium + Blog + LinkedIn
       Plan once, repurpose everywhere
+    Ch 07 - RAG
+      RAG Explorer app
+      PDF to chunk to embed
+      Nomic Embed via Ollama
+      Local ChromaDB store
+      Retrieve top-k + Groq answer
     Project - Job Tracker AI
       Local-first React Kanban board
       IndexedDB persistence
@@ -163,6 +169,15 @@ mindmap
 │   ├── 05_Medium_Article_Template.md
 │   ├── 06_Blog_Post_Template.md
 │   └── 07_LinkedIn_Post_Template.md
+│
+├── chapter_07_RAG/                Retrieval-Augmented Generation
+│   ├── RAG_Explorer.jpg
+│   └── Basic_RAG/
+│       ├── data/                  Source PDF (VWO PRD)
+│       └── rag-explorer/          React + Express RAG demo app
+│           ├── server/            Express API: pdf, chunk, embed, chroma, groq
+│           ├── src/               React UI (pipeline view, ingest, query)
+│           └── README.md
 │
 └── Project_Job_TRACKERAI/         Local-first job application tracker
     ├── README.md
@@ -645,6 +660,64 @@ Open `chapter_06_AI_Social_Media_Content_Creation/README.md` for the workflow, t
 
 ---
 
+## Chapter 07 — RAG (Retrieval-Augmented Generation)
+
+**Concept:** **RAG Explorer** is a React + Express app that runs a full RAG pipeline end to end and *shows every stage*: a PDF is read, split into chunks, embedded with **Nomic Embed** (local Ollama), stored in a **local ChromaDB**, and — for each question — the top-k chunks are retrieved and handed to **Groq (`openai/gpt-oss-120b`)** to generate a grounded answer.
+
+**Why:** RAG is usually a black box — you type a question and an answer appears. This app opens the box so a QA engineer can *see* the chunking, the actual embedding vectors, the similarity scores of retrieved chunks, and the exact augmented prompt sent to the LLM. Understanding each seam is what lets you test and debug a RAG system instead of trusting it blindly.
+
+![RAG Explorer](chapter_07_RAG/RAG_Explorer.jpg)
+
+**Q&A — building a basic RAG pipeline:**
+- **Q: Why a Node backend — can't this run in the browser?** A: No. The vector DB (ChromaDB), the embedder (Ollama), and PDF parsing are all server-side. The React UI only talks to the Express backend over same-origin `/api` (proxied by Vite).
+- **Q: Why local Nomic Embed + local ChromaDB?** A: Zero cost, fully offline, and nothing leaves the machine. `nomic-embed-text` via Ollama produces 768-dim vectors; ChromaDB stores them and does cosine similarity search. Only the final answer step calls out (to Groq).
+- **Q: How does retrieval actually work?** A: The question is embedded with the *same* model as the chunks, then ChromaDB returns the nearest `top-k` by cosine distance. Those chunks — and only those — become the LLM's context, so the answer is grounded in the document.
+
+**The RAG flow:**
+
+```mermaid
+flowchart LR
+    PDF[PDF] --> CH[Chunk<br/>1200 / 200 overlap]
+    CH --> EM[Nomic Embed<br/>768-dim · Ollama]
+    EM --> DB[(ChromaDB<br/>cosine)]
+    Q[Question] --> QE[Embed query]
+    QE --> DB
+    DB -->|top-k chunks| LLM[Groq gpt-oss-120b]
+    LLM --> A[Grounded answer]
+```
+
+**The retrieval core (`server/lib/chroma.js`):**
+
+```js
+// Embed the query with the SAME model as the chunks, then pull top-k by cosine.
+export async function retrieve(collection, queryText, k = 4) {
+  const queryEmbedding = await embedQuery(queryText)          // Ollama nomic-embed-text
+  const res = await collection.query({
+    queryEmbeddings: [queryEmbedding],
+    nResults: k,
+    include: ['documents', 'metadatas', 'distances'],
+  })
+  return res.documents[0].map((text, i) => ({
+    text,
+    distance: res.distances[0][i],
+    similarity: Math.max(0, 1 - res.distances[0][i]),         // cosine dist -> 0..1 for display
+  }))
+}
+```
+
+**Run it:**
+```bash
+cd chapter_07_RAG/Basic_RAG/rag-explorer
+npm install
+cp .env.example .env      # paste your GROQ_API_KEY
+ollama pull nomic-embed-text
+npm run dev               # starts ChromaDB + Express API + Vite UI
+```
+
+Open the Vite URL (default `http://localhost:5175`), click **Ingest PDF**, then ask a question. See `chapter_07_RAG/Basic_RAG/rag-explorer/README.md` for the full walkthrough and troubleshooting.
+
+---
+
 ## Project - Job Tracker AI
 
 `Project_Job_TRACKERAI/` is a local-first job application tracker built as a Vite + React single-page app. It stores every job card in the browser with IndexedDB through the `idb` library, so there is no backend, authentication, or external database.
@@ -669,7 +742,7 @@ Open the local Vite URL and use the app directly in the browser. Data persists i
 
 ## How to Use This Repo
 
-You can read it linearly (chapter 01 → 06) or jump straight to a project:
+You can read it linearly (chapter 01 → 07) or jump straight to a project:
 
 - **"I want better test cases now."** → `chapter_02_Prompt_Eng/templates/01_TestCaseGeneration_Prompt.md` or `02_TestCases_from_prd`.
 - **"I want to write tests from a PDF/API doc."** → `chapter_02_Prompt_Eng/Project1_TC_Gen/`.
@@ -686,6 +759,7 @@ You can read it linearly (chapter 01 → 06) or jump straight to a project:
 - **"I want to validate an API response against a JSON schema."** → `chapter_05_AI_Agents_LangFlow/Project/AI3X_004_API_Contract_Validator.md`.
 - **"I want to turn one idea into content for every platform."** → `chapter_06_AI_Social_Media_Content_Creation/` (start at `00_Hook_Story_Offer_Planning.md`).
 - **"I want to publish a LinkedIn post that actually gets reach."** → `chapter_06_AI_Social_Media_Content_Creation/07_LinkedIn_Post_Template.md`.
+- **"I want to see how a RAG pipeline works end to end."** → `chapter_07_RAG/Basic_RAG/rag-explorer/`.
 - **"I want to track job applications locally."** → `Project_Job_TRACKERAI/`.
 
 ## Requirements
@@ -698,6 +772,7 @@ You can read it linearly (chapter 01 → 06) or jump straight to a project:
 - For Chapter 4 Social Media Agent: n8n plus credentials for a chat model (DeepSeek / Gemini / OpenAI), Google Sheets, and Google Drive.
 - For Chapter 5 LangFlow: a running LangFlow instance (default `http://localhost:7861`) and an OpenRouter (or compatible) API key; **Node.js 20+** and npm to run the Flaky Test Analyzer UI.
 - For Chapter 6 Content Templates: nothing but a Markdown editor and any LLM — the templates are tooling-free.
+- For Chapter 7 RAG Explorer: **Node.js 20+**, **Ollama** with `nomic-embed-text` pulled, **ChromaDB** (`pip install chromadb`), and a **Groq API key**.
 - For Job Tracker AI: **Node.js 20.19+ or 22.12+** and npm for Vite 8.
 
 ## Chapter History
@@ -709,6 +784,7 @@ You can read it linearly (chapter 01 → 06) or jump straight to a project:
 `bbc77dc` — chapter 05 LangFlow Flaky Test Analyzer agent + React UI.
 `e98d376` — chapter 05 API Contract Validator agent.
 `d81aef0` — chapter 05 LangFlow agents (Hello World, Bug Triage) + chapter 04 skills.
+`2d00d6f` — chapter 06 AI social media content templates + chapter 05 PROMPTS.md.
 
 ---
 

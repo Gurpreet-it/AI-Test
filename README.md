@@ -78,6 +78,12 @@ mindmap
       Nomic Embed via Ollama
       Local ChromaDB store
       Retrieve top-k + Groq answer
+    E2E AI QA Pipeline (blueprint)
+      Jira JQL to test plan
+      RAG test cases
+      Playwright .md automation
+      Browser Bash execution
+      Flakiness + RCA + dashboard
     Project - Job Tracker AI
       Local-first React Kanban board
       IndexedDB persistence
@@ -178,6 +184,9 @@ mindmap
 │           ├── server/            Express API: pdf, chunk, embed, chroma, groq
 │           ├── src/               React UI (pipeline view, ingest, query)
 │           └── README.md
+│
+├── E2E_QA_Pipeline/               End-to-end AI QA pipeline blueprint
+│   └── E2E_QA_Pipeline.md         8-step flow: Jira -> plan -> cases -> automation -> run -> RCA
 │
 └── Project_Job_TRACKERAI/         Local-first job application tracker
     ├── README.md
@@ -718,6 +727,37 @@ Open the Vite URL (default `http://localhost:5175`), click **Ingest PDF**, then 
 
 ---
 
+## End-to-End AI QA Pipeline (Blueprint)
+
+**Concept:** `E2E_QA_Pipeline/` is the blueprint that ties the whole course together — an AI pipeline that reads a Jira story and drives it all the way to executed automation and an analysed results dashboard, with a RAG pipeline supplying historical test plans and cases along the way.
+
+**Why:** Each chapter builds one capability (prompts, agents, RAG, automation). This document shows how they compose into a single autonomous loop: from a Jira story to test plan, test cases, Playwright automation, execution, and root-cause analysis — no manual step in between.
+
+**Q&A — the end-to-end loop:**
+- **Q: Where does RAG fit?** A: Steps 3 and 4. The agent generates the test plan and test cases by referencing a RAG store of past plans, cases, and testing docs — so output is context-aware and reusable, not generated from scratch.
+- **Q: How do test cases become runnable?** A: Step 5 — a LangChain agent converts them into `.md` automation-flow files against the Playwright framework, which Browser Bash (step 6) executes with a cost-effective LLM (e.g. DeepSeek).
+- **Q: What closes the loop?** A: Step 8 — `result.json` is fed back to an agent that checks flakiness, runs RCA, triages failures, and pushes the final data to a dashboard.
+
+**The 8-step flow:**
+
+```mermaid
+flowchart TD
+    J[1. Fetch Jira stories<br/>JQL + LangChain agent] --> P[2. Process story<br/>one by one - VWO-109]
+    P --> TP[3. Create test plan]
+    TP --> TC[4. Generate test cases]
+    RAG[(RAG pipeline<br/>past plans + cases + docs)] -.reference.-> TP
+    RAG -.reference.-> TC
+    TC --> MD[5. Convert to .md<br/>Playwright automation flow]
+    MD --> EX[6. Execute via Browser Bash<br/>DeepSeek / cheap LLM]
+    EX --> RJ[7. Generate result.json<br/>pass/fail, logs, errors]
+    RJ --> AN[8. Analyze results<br/>flakiness + RCA + triage]
+    AN --> DASH[Dashboard<br/>final reporting]
+```
+
+Read `E2E_QA_Pipeline/E2E_QA_Pipeline.md` for the full step-by-step write-up.
+
+---
+
 ## Project - Job Tracker AI
 
 `Project_Job_TRACKERAI/` is a local-first job application tracker built as a Vite + React single-page app. It stores every job card in the browser with IndexedDB through the `idb` library, so there is no backend, authentication, or external database.
@@ -760,6 +800,7 @@ You can read it linearly (chapter 01 → 07) or jump straight to a project:
 - **"I want to turn one idea into content for every platform."** → `chapter_06_AI_Social_Media_Content_Creation/` (start at `00_Hook_Story_Offer_Planning.md`).
 - **"I want to publish a LinkedIn post that actually gets reach."** → `chapter_06_AI_Social_Media_Content_Creation/07_LinkedIn_Post_Template.md`.
 - **"I want to see how a RAG pipeline works end to end."** → `chapter_07_RAG/Basic_RAG/rag-explorer/`.
+- **"I want the big picture — Jira story to executed automation."** → `E2E_QA_Pipeline/E2E_QA_Pipeline.md`.
 - **"I want to track job applications locally."** → `Project_Job_TRACKERAI/`.
 
 ## Requirements

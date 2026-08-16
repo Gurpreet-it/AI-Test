@@ -1,0 +1,375 @@
+{
+  "key": "HMA-401957",
+  "summary": "Basic Multi-armed Bandit option for A/B testing",
+  "type": "Story",
+  "priority": "Medium",
+  "status": "In Development",
+  "assignee": "Sachin Bansal",
+  "reporter": "Su Su",
+  "created": "2026-01-26T10:01:17.564-0500",
+  "updated": "2026-06-25T01:03:31.449-0400",
+  "components": [],
+  "labels": [],
+  "fixVersions": [],
+  "description": {
+    "type": "doc",
+    "version": 1,
+    "content": [
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "In addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit ("
+          },
+          {
+            "type": "inlineCard",
+            "attrs": {
+              "url": "https://en.wikipedia.org/wiki/Multi-armed_bandit"
+            }
+          },
+          {
+            "type": "text",
+            "text": " ) as a move towards integrating more AI capability, even though we only implement the basic case."
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "To do this, the below new configuration settings are added to A/B test UI"
+          }
+        ]
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Threshold on total presentation of all the branches."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Minimum percentage (minPer) to be selected for for random selection."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "paragraph",
+        "content": [
+          {
+            "type": "text",
+            "text": "This is how it works"
+          }
+        ]
+      },
+      {
+        "type": "orderedList",
+        "attrs": {
+          "order": 1
+        },
+        "content": [
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "Initially, the branches are selected randomly based on the initial configured percentage"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest. For example, if minPer=10, random selection is applied in 10% of the getOffers call, and the best performant branch is selected in 90% of the cases."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "listItem",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact & accept counts from the beginning. The logic for “recent data“ is to be decided."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "descriptionText": "<p>In addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit (<a href=\"https://en.wikipedia.org/wiki/Multi-armed_bandit\" title=\"smart-link\" class=\"external-link\" rel=\"nofollow noreferrer\">https://en.wikipedia.org/wiki/Multi-armed_bandit</a> ) as a move towards integrating more AI capability, even though we only implement the basic case.</p>\n\n<p>To do this, the below new configuration settings are added to A/B test UI</p>\n\n<ol>\n\t<li>Threshold on total presentation of all the branches.</li>\n\t<li>Minimum percentage (minPer) to be selected for for random selection.</li>\n</ol>\n\n\n<p>This is how it works</p>\n\n<ol>\n\t<li>Initially, the branches are selected randomly based on the initial configured percentage</li>\n\t<li>When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest. For example, if minPer=10, random selection is applied in 10% of the getOffers call, and the best performant branch is selected in 90% of the cases.</li>\n\t<li>The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact &amp; accept counts from the beginning. The logic for “recent data“ is to be decided.</li>\n</ol>\n",
+  "links": [],
+  "attachments": [
+    {
+      "filename": "MultiArmedBandit_ABTest_Design.docx",
+      "size": 1957111,
+      "mimeType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "created": "2026-06-03T02:41:33.842-0400",
+      "author": "Sachin Bansal",
+      "url": "https://hclsw-jirafederal.atlassian.net/rest/api/3/attachment/content/531086"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1338024",
+      "author": "Sachin Bansal",
+      "created": "2026-06-01T07:11:46.295-0400",
+      "updated": "2026-06-01T07:11:46.295-0400",
+      "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Design document attached."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "1338109",
+      "author": "Su Su",
+      "created": "2026-06-01T08:16:49.132-0400",
+      "updated": "2026-06-01T08:16:49.132-0400",
+      "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "mention",
+                "attrs": {
+                  "id": "712020:694f8462-b908-4edc-ab75-5ae8c7e6ff80",
+                  "text": "@Sachin Bansal",
+                  "accessLevel": ""
+                }
+              },
+              {
+                "type": "text",
+                "text": " "
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "For this edge case: "
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "attrs": {
+              "isNumberColumnEnabled": false,
+              "layout": "center",
+              "localId": "c9b9ab57-a989-4684-b04b-c9b4f72351d2"
+            },
+            "content": [
+              {
+                "type": "tableRow",
+                "content": [
+                  {
+                    "type": "tableCell",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Tied acceptance rates"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "tableCell",
+                    "attrs": {},
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "Select the branch with higher total contacts (more data confidence); if still tied, select first"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Select the branch configured with higher percentage. If this is still a tie, select the first."
+              }
+            ]
+          },
+          {
+            "type": "paragraph"
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Additionally, we can add 2 more settings"
+              }
+            ]
+          },
+          {
+            "type": "orderedList",
+            "attrs": {
+              "order": 1
+            },
+            "content": [
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Reevaluation interval - the frequency to re-evaluate the acceptance rate and hence select the winning branch"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "listItem",
+                "content": [
+                  {
+                    "type": "paragraph",
+                    "content": [
+                      {
+                        "type": "text",
+                        "text": "Recent transaction weight (0 to 1.0) - the weight of the acceptance rate during the last evaluation interval: overall acceptance rate = weight x (acceptance rate in the last interval) + (1.0 - weight) x (acceptance rate before the last interval)"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "In UACI_ABTest, instead of adding 2 columns, create a text column “OtherSettings” for all the new settings in the format of JSON."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "1340139",
+      "author": "Su Su",
+      "created": "2026-06-03T04:00:53.058-0400",
+      "updated": "2026-06-03T04:00:53.058-0400",
+      "body": {
+        "type": "doc",
+        "version": 1,
+        "content": [
+          {
+            "type": "paragraph",
+            "content": [
+              {
+                "type": "text",
+                "text": "Please coordinate with "
+              },
+              {
+                "type": "mention",
+                "attrs": {
+                  "id": "712020:545c06e2-0ab4-4505-8c48-c2f53c537f13",
+                  "text": "@Rahul Ramesh Shinde",
+                  "accessLevel": "",
+                  "localId": "d7b58ee7-cd2f-4c9b-9989-3aebc6736e42"
+                }
+              },
+              {
+                "type": "text",
+                "text": " and "
+              },
+              {
+                "type": "mention",
+                "attrs": {
+                  "id": "712020:2ad5400a-5da1-4300-9c59-6af1c3f0f9e0",
+                  "text": "@Dalbeer Singh",
+                  "accessLevel": "",
+                  "localId": "5e8fa1bd-0222-4af7-b27b-9e0ea79359db"
+                }
+              },
+              {
+                "type": "text",
+                "text": " for the UI change"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "acceptanceCriteria": null
+}

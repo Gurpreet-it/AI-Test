@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "buildCommand": "cd frontend && npm ci && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "npm install",
+  "framework": null,
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 60,
+      "memory": 1024
+    },
+    "api/download-excel.js": {
+      "maxDuration": 30,
+      "memory": 512
+    },
+    "api/fetch-jira.js": {
+      "maxDuration": 20,
+      "memory": 256
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

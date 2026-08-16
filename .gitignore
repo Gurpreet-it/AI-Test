@@ -5,6 +5,14 @@ target/
 *.war
 *.log
 
+# Node
+node_modules/
+dist/
+.next/
+out/
+build/
+*.tsbuildinfo
+
 # IDE
 .idea/
 .vscode/

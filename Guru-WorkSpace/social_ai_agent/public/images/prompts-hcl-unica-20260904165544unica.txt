@@ -1,0 +1,18 @@
+ContentForge Image Prompts — 2026-09-04-165544-unica
+Brand: HCL-UNICA
+Topic: "Unleashing Digital Transformation: An In-depth Look at the HCL Unica+ Journey"
+────────────────────────────────────────────────────────────
+
+📄 MEDIUM COVER (1280×720)
+
+Create a 1280x720 blog cover image for ""Unleashing Digital Transformation: An In-depth Look at the HCL Unica+ Journey"". Professional, clean, whitepaper style. Split layout: left 45% dark navy background with title and tags, right 55% light gray with architecture diagram.
+
+💼 LINKEDIN BANNER (1200×627)
+
+Create a 1200x627 LinkedIn infographic for ""Unleashing Digital Transformation: An In-depth Look at the HCL Unica+ Journey"". 3-column layout: Input → Processing → Output. Professional, colorful, SaaS-style. Include stats bar at bottom.
+
+📸 INSTAGRAM SQUARE (1080×1080)
+
+Create a 1080x1080 Instagram infographic for ""Unleashing Digital Transformation: An In-depth Look at the HCL Unica+ Journey"". Square layout: dark header with title, middle white section with pipeline diagram, footer with metrics. Clean, scroll-stopping.
+
+Use at: https://gemini.google.com

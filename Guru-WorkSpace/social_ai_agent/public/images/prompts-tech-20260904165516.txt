@@ -1,0 +1,18 @@
+ContentForge Image Prompts — 2026-09-04-165516
+Brand: TECH
+Topic: "Mastering n8n: Best Practices for Scaling and Optimizing Workflow Automation"
+────────────────────────────────────────────────────────────
+
+📄 MEDIUM COVER (1280×720)
+
+Create a 1280x720 blog cover image for ""Mastering n8n: Best Practices for Scaling and Optimizing Workflow Automation"". Professional, clean, whitepaper style. Split layout: left 45% dark navy background with title and tags, right 55% light gray with architecture diagram.
+
+💼 LINKEDIN BANNER (1200×627)
+
+Create a 1200x627 LinkedIn infographic for ""Mastering n8n: Best Practices for Scaling and Optimizing Workflow Automation"". 3-column layout: Input → Processing → Output. Professional, colorful, SaaS-style. Include stats bar at bottom.
+
+📸 INSTAGRAM SQUARE (1080×1080)
+
+Create a 1080x1080 Instagram infographic for ""Mastering n8n: Best Practices for Scaling and Optimizing Workflow Automation"". Square layout: dark header with title, middle white section with pipeline diagram, footer with metrics. Clean, scroll-stopping.
+
+Use at: https://gemini.google.com

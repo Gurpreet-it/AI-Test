@@ -1,0 +1,37 @@
+
+LinkedIn Banner Infographic (1200×627px)
+Title: ""Mastering Omnichannel Marketing: Leveraging HCL Unica for Seamless Customer Journeys Across All Channels""
+
+LAYOUT (3-column: Input → Processing → Output):
+
+LEFT COLUMN (Input):
+- Title: "THE CHALLENGE"
+- Icon: Target/Problem symbol
+- 2-3 bullet points about the problem
+- Color: Orange/Red accent
+
+CENTER COLUMN (Processing):
+- Title: "THE SOLUTION"
+- Icon: Cog/Process symbol
+- Flow diagram showing HCL Unica modules involved
+- Key steps or transformation
+- Color: Blue accent
+
+RIGHT COLUMN (Output):
+- Title: "THE RESULT"
+- Icon: Success/Checkmark symbol
+- 2-3 outcome bullets
+- Key metrics or benefits
+- Color: Green accent
+
+BOTTOM STATS BAR:
+- 3-4 key metrics about HCL Unica
+- Format: Large numbers + label
+- Dark background with white text
+
+DESIGN GUIDELINES:
+- Dimensions: 1200×627px
+- Color scheme: HCL brand colors (Blues, Purples, Orange, Green)
+- Typography: Modern sans-serif, bold headings
+- Icons: Flat design, colorful
+- Professional SaaS style

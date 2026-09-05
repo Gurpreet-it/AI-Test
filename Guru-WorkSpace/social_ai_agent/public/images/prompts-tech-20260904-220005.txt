@@ -1,0 +1,37 @@
+
+LinkedIn Banner Infographic (1200×627px)
+Title: ""Deep Dive: Understanding Function Calling Convention and Its Impact on Performance in C++""
+
+LAYOUT (3-column: Input → Processing → Output):
+
+LEFT COLUMN (Input):
+- Title: "THE PROBLEM"
+- Icon: Warning/Alert symbol
+- 2-3 key pain points related to ""Deep Dive: Understanding Function Calling Convention and Its Impact on Performance in C++""
+- Color: Red/Orange accent
+
+CENTER COLUMN (Processing):
+- Title: "THE APPROACH"
+- Icon: Automation/Process symbol
+- Step-by-step process or workflow
+- Key techniques or best practices for ""Deep Dive: Understanding Function Calling Convention and Its Impact on Performance in C++""
+- Color: Blue accent
+
+RIGHT COLUMN (Output):
+- Title: "THE BENEFIT"
+- Icon: Success/Rocket symbol
+- 2-3 concrete outcomes
+- Performance improvements
+- Color: Green accent
+
+BOTTOM STATS BAR:
+- 3-4 relevant metrics/statistics
+- Format: Large bold numbers + label
+- Dark background
+
+DESIGN GUIDELINES:
+- Dimensions: 1200×627px
+- Color scheme: Tech blues, purples, oranges, greens
+- Typography: Modern sans-serif
+- Icons: Flat design, colorful
+- Professional SaaS aesthetic

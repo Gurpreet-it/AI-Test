@@ -35,3 +35,12 @@ env
 
 # Local browser verification artifacts
 .playwright-mcp/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Temporary spreadsheet lock files
+~$*.xlsx

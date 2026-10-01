@@ -1,0 +1,3921 @@
+{
+  "test_cases": [
+    {
+      "title": "Verify 'Threshold on total presentation of all the branches' configuration setting presence",
+      "objective": "Ensure the 'Threshold' configuration setting is present in the A/B test UI.",
+      "preconditions": "Access to the A/B test configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration screen.",
+          "test_data": "",
+          "expected": "The A/B test configuration screen is displayed."
+        },
+        {
+          "step": "Locate the 'Multi-Armed Bandit Configuration' section.",
+          "test_data": "",
+          "expected": "The 'Multi-Armed Bandit Configuration' section is visible."
+        },
+        {
+          "step": "Check for the presence of the 'Threshold' input field.",
+          "test_data": "",
+          "expected": "The 'Threshold' input field is present and labeled correctly."
+        }
+      ],
+      "expected_result": "The 'Threshold' configuration setting is present and correctly labeled.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Test UI",
+      "requirement_ids": [
+        "STORY-02"
+      ],
+      "reference_keys": [
+        "HMI-T31652"
+      ],
+      "traceability": "STORY-02: Include a configuration setting for 'Threshold on total presentation of all the ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_001"
+    },
+    {
+      "title": "Verify 'Minimum percentage (minPer) for random selection' configuration setting presence",
+      "objective": "Ensure the 'MinPercent' configuration setting is present in the A/B test UI.",
+      "preconditions": "Access to the A/B test configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration screen.",
+          "test_data": "",
+          "expected": "The A/B test configuration screen is displayed."
+        },
+        {
+          "step": "Locate the 'Multi-Armed Bandit Configuration' section.",
+          "test_data": "",
+          "expected": "The 'Multi-Armed Bandit Configuration' section is visible."
+        },
+        {
+          "step": "Check for the presence of the 'MinPercent' input field.",
+          "test_data": "",
+          "expected": "The 'MinPercent' input field is present and labeled correctly."
+        }
+      ],
+      "expected_result": "The 'MinPercent' configuration setting is present and correctly labeled.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Test UI",
+      "requirement_ids": [
+        "STORY-03"
+      ],
+      "reference_keys": [
+        "HMI-T31652"
+      ],
+      "traceability": "STORY-03: Include a configuration setting for 'Minimum percentage (minPer) to be selected ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_002"
+    },
+    {
+      "title": "Verify 'Enable A/B testing' toggle functionality",
+      "objective": "Ensure the 'Enable A/B testing' toggle is present and can be switched on or off.",
+      "preconditions": "Access to the A/B test configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration screen.",
+          "test_data": "",
+          "expected": "The A/B test configuration screen is displayed."
+        },
+        {
+          "step": "Locate the 'Enable A/B testing' toggle.",
+          "test_data": "",
+          "expected": "The 'Enable A/B testing' toggle is visible."
+        },
+        {
+          "step": "Toggle the 'Enable A/B testing' switch to 'On'.",
+          "test_data": "",
+          "expected": "The toggle is switched to 'On' and the A/B testing options are enabled."
+        },
+        {
+          "step": "Toggle the 'Enable A/B testing' switch to 'Off'.",
+          "test_data": "",
+          "expected": "The toggle is switched to 'Off' and the A/B testing options are disabled."
+        }
+      ],
+      "expected_result": "The 'Enable A/B testing' toggle functions correctly, enabling and disabling A/B testing options.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Test UI",
+      "requirement_ids": [
+        "SCR-01"
+      ],
+      "reference_keys": [
+        "HMI-T18413"
+      ],
+      "traceability": "SCR-01: The 'Enable A/B testing' toggle is present and can be switched on or off.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_003"
+    },
+    {
+      "title": "Verify 'From date' field presence with calendar icon",
+      "objective": "Ensure the 'From date' field is present with a calendar icon in the A/B test UI.",
+      "preconditions": "Access to the A/B test configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration screen.",
+          "test_data": "",
+          "expected": "The A/B test configuration screen is displayed."
+        },
+        {
+          "step": "Locate the 'From date' field.",
+          "test_data": "",
+          "expected": "The 'From date' field is visible."
+        },
+        {
+          "step": "Check for the presence of a calendar icon next to the 'From date' field.",
+          "test_data": "",
+          "expected": "A calendar icon is present next to the 'From date' field."
+        }
+      ],
+      "expected_result": "The 'From date' field is present with a calendar icon.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "A/B Test UI",
+      "requirement_ids": [
+        "SCR-02"
+      ],
+      "reference_keys": [
+        "HMI-T18449"
+      ],
+      "traceability": "SCR-02: The 'From date' field is present with a calendar icon.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_004"
+    },
+    {
+      "title": "Verify 'To date' field presence with calendar icon",
+      "objective": "Ensure the 'To date' field is present and includes a calendar icon.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'To date' field in the panel.",
+          "test_data": "",
+          "expected": "The 'To date' field is visible with a calendar icon next to it."
+        }
+      ],
+      "expected_result": "The 'To date' field is present with a calendar icon.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-03"
+      ],
+      "reference_keys": [
+        "HMI-T28698"
+      ],
+      "traceability": "SCR-03: The 'To date' field is present with a calendar icon.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_005"
+    },
+    {
+      "title": "Verify 'Selection Mode' dropdown with 'Multi-Armed Bandit' selected",
+      "objective": "Ensure the 'Selection Mode' dropdown is present and 'Multi-Armed Bandit' is selected.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Selection Mode' dropdown in the panel.",
+          "test_data": "",
+          "expected": "The 'Selection Mode' dropdown is visible."
+        },
+        {
+          "step": "Check the selected option in the 'Selection Mode' dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected in the dropdown."
+        }
+      ],
+      "expected_result": "'Selection Mode' dropdown is present with 'Multi-Armed Bandit' selected.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-04"
+      ],
+      "reference_keys": [
+        "HMI-T28698"
+      ],
+      "traceability": "SCR-04: The 'Selection Mode' dropdown is present with 'Multi-Armed Bandit' selected.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_006"
+    },
+    {
+      "title": "Verify 'Multi-Armed Bandit Configuration' section is expandable and shows 'Completed' status",
+      "objective": "Ensure the 'Multi-Armed Bandit Configuration' section is expandable and displays 'Completed' status.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Multi-Armed Bandit Configuration' section in the panel.",
+          "test_data": "",
+          "expected": "The 'Multi-Armed Bandit Configuration' section is visible."
+        },
+        {
+          "step": "Expand the 'Multi-Armed Bandit Configuration' section.",
+          "test_data": "",
+          "expected": "The section expands and displays its contents."
+        },
+        {
+          "step": "Check the status displayed in the 'Multi-Armed Bandit Configuration' section.",
+          "test_data": "",
+          "expected": "The status 'Completed' is displayed in the section."
+        }
+      ],
+      "expected_result": "'Multi-Armed Bandit Configuration' section is expandable and shows 'Completed' status.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-05"
+      ],
+      "reference_keys": [
+        "HMI-T28698"
+      ],
+      "traceability": "SCR-05: The 'Multi-Armed Bandit Configuration' section is expandable and shows 'Complete",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_007"
+    },
+    {
+      "title": "Verify 'Threshold' field presence with value 87",
+      "objective": "Ensure the 'Threshold' field is present and displays the value 87.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Threshold' field in the 'Multi-Armed Bandit Configuration' section.",
+          "test_data": "",
+          "expected": "The 'Threshold' field is visible in the section."
+        },
+        {
+          "step": "Check the value displayed in the 'Threshold' field.",
+          "test_data": "",
+          "expected": "The value 87 is displayed in the 'Threshold' field."
+        }
+      ],
+      "expected_result": "'Threshold' field is present with a value of 87.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-06"
+      ],
+      "reference_keys": [
+        "HMI-T28698"
+      ],
+      "traceability": "SCR-06: The 'Threshold' field is present with a value of 87.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_008"
+    },
+    {
+      "title": "Verify 'MinPercent' field presence and default value",
+      "objective": "Ensure the 'MinPercent' field is present with a default value of 80%.",
+      "preconditions": "<TBD: User logged into the system and navigated to the A/B Testing configuration page>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration page.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration page is displayed."
+        },
+        {
+          "step": "Locate the 'MinPercent' field under the Multi-Armed Bandit Configuration section.",
+          "test_data": "",
+          "expected": "The 'MinPercent' field is present."
+        },
+        {
+          "step": "Check the default value of the 'MinPercent' field.",
+          "test_data": "",
+          "expected": "The default value of the 'MinPercent' field is 80%."
+        }
+      ],
+      "expected_result": "The 'MinPercent' field is present with a default value of 80%.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "SCR-07"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-07: The 'MinPercent' field is present with a value of 80%.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_009"
+    },
+    {
+      "title": "Verify 'Re-evaluation In' field presence and default value",
+      "objective": "Ensure the 'Re-evaluation In' field is present with a default value of 1 and a dropdown for time units.",
+      "preconditions": "<TBD: User logged into the system and navigated to the A/B Testing configuration page>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration page.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration page is displayed."
+        },
+        {
+          "step": "Locate the 'Re-evaluation In' field under the Multi-Armed Bandit Configuration section.",
+          "test_data": "",
+          "expected": "The 'Re-evaluation In' field is present."
+        },
+        {
+          "step": "Check the default value of the 'Re-evaluation In' field.",
+          "test_data": "",
+          "expected": "The default value of the 'Re-evaluation In' field is 1."
+        },
+        {
+          "step": "Check the presence of a dropdown for time units next to the 'Re-evaluation In' field.",
+          "test_data": "",
+          "expected": "A dropdown for time units is present next to the 'Re-evaluation In' field."
+        }
+      ],
+      "expected_result": "The 'Re-evaluation In' field is present with a default value of 1 and a dropdown for time units.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "SCR-08"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-08: The 'Re-evaluation In' field is present with a value of 1 and a dropdown for tim",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_010"
+    },
+    {
+      "title": "Verify 'Recent Transaction Weight' field presence and default value",
+      "objective": "Ensure the 'Recent Transaction Weight' field is present with a default value of 80%.",
+      "preconditions": "<TBD: User logged into the system and navigated to the A/B Testing configuration page>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration page.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration page is displayed."
+        },
+        {
+          "step": "Locate the 'Recent Transaction Weight' field under the Multi-Armed Bandit Configuration section.",
+          "test_data": "",
+          "expected": "The 'Recent Transaction Weight' field is present."
+        },
+        {
+          "step": "Check the default value of the 'Recent Transaction Weight' field.",
+          "test_data": "",
+          "expected": "The default value of the 'Recent Transaction Weight' field is 80%."
+        }
+      ],
+      "expected_result": "The 'Recent Transaction Weight' field is present with a default value of 80%.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "SCR-09"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-09: The 'Recent Transaction Weight' field is present with a value of 80%.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_011"
+    },
+    {
+      "title": "Verify 'Branches' section presence and message",
+      "objective": "Ensure the 'Branches' section is present with a message to add branches for comparison.",
+      "preconditions": "<TBD: User logged into the system and navigated to the A/B Testing configuration page>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration page.",
+          "test_data": "",
+          "expected": "The A/B Testing configuration page is displayed."
+        },
+        {
+          "step": "Locate the 'Branches' section on the page.",
+          "test_data": "",
+          "expected": "The 'Branches' section is present."
+        },
+        {
+          "step": "Check for the presence of a message prompting to add branches for comparison.",
+          "test_data": "",
+          "expected": "A message is displayed prompting to add branches for comparison."
+        }
+      ],
+      "expected_result": "The 'Branches' section is present with a message to add branches for comparison.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "SCR-10"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-10: The 'Branches' section is present with a message to add branches for comparison.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_012"
+    },
+    {
+      "title": "Verify 'Branch' button is present and enabled",
+      "objective": "Ensure the 'Branch' button is visible and enabled on the A/B testing UI.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the '+ Branch' button on the panel.",
+          "test_data": "",
+          "expected": "The '+ Branch' button is visible and enabled."
+        }
+      ],
+      "expected_result": "The '+ Branch' button should be present and enabled.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-11"
+      ],
+      "reference_keys": [
+        "HMI-T18412"
+      ],
+      "traceability": "SCR-11: The 'Branch' button is present and enabled.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_013"
+    },
+    {
+      "title": "Verify 'Cancel' button is present and enabled",
+      "objective": "Ensure the 'Cancel' button is visible and enabled on the A/B testing UI.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Cancel' button on the panel.",
+          "test_data": "",
+          "expected": "The 'Cancel' button is visible and enabled."
+        }
+      ],
+      "expected_result": "The 'Cancel' button should be present and enabled.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-12"
+      ],
+      "reference_keys": [
+        "HMI-T18412"
+      ],
+      "traceability": "SCR-12: The 'Cancel' button is present and enabled.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_014"
+    },
+    {
+      "title": "Verify 'Save' button is present and disabled",
+      "objective": "Ensure the 'Save' button is visible and disabled on the A/B testing UI.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Save' button on the panel.",
+          "test_data": "",
+          "expected": "The 'Save' button is visible and disabled."
+        }
+      ],
+      "expected_result": "The 'Save' button should be present and disabled.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-13"
+      ],
+      "reference_keys": [
+        "HMI-T18412"
+      ],
+      "traceability": "SCR-13: The 'Save' button is present and disabled.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_015"
+    },
+    {
+      "title": "Verify 'Branches' table header includes specified columns",
+      "objective": "Ensure the 'Branches' table header includes the columns: Branch, Cell Code, Sampling %, Offer, Attributes, Default, Acceptance, State.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B testing configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Branches' table on the panel.",
+          "test_data": "",
+          "expected": "The 'Branches' table is visible."
+        },
+        {
+          "step": "Verify the table header includes the columns: Branch, Cell Code, Sampling %, Offer, Attributes, Default, Acceptance, State.",
+          "test_data": "",
+          "expected": "The table header includes all specified columns."
+        }
+      ],
+      "expected_result": "The 'Branches' table header should include the columns: Branch, Cell Code, Sampling %, Offer, Attributes, Default, Acceptance, State.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-14"
+      ],
+      "reference_keys": [
+        "HMI-T18412"
+      ],
+      "traceability": "SCR-14: The 'Branches' table header includes columns: Branch, Cell Code, Sampling %, Off",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_016"
+    },
+    {
+      "title": "Verify 'Personalization Point' Display",
+      "objective": "Ensure the 'Personalization Point' is displayed as 'Main Banner PP'.",
+      "preconditions": "User is on the A/B Testing configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration screen.",
+          "test_data": "",
+          "expected": "The screen is displayed with A/B Testing options."
+        },
+        {
+          "step": "Check the 'Personalization Point' label.",
+          "test_data": "",
+          "expected": "The label should be displayed as 'Main Banner PP'."
+        }
+      ],
+      "expected_result": "The 'Personalization Point' is displayed as 'Main Banner PP'.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "SCR-15"
+      ],
+      "reference_keys": [
+        "HMI-T31585"
+      ],
+      "traceability": "SCR-15: The 'Personalization Point' is displayed as 'Main Banner PP'.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_017"
+    },
+    {
+      "title": "Verify 'Selection Mode' Dropdown with 'Multi-Armed Bandit' Option",
+      "objective": "Ensure the 'Selection Mode' dropdown includes the 'Multi-Armed Bandit' option.",
+      "preconditions": "User is on the A/B Testing configuration screen.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration screen.",
+          "test_data": "",
+          "expected": "The screen is displayed with A/B Testing options."
+        },
+        {
+          "step": "Locate the 'Selection Mode' dropdown.",
+          "test_data": "",
+          "expected": "The dropdown is visible."
+        },
+        {
+          "step": "Click on the 'Selection Mode' dropdown.",
+          "test_data": "",
+          "expected": "The dropdown options are displayed."
+        },
+        {
+          "step": "Check for the 'Multi-Armed Bandit' option in the dropdown.",
+          "test_data": "",
+          "expected": "The 'Multi-Armed Bandit' option is present in the dropdown."
+        }
+      ],
+      "expected_result": "The 'Selection Mode' dropdown includes the 'Multi-Armed Bandit' option.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "DOC-12"
+      ],
+      "reference_keys": [
+        "HMI-T31605"
+      ],
+      "traceability": "DOC-12: The A/B Test configuration panel adds a 'Selection Mode' dropdown with a new opt",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_018"
+    },
+    {
+      "title": "Verify 'Threshold' Input for 'Multi-Armed Bandit'",
+      "objective": "Ensure 'Threshold' is a numeric input with a minimum value of 1 when 'Multi-Armed Bandit' is selected.",
+      "preconditions": "User is on the A/B Testing configuration screen with 'Multi-Armed Bandit' selected.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration screen.",
+          "test_data": "",
+          "expected": "The screen is displayed with A/B Testing options."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the 'Selection Mode' dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Locate the 'Threshold' input field.",
+          "test_data": "",
+          "expected": "The 'Threshold' input field is visible."
+        },
+        {
+          "step": "Enter a value less than 1 in the 'Threshold' input field.",
+          "test_data": "0",
+          "expected": "An error message is displayed indicating the minimum value is 1."
+        }
+      ],
+      "expected_result": "'Threshold' is a numeric input with a minimum value of 1.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "DOC-13"
+      ],
+      "reference_keys": [
+        "HMI-T31626"
+      ],
+      "traceability": "DOC-13: When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_019"
+    },
+    {
+      "title": "Verify 'Min Exploration %' Input for 'Multi-Armed Bandit'",
+      "objective": "Ensure 'Min Exploration %' is a numeric input with a range of 0–100 when 'Multi-Armed Bandit' is selected.",
+      "preconditions": "User is on the A/B Testing configuration screen with 'Multi-Armed Bandit' selected.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration screen.",
+          "test_data": "",
+          "expected": "The screen is displayed with A/B Testing options."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the 'Selection Mode' dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Locate the 'Min Exploration %' input field.",
+          "test_data": "",
+          "expected": "The 'Min Exploration %' input field is visible."
+        },
+        {
+          "step": "Enter a value less than 0 in the 'Min Exploration %' input field.",
+          "test_data": "-1",
+          "expected": "An error message is displayed indicating the valid range is 0–100."
+        },
+        {
+          "step": "Enter a value greater than 100 in the 'Min Exploration %' input field.",
+          "test_data": "101",
+          "expected": "An error message is displayed indicating the valid range is 0–100."
+        }
+      ],
+      "expected_result": "'Min Exploration %' is a numeric input with a range of 0–100.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "A/B Testing UI",
+      "requirement_ids": [
+        "DOC-14"
+      ],
+      "reference_keys": [
+        "HMI-T31586"
+      ],
+      "traceability": "DOC-14: When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_020"
+    },
+    {
+      "title": "Verify Multi-Armed Bandit option is available in A/B testing UI",
+      "objective": "Ensure the Multi-Armed Bandit option is added to the A/B testing UI.",
+      "preconditions": "A/B Test configuration panel is accessible.",
+      "steps": [
+        {
+          "step": "Open the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Check the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "The 'Multi-Armed Bandit' option is available in the Selection Mode dropdown."
+        }
+      ],
+      "expected_result": "The 'Multi-Armed Bandit' option should be present in the A/B testing UI.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "UI",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "reference_keys": [],
+      "traceability": "STORY-01: Add a multi-armed bandit option to the A/B testing UI.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_021"
+    },
+    {
+      "title": "Verify 'Re-evaluation Interval' is shown when 'Multi-Armed Bandit' is selected",
+      "objective": "Ensure 'Re-evaluation Interval' field is displayed when 'Multi-Armed Bandit' is selected.",
+      "preconditions": "A/B Test configuration panel is accessible.",
+      "steps": [
+        {
+          "step": "Open the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Check for the presence of 'Re-evaluation Interval' field.",
+          "test_data": "",
+          "expected": "'Re-evaluation Interval' field is displayed."
+        }
+      ],
+      "expected_result": "'Re-evaluation Interval' should be visible when 'Multi-Armed Bandit' is selected.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "UI",
+      "requirement_ids": [
+        "DOC-15"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-15: When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_022"
+    },
+    {
+      "title": "Verify 'Recent Transactions Weight' is shown when 'Multi-Armed Bandit' is selected",
+      "objective": "Ensure 'Recent Transactions Weight' field is displayed when 'Multi-Armed Bandit' is selected.",
+      "preconditions": "A/B Test configuration panel is accessible.",
+      "steps": [
+        {
+          "step": "Open the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Check for the presence of 'Recent Transactions Weight' field.",
+          "test_data": "",
+          "expected": "'Recent Transactions Weight' field is displayed."
+        }
+      ],
+      "expected_result": "'Recent Transactions Weight' should be visible when 'Multi-Armed Bandit' is selected.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "UI",
+      "requirement_ids": [
+        "DOC-16"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-16: When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_023"
+    },
+    {
+      "title": "Verify initial random selection of branches based on configured percentage",
+      "objective": "Ensure branches are initially selected randomly based on the configured percentage.",
+      "preconditions": "A/B Test with Multi-Armed Bandit mode is configured with initial percentages.",
+      "steps": [
+        {
+          "step": "Open the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Ensure 'Multi-Armed Bandit' is selected in the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Check the initial branch selection distribution.",
+          "test_data": "",
+          "expected": "Branches are selected randomly based on the initial configured percentage."
+        }
+      ],
+      "expected_result": "Branches should be selected randomly based on the initial configured percentage.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "UI",
+      "requirement_ids": [
+        "STORY-04"
+      ],
+      "reference_keys": [],
+      "traceability": "STORY-04: Branches are initially selected randomly based on the initial configured percent",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_024"
+    },
+    {
+      "title": "Verify Multi-Armed Bandit selection mode is added to ABTestSelectionMode enum",
+      "objective": "Ensure that the MultiArmedBandit(3) option is available in the ABTestSelectionMode enum.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Access the ABTestSelectionMode enum in the system.",
+          "test_data": "",
+          "expected": "The enum contains an option labeled 'MultiArmedBandit' with a value of 3."
+        }
+      ],
+      "expected_result": "The MultiArmedBandit(3) option is present in the ABTestSelectionMode enum.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-01"
+      ],
+      "reference_keys": [
+        "HMI-T18580"
+      ],
+      "traceability": "DOC-01: Add MultiArmedBandit(3) to the ABTestSelectionMode enum.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_025"
+    },
+    {
+      "title": "Verify random selection is applied in minPercentage of cases after threshold is reached",
+      "objective": "Ensure that after the threshold is reached, random selection is applied in minPercentage of the cases.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Configure an A/B test with a threshold and minPercentage values.",
+          "test_data": "Threshold = 500, MinPercent = 10",
+          "expected": "Configuration is saved successfully."
+        },
+        {
+          "step": "Simulate reaching the threshold by making 500 getOffers calls.",
+          "test_data": "",
+          "expected": "Threshold is reached."
+        },
+        {
+          "step": "Continue making getOffers calls beyond the threshold.",
+          "test_data": "",
+          "expected": "Random selection is applied in approximately 10% of the cases."
+        }
+      ],
+      "expected_result": "Random selection is applied in minPercentage of the cases after the threshold is reached.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "STORY-05: When the threshold is reached, random selection is applied in only minPercentage",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_026"
+    },
+    {
+      "title": "Verify branch with highest acceptance rate is selected after threshold is reached",
+      "objective": "Ensure that after the threshold is reached, the branch with the highest acceptance rate is selected for the majority of cases.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Configure an A/B test with a threshold and minPercentage values.",
+          "test_data": "Threshold = 500, MinPercent = 10",
+          "expected": "Configuration is saved successfully."
+        },
+        {
+          "step": "Simulate reaching the threshold by making 500 getOffers calls.",
+          "test_data": "",
+          "expected": "Threshold is reached."
+        },
+        {
+          "step": "Continue making getOffers calls beyond the threshold.",
+          "test_data": "",
+          "expected": "The branch with the highest acceptance rate is selected in approximately 90% of the cases."
+        }
+      ],
+      "expected_result": "The branch with the highest acceptance rate is selected for the majority of cases after the threshold is reached.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "STORY-06"
+      ],
+      "reference_keys": [
+        "HMI-T31830"
+      ],
+      "traceability": "STORY-06: When the threshold is reached, the branch with the highest acceptance rate is se",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_027"
+    },
+    {
+      "title": "Verify dynamic evaluation of best performant branch based on recent data",
+      "objective": "Ensure that the best performant branch is dynamically evaluated based on recent data.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Configure an A/B test with dynamic evaluation settings.",
+          "test_data": "Recent Transaction Weight = 0.7",
+          "expected": "Configuration is saved successfully."
+        },
+        {
+          "step": "Simulate getOffers calls with varying acceptance rates over time.",
+          "test_data": "",
+          "expected": "Acceptance rates are recorded."
+        },
+        {
+          "step": "Verify that the best performant branch is dynamically evaluated based on recent data.",
+          "test_data": "",
+          "expected": "The branch with the highest recent acceptance rate is identified as the best performer."
+        }
+      ],
+      "expected_result": "The best performant branch is dynamically evaluated based on recent data.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "STORY-07"
+      ],
+      "reference_keys": [
+        "HMI-T21494"
+      ],
+      "traceability": "STORY-07: The best performant branch is dynamically evaluated based on recent data.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_028"
+    },
+    {
+      "title": "Verify Initial Exploration Phase in Multi-Armed Bandit Mode",
+      "objective": "Ensure that all branches are explored initially using configured percentages in Multi-Armed Bandit mode.",
+      "preconditions": "<TBD: Setup with Multi-Armed Bandit mode enabled and branches configured with specific percentages>",
+      "steps": [
+        {
+          "step": "Initiate the A/B test with Multi-Armed Bandit mode.",
+          "test_data": "<TBD: Branch configuration with specific percentages>",
+          "expected": "The test starts with branches being selected based on the configured percentages."
+        },
+        {
+          "step": "Monitor the branch selection distribution over several getOffers calls.",
+          "test_data": "<TBD: Number of calls>",
+          "expected": "Branch selection matches the configured percentages during the initial phase."
+        }
+      ],
+      "expected_result": "Branches are selected based on the configured percentages during the initial exploration phase.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-02"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "DOC-02: Implement a Multi-Armed Bandit selection mode that explores all branches initial",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_029"
+    },
+    {
+      "title": "Verify Transition to Exploit Mode After Threshold in Multi-Armed Bandit",
+      "objective": "Ensure that the Multi-Armed Bandit mode shifts to exploiting the best-performing branch after the presentation threshold is reached.",
+      "preconditions": "<TBD: Setup with Multi-Armed Bandit mode enabled, threshold set, and branches configured>",
+      "steps": [
+        {
+          "step": "Initiate the A/B test with Multi-Armed Bandit mode.",
+          "test_data": "<TBD: Branch configuration and threshold value>",
+          "expected": "The test starts with branches being selected based on the configured percentages."
+        },
+        {
+          "step": "Reach the presentation threshold by making sufficient getOffers calls.",
+          "test_data": "<TBD: Number of calls to reach threshold>",
+          "expected": "The threshold is reached."
+        },
+        {
+          "step": "Monitor the branch selection distribution over subsequent getOffers calls.",
+          "test_data": "<TBD: Number of calls>",
+          "expected": "Branch selection shifts to exploiting the best-performing branch while maintaining the configured exploration rate."
+        }
+      ],
+      "expected_result": "After reaching the threshold, the mode shifts to exploiting the best-performing branch with the configured exploration rate.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-03"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "DOC-03: After a presentation threshold is reached, the Multi-Armed Bandit mode shifts to",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_030"
+    },
+    {
+      "title": "Verify Dynamic Re-evaluation of Best Branch in Multi-Armed Bandit Mode",
+      "objective": "Ensure that the Multi-Armed Bandit mode dynamically re-evaluates the best branch based on recent acceptance rate data.",
+      "preconditions": "<TBD: Setup with Multi-Armed Bandit mode enabled and branches configured>",
+      "steps": [
+        {
+          "step": "Initiate the A/B test with Multi-Armed Bandit mode.",
+          "test_data": "<TBD: Branch configuration>",
+          "expected": "The test starts with branches being selected based on the configured percentages."
+        },
+        {
+          "step": "Simulate changes in acceptance rates for different branches.",
+          "test_data": "<TBD: Acceptance rate changes>",
+          "expected": "Acceptance rates are updated."
+        },
+        {
+          "step": "Monitor the branch selection distribution over subsequent getOffers calls.",
+          "test_data": "<TBD: Number of calls>",
+          "expected": "Branch selection reflects the dynamically re-evaluated best branch based on recent data."
+        }
+      ],
+      "expected_result": "The best branch is dynamically re-evaluated and selected based on recent acceptance rate data.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-04"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "DOC-04: The Multi-Armed Bandit mode dynamically re-evaluates the best branch based on re",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_031"
+    },
+    {
+      "title": "Verify Configuration of 'Threshold' Parameter for Multi-Armed Bandit Mode",
+      "objective": "Ensure that the 'Threshold' parameter can be configured and is used to determine when the Multi-Armed Bandit logic activates.",
+      "preconditions": "<TBD: Setup with Multi-Armed Bandit mode enabled>",
+      "steps": [
+        {
+          "step": "Access the A/B Test configuration panel.",
+          "test_data": "<TBD: Access method>",
+          "expected": "The configuration panel is displayed."
+        },
+        {
+          "step": "Locate the 'Threshold' parameter input field.",
+          "test_data": "",
+          "expected": "The 'Threshold' parameter input field is present and visible."
+        },
+        {
+          "step": "Enter a valid integer value for the 'Threshold' parameter.",
+          "test_data": "<TBD: Valid integer value>",
+          "expected": "The value is accepted and saved."
+        }
+      ],
+      "expected_result": "The 'Threshold' parameter is configurable and determines when the Multi-Armed Bandit logic activates.",
+      "priority": "High",
+      "test_type": "Data",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-05"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "DOC-05: Add a new configuration parameter 'Threshold' of type INTEGER for total presenta",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_032"
+    },
+    {
+      "title": "Verify 'MinPercent' Configuration Parameter Addition",
+      "objective": "Ensure the 'MinPercent' parameter is correctly added and accepts valid DOUBLE values.",
+      "preconditions": "<TBD: System setup with access to A/B Test configuration UI>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' as the Selection Mode.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is selected."
+        },
+        {
+          "step": "Locate the 'Min Exploration %' input field.",
+          "test_data": "",
+          "expected": "'Min Exploration %' input field is visible and enabled."
+        },
+        {
+          "step": "Enter a valid DOUBLE value (e.g., 10.5) into the 'Min Exploration %' field.",
+          "test_data": "10.5",
+          "expected": "The value '10.5' is accepted in the 'Min Exploration %' field."
+        }
+      ],
+      "expected_result": "'MinPercent' parameter is added and accepts valid DOUBLE values.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-06"
+      ],
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "traceability": "DOC-06: Add a new configuration parameter 'MinPercent' of type DOUBLE for the percentage",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_033"
+    },
+    {
+      "title": "Verify 'Re-evaluation Interval' Configuration Parameter Addition",
+      "objective": "Ensure the 'Re-evaluation Interval' parameter is correctly added and accepts valid INTEGER values.",
+      "preconditions": "<TBD: System setup with access to A/B Test configuration UI>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' as the Selection Mode.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is selected."
+        },
+        {
+          "step": "Locate the 'Re-evaluation Interval' input field.",
+          "test_data": "",
+          "expected": "'Re-evaluation Interval' input field is visible and enabled."
+        },
+        {
+          "step": "Enter a valid INTEGER value (e.g., 2) into the 'Re-evaluation Interval' field.",
+          "test_data": "2",
+          "expected": "The value '2' is accepted in the 'Re-evaluation Interval' field."
+        }
+      ],
+      "expected_result": "'Re-evaluation Interval' parameter is added and accepts valid INTEGER values.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-07"
+      ],
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "traceability": "DOC-07: Add a new configuration parameter 'Re-evaluation Interval' of type INTEGER for t",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_034"
+    },
+    {
+      "title": "Verify 'Recent Transaction Weight' Configuration Parameter Addition",
+      "objective": "Ensure the 'Recent Transaction Weight' parameter is correctly added and accepts valid FLOAT values.",
+      "preconditions": "<TBD: System setup with access to A/B Test configuration UI>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' as the Selection Mode.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is selected."
+        },
+        {
+          "step": "Locate the 'Recent Transactions Weight' input field.",
+          "test_data": "",
+          "expected": "'Recent Transactions Weight' input field is visible and enabled."
+        },
+        {
+          "step": "Enter a valid FLOAT value (e.g., 0.75) into the 'Recent Transactions Weight' field.",
+          "test_data": "0.75",
+          "expected": "The value '0.75' is accepted in the 'Recent Transactions Weight' field."
+        }
+      ],
+      "expected_result": "'Recent Transaction Weight' parameter is added and accepts valid FLOAT values.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-08"
+      ],
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "traceability": "DOC-08: Add a new configuration parameter 'Recent Transaction Weight' of type FLOAT for ",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_035"
+    },
+    {
+      "title": "Verify Random Branch Selection in Phase 1",
+      "objective": "Ensure branches are selected randomly based on configured sample percentages when totalPresentations < threshold.",
+      "preconditions": "<TBD: System setup with A/B Test configured with sample percentages and threshold>",
+      "steps": [
+        {
+          "step": "Simulate getOffers calls with totalPresentations less than the configured threshold.",
+          "test_data": "<TBD: Sample percentages and threshold>",
+          "expected": "Branches are selected randomly based on configured sample percentages."
+        }
+      ],
+      "expected_result": "Branches are selected randomly in Phase 1 based on configured sample percentages.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-09"
+      ],
+      "reference_keys": [
+        "HMI-T18462"
+      ],
+      "traceability": "DOC-09: In Phase 1 (Exploration), when totalPresentations < threshold, select branch ran",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_036"
+    },
+    {
+      "title": "Verify random selection in Phase 2 based on minPercent",
+      "objective": "Ensure that in Phase 2, when totalPresentations >= threshold, branches are selected randomly with probability (minPercent / 100) as per configured percentages.",
+      "preconditions": "<TBD: Setup with totalPresentations >= threshold and configured minPercent>",
+      "steps": [
+        {
+          "step": "Configure an A/B test with multiple branches and set minPercent to a specific value.",
+          "test_data": "minPercent = 10",
+          "expected": "A/B test is configured with minPercent set to 10."
+        },
+        {
+          "step": "Simulate getOffers calls in Phase 2.",
+          "test_data": "Total calls = 1000",
+          "expected": "Approximately 10% of the calls should select branches randomly based on configured percentages."
+        }
+      ],
+      "expected_result": "Branches are selected randomly in approximately minPercent% of the cases.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-10"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-10: In Phase 2 (Exploit + Explore), when totalPresentations >= threshold, with proba",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_037"
+    },
+    {
+      "title": "Verify selection of best-performing branch in Phase 2",
+      "objective": "Ensure that in Phase 2, when totalPresentations >= threshold, the branch with the highest recent acceptance rate is selected with probability (1 – (minPercent / 100)).",
+      "preconditions": "<TBD: Setup with totalPresentations >= threshold and known acceptance rates>",
+      "steps": [
+        {
+          "step": "Configure an A/B test with multiple branches and set minPercent to a specific value.",
+          "test_data": "minPercent = 10",
+          "expected": "A/B test is configured with minPercent set to 10."
+        },
+        {
+          "step": "Simulate getOffers calls in Phase 2.",
+          "test_data": "Total calls = 1000",
+          "expected": "Approximately 90% of the calls should select the branch with the highest recent acceptance rate."
+        }
+      ],
+      "expected_result": "The branch with the highest recent acceptance rate is selected in approximately (1 – minPercent)% of the cases.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-11"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-11: In Phase 2 (Exploit + Explore), when totalPresentations >= threshold, with proba",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_038"
+    },
+    {
+      "title": "Verify creation of 'uaci_abtestperformanceHistory' table",
+      "objective": "Ensure the 'uaci_abtestperformanceHistory' table is created in the Interact runtime database with the correct schema.",
+      "preconditions": "<TBD: Database access>",
+      "steps": [
+        {
+          "step": "Check the database schema for the presence of 'uaci_abtestperformanceHistory' table.",
+          "test_data": "Database schema",
+          "expected": "'uaci_abtestperformanceHistory' table is present in the database schema."
+        },
+        {
+          "step": "Verify the columns of 'uaci_abtestperformanceHistory' table.",
+          "test_data": "Table schema",
+          "expected": "Table contains columns: RuleID, BranchID, ContactCount, AcceptCount, UpdateDate."
+        }
+      ],
+      "expected_result": "'uaci_abtestperformanceHistory' table is correctly created with specified columns.",
+      "priority": "High",
+      "test_type": "Data",
+      "component": "Database",
+      "requirement_ids": [
+        "DOC-17"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-17: Create a new table 'uaci_abtestperformanceHistory' in the Interact runtime datab",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_039"
+    },
+    {
+      "title": "Verify addition of 'acceptanceRate' column to 'uaci_abtestperformance' table",
+      "objective": "Ensure the 'acceptanceRate' column is added to the 'uaci_abtestperformance' table to hold calculated acceptance rates.",
+      "preconditions": "<TBD: Database access>",
+      "steps": [
+        {
+          "step": "Check the database schema for the 'uaci_abtestperformance' table.",
+          "test_data": "Database schema",
+          "expected": "'uaci_abtestperformance' table is present in the database schema."
+        },
+        {
+          "step": "Verify the presence of 'acceptanceRate' column in 'uaci_abtestperformance' table.",
+          "test_data": "Table schema",
+          "expected": "'acceptanceRate' column is present in the 'uaci_abtestperformance' table."
+        }
+      ],
+      "expected_result": "'acceptanceRate' column is correctly added to the 'uaci_abtestperformance' table.",
+      "priority": "High",
+      "test_type": "Data",
+      "component": "Database",
+      "requirement_ids": [
+        "DOC-18"
+      ],
+      "reference_keys": [],
+      "traceability": "DOC-18: Add a new column 'acceptanceRate' to the 'uaci_abtestperformance' table to hold ",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_040"
+    },
+    {
+      "title": "Verify ABTestPerformanceBatchJob runs on scheduled interval",
+      "objective": "Ensure that the ABTestPerformanceBatchJob executes according to the interval defined by ABTestPerformanceBatchIntervalInHours.",
+      "preconditions": "<TBD: ABTestPerformanceBatchIntervalInHours configuration>",
+      "steps": [
+        {
+          "step": "Set ABTestPerformanceBatchIntervalInHours to a specific value.",
+          "test_data": "ABTestPerformanceBatchIntervalInHours = 1",
+          "expected": "ABTestPerformanceBatchJob is configured to run every 1 hour."
+        },
+        {
+          "step": "Monitor the execution of ABTestPerformanceBatchJob over a period.",
+          "test_data": "Execution logs",
+          "expected": "ABTestPerformanceBatchJob runs at the interval specified by ABTestPerformanceBatchIntervalInHours."
+        }
+      ],
+      "expected_result": "ABTestPerformanceBatchJob runs on the defined schedule.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-19"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "DOC-19: The ABTestPerformanceBatchJob runs on a scheduled interval defined by ABTestPerf",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_041"
+    },
+    {
+      "title": "Verify single RT instance executes ABTestPerformanceBatchJob using uaci_tasklock",
+      "objective": "Ensure that only one RT instance executes the ABTestPerformanceBatchJob using the uaci_tasklock mechanism.",
+      "preconditions": "<TBD: Multiple RT instances setup>",
+      "steps": [
+        {
+          "step": "Start multiple RT instances.",
+          "test_data": "RT instances = 3",
+          "expected": "Multiple RT instances are running."
+        },
+        {
+          "step": "Trigger ABTestPerformanceBatchJob execution.",
+          "test_data": "Job execution trigger",
+          "expected": "ABTestPerformanceBatchJob starts execution."
+        },
+        {
+          "step": "Check uaci_tasklock table for lock entry.",
+          "test_data": "uaci_tasklock table",
+          "expected": "Lock entry is present for ABTestPerformanceBatchJob."
+        },
+        {
+          "step": "Verify execution logs of all RT instances.",
+          "test_data": "Execution logs",
+          "expected": "Only one RT instance executes the ABTestPerformanceBatchJob."
+        }
+      ],
+      "expected_result": "Only a single RT instance executes the ABTestPerformanceBatchJob.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-20"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "DOC-20: The ABTestPerformanceBatchJob uses 'uaci_tasklock' to ensure that only a single ",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_042"
+    },
+    {
+      "title": "Verify ABTestPerformanceBatchJob queries correct tables for statistics",
+      "objective": "Ensure that the ABTestPerformanceBatchJob queries 'uaci_abtestperformance' for overall statistics and 'uaci_abtestperformanceHistory' for last evaluation statistics.",
+      "preconditions": "<TBD: Database setup with necessary tables>",
+      "steps": [
+        {
+          "step": "Execute ABTestPerformanceBatchJob.",
+          "test_data": "Job execution trigger",
+          "expected": "ABTestPerformanceBatchJob starts execution."
+        },
+        {
+          "step": "Monitor database queries during job execution.",
+          "test_data": "Database query logs",
+          "expected": "Queries are made to 'uaci_abtestperformance' and 'uaci_abtestperformanceHistory' tables."
+        }
+      ],
+      "expected_result": "ABTestPerformanceBatchJob queries the correct tables for statistics.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-21"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "DOC-21: The ABTestPerformanceBatchJob queries 'uaci_abtestperformance' for overall stati",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_043"
+    },
+    {
+      "title": "Verify acceptance rate computation in ABTestPerformanceBatchJob",
+      "objective": "Ensure that the ABTestPerformanceBatchJob computes acceptance rates using the specified formula.",
+      "preconditions": "<TBD: Acceptance rate computation setup>",
+      "steps": [
+        {
+          "step": "Set recent transaction weight and acceptance rates for last and previous intervals.",
+          "test_data": "Recent Transaction Weight = 0.7, Last Interval Acceptance Rate = 0.5, Previous Interval Acceptance Rate = 0.3",
+          "expected": "Values are set for computation."
+        },
+        {
+          "step": "Execute ABTestPerformanceBatchJob.",
+          "test_data": "Job execution trigger",
+          "expected": "ABTestPerformanceBatchJob starts execution."
+        },
+        {
+          "step": "Verify computed acceptance rate in the database.",
+          "test_data": "Database entry for acceptance rate",
+          "expected": "Acceptance rate is computed as 0.7 * 0.5 + 0.3 * 0.3 = 0.44."
+        }
+      ],
+      "expected_result": "Acceptance rate is computed correctly using the formula.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-22"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "DOC-22: The ABTestPerformanceBatchJob computes acceptance rate per branch using the form",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_044"
+    },
+    {
+      "title": "Verify ABTestPerformanceBatchJob updates 'uaci_abtestperformance' and 'uaci_abtestperformanceHistory' tables",
+      "objective": "Ensure that the ABTestPerformanceBatchJob correctly updates the 'uaci_abtestperformance' and 'uaci_abtestperformanceHistory' tables.",
+      "preconditions": "<TBD: Setup required for ABTestPerformanceBatchJob>",
+      "steps": [
+        {
+          "step": "Trigger the ABTestPerformanceBatchJob.",
+          "test_data": "<TBD: Trigger method>",
+          "expected": "ABTestPerformanceBatchJob runs successfully."
+        },
+        {
+          "step": "Check the 'uaci_abtestperformance' table for updates.",
+          "test_data": "<TBD: Database query>",
+          "expected": "The 'uaci_abtestperformance' table is updated with the latest acceptance rates."
+        },
+        {
+          "step": "Check the 'uaci_abtestperformanceHistory' table for updates.",
+          "test_data": "<TBD: Database query>",
+          "expected": "The 'uaci_abtestperformanceHistory' table is updated with the latest contactCount, acceptCount, and UpdateDate."
+        }
+      ],
+      "expected_result": "Both tables are updated correctly by the ABTestPerformanceBatchJob.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "ABTestPerformanceBatchJob",
+      "requirement_ids": [
+        "DOC-23"
+      ],
+      "reference_keys": [
+        "HMI-T31832"
+      ],
+      "traceability": "DOC-23: The ABTestPerformanceBatchJob updates the 'uaci_abtestperformance' and 'uaci_abt",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_045"
+    },
+    {
+      "title": "Verify ABTestPerformanceCache reads and stores acceptance rates",
+      "objective": "Ensure that the ABTestPerformanceCache reads the database and stores acceptance rates for each branch.",
+      "preconditions": "<TBD: Setup required for ABTestPerformanceCache>",
+      "steps": [
+        {
+          "step": "Initialize the ABTestPerformanceCache.",
+          "test_data": "<TBD: Initialization method>",
+          "expected": "ABTestPerformanceCache is initialized successfully."
+        },
+        {
+          "step": "Check if the cache reads from the database.",
+          "test_data": "<TBD: Database query>",
+          "expected": "The cache reads acceptance rates from the database."
+        },
+        {
+          "step": "Verify the acceptance rates are stored in the cache.",
+          "test_data": "<TBD: Cache inspection method>",
+          "expected": "Acceptance rates for each branch are stored in the cache."
+        }
+      ],
+      "expected_result": "The cache reads and stores acceptance rates correctly.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "ABTestPerformanceCache",
+      "requirement_ids": [
+        "DOC-24"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "DOC-24: The ABTestPerformanceCache is a local cache for each runtime instance that reads",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_046"
+    },
+    {
+      "title": "Verify ABTestPerformanceCache syncs with database based on batch frequency",
+      "objective": "Ensure that the ABTestPerformanceCache is synced with the database based on the ABTestPerformanceBatch frequency.",
+      "preconditions": "<TBD: Setup required for ABTestPerformanceCache and batch frequency>",
+      "steps": [
+        {
+          "step": "Set the ABTestPerformanceBatch frequency.",
+          "test_data": "<TBD: Frequency setting method>",
+          "expected": "Batch frequency is set successfully."
+        },
+        {
+          "step": "Allow time for the batch job to run according to the set frequency.",
+          "test_data": "<TBD: Wait time>",
+          "expected": "Batch job runs as per the set frequency."
+        },
+        {
+          "step": "Verify the cache is updated with the latest data from the database.",
+          "test_data": "<TBD: Cache inspection method>",
+          "expected": "Cache is synced with the latest data from the database."
+        }
+      ],
+      "expected_result": "The cache is synced with the database based on the batch frequency.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "ABTestPerformanceCache",
+      "requirement_ids": [
+        "DOC-25"
+      ],
+      "reference_keys": [
+        "HMI-T31619"
+      ],
+      "traceability": "DOC-25: The cache will be synced with the database based on the ABTestPerformanceBatch f",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_047"
+    },
+    {
+      "title": "Verify fallback to random selection when all branches have 0 accepts",
+      "objective": "Ensure that when all branches have 0 accepts, the system falls back to random selection by percentage.",
+      "preconditions": "<TBD: Setup required for branches with 0 accepts>",
+      "steps": [
+        {
+          "step": "Simulate a scenario where all branches have 0 accepts.",
+          "test_data": "<TBD: Simulation method>",
+          "expected": "All branches are confirmed to have 0 accepts."
+        },
+        {
+          "step": "Trigger the selection process.",
+          "test_data": "<TBD: Selection trigger method>",
+          "expected": "Selection process is triggered."
+        },
+        {
+          "step": "Verify the selection falls back to random selection by percentage.",
+          "test_data": "<TBD: Selection verification method>",
+          "expected": "Random selection by percentage is applied."
+        }
+      ],
+      "expected_result": "The system correctly falls back to random selection by percentage when all branches have 0 accepts.",
+      "priority": "High",
+      "test_type": "Error handling",
+      "component": "Selection Process",
+      "requirement_ids": [
+        "DOC-26"
+      ],
+      "reference_keys": [
+        "HMI-T31652"
+      ],
+      "traceability": "DOC-26: If all branches have 0 accepts, fall back to random selection by percentage.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_048"
+    },
+    {
+      "title": "Verify branch selection when acceptance rates are tied",
+      "objective": "Ensure that when acceptance rates are tied, the branch with the higher configured percentage is selected. If still tied, the first branch is selected.",
+      "preconditions": "<TBD: Setup with multiple branches having tied acceptance rates>",
+      "steps": [
+        {
+          "step": "Simulate tied acceptance rates for multiple branches.",
+          "test_data": "<TBD: Acceptance rates and branch percentages>",
+          "expected": "Acceptance rates are tied for the branches."
+        },
+        {
+          "step": "Invoke the branch selection logic.",
+          "test_data": "",
+          "expected": "The branch with the higher configured percentage is selected."
+        },
+        {
+          "step": "If percentages are also tied, check the selected branch.",
+          "test_data": "",
+          "expected": "The first branch in the list is selected."
+        }
+      ],
+      "expected_result": "Branch selection follows the rule: higher percentage, then first in list if tied.",
+      "priority": "High",
+      "test_type": "Error handling",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-27"
+      ],
+      "reference_keys": [
+        "HMI-T18437"
+      ],
+      "traceability": "DOC-27: If there are tied acceptance rates, select the branch configured with a higher p",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_049"
+    },
+    {
+      "title": "Verify branch selection when the best branch becomes disabled or expired",
+      "objective": "Ensure that if the best branch becomes disabled or expired, the next best branch is selected from cache, or fallback to random if none available.",
+      "preconditions": "<TBD: Setup with a best branch that can be disabled or expired>",
+      "steps": [
+        {
+          "step": "Disable or expire the current best branch.",
+          "test_data": "<TBD: Best branch details>",
+          "expected": "The best branch is marked as disabled or expired."
+        },
+        {
+          "step": "Invoke the branch selection logic.",
+          "test_data": "",
+          "expected": "The system re-evaluates and selects the next best branch from cache."
+        },
+        {
+          "step": "If no other branches are available, check the selection.",
+          "test_data": "",
+          "expected": "Fallback to random selection among available branches."
+        }
+      ],
+      "expected_result": "Branch selection correctly handles disabled/expired best branch by re-evaluating or falling back to random.",
+      "priority": "High",
+      "test_type": "Error handling",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-28"
+      ],
+      "reference_keys": [
+        "HMI-T18424"
+      ],
+      "traceability": "DOC-28: If the best branch becomes disabled/expired, re-evaluate and select the next bes",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_050"
+    },
+    {
+      "title": "Verify validation prevents saving when Threshold is NULL for MAB mode",
+      "objective": "Ensure that the system prevents saving the configuration if the Threshold is NULL when MAB mode is selected.",
+      "preconditions": "<TBD: Setup with MAB mode selected>",
+      "steps": [
+        {
+          "step": "Set the Threshold value to NULL in the configuration.",
+          "test_data": "",
+          "expected": "Threshold value is set to NULL."
+        },
+        {
+          "step": "Attempt to save the configuration.",
+          "test_data": "",
+          "expected": "The system prevents saving and displays a validation error message."
+        }
+      ],
+      "expected_result": "Configuration cannot be saved with a NULL Threshold in MAB mode.",
+      "priority": "High",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-29"
+      ],
+      "reference_keys": [
+        "HMI-T18437"
+      ],
+      "traceability": "DOC-29: Validation prevents saving if Threshold is NULL for MAB mode.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_051"
+    },
+    {
+      "title": "Verify MinPercent = 0 is valid and results in 100% exploitation after threshold",
+      "objective": "Ensure that setting MinPercent to 0 is valid and results in 100% exploitation after the threshold is reached.",
+      "preconditions": "<TBD: Setup with MinPercent set to 0>",
+      "steps": [
+        {
+          "step": "Set MinPercent to 0 in the configuration.",
+          "test_data": "",
+          "expected": "MinPercent is set to 0."
+        },
+        {
+          "step": "Reach the configured threshold for presentations.",
+          "test_data": "<TBD: Threshold value>",
+          "expected": "Threshold is reached."
+        },
+        {
+          "step": "Invoke the branch selection logic.",
+          "test_data": "",
+          "expected": "100% of getOffers calls select the best-performing branch."
+        }
+      ],
+      "expected_result": "Setting MinPercent to 0 results in 100% exploitation after threshold.",
+      "priority": "High",
+      "test_type": "Validation",
+      "component": "Interact Runtime",
+      "requirement_ids": [
+        "DOC-30"
+      ],
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "traceability": "DOC-30: MinPercent = 0 is valid and means 100% exploitation after threshold (no explorat",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_052"
+    },
+    {
+      "title": "Verify MinPercent = 100 results in always random selection",
+      "objective": "To ensure that setting MinPercent to 100 results in random selection for all getOffers calls, effectively disabling the Multi-Armed Bandit logic.",
+      "preconditions": "<TBD: Setup A/B test with Multi-Armed Bandit mode>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' is selected."
+        },
+        {
+          "step": "Set Min Exploration % to 100.",
+          "test_data": "MinPercent = 100",
+          "expected": "Min Exploration % is set to 100."
+        },
+        {
+          "step": "Save the configuration.",
+          "test_data": "",
+          "expected": "Configuration is saved successfully."
+        },
+        {
+          "step": "Trigger multiple getOffers calls.",
+          "test_data": "",
+          "expected": "Offers are selected randomly according to the configured percentages for all calls."
+        }
+      ],
+      "expected_result": "All getOffers calls result in random selection, confirming that MinPercent = 100 disables MAB logic.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-31"
+      ],
+      "reference_keys": [
+        "HMI-T18424"
+      ],
+      "traceability": "DOC-31: MinPercent = 100 is valid and means always random selection (effectively no MAB)",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_053"
+    },
+    {
+      "title": "Verify single active branch selection",
+      "objective": "To ensure that if only one branch remains active, it is always selected regardless of the mode.",
+      "preconditions": "<TBD: Setup A/B test with multiple branches, then disable all but one>",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Test configuration panel.",
+          "test_data": "",
+          "expected": "A/B Test configuration panel is displayed."
+        },
+        {
+          "step": "Disable all branches except one.",
+          "test_data": "",
+          "expected": "Only one branch remains active."
+        },
+        {
+          "step": "Save the configuration.",
+          "test_data": "",
+          "expected": "Configuration is saved successfully."
+        },
+        {
+          "step": "Trigger a getOffers call.",
+          "test_data": "",
+          "expected": "The offer from the single active branch is selected."
+        }
+      ],
+      "expected_result": "The single active branch is always selected for offers.",
+      "priority": "High",
+      "test_type": "Error handling",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-32"
+      ],
+      "reference_keys": [
+        "HMI-T31638"
+      ],
+      "traceability": "DOC-32: If a single branch remains active, always select that branch regardless of mode.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_054"
+    },
+    {
+      "title": "Verify backward compatibility for existing AB tests",
+      "objective": "To ensure that existing AB tests with modes 0, 1, and 2 remain unaffected by the introduction of new columns.",
+      "preconditions": "<TBD: Setup existing AB tests with modes 0, 1, and 2>",
+      "steps": [
+        {
+          "step": "Access the database schema for existing AB tests.",
+          "test_data": "",
+          "expected": "Database schema is accessed."
+        },
+        {
+          "step": "Verify that new columns are nullable with NULL default.",
+          "test_data": "",
+          "expected": "New columns are confirmed to be nullable with NULL default."
+        },
+        {
+          "step": "Run existing AB tests with modes 0, 1, and 2.",
+          "test_data": "",
+          "expected": "Existing AB tests run without any issues."
+        }
+      ],
+      "expected_result": "Existing AB tests function correctly, confirming backward compatibility.",
+      "priority": "Normal",
+      "test_type": "Non-functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-33"
+      ],
+      "reference_keys": [
+        "HMI-T18438"
+      ],
+      "traceability": "DOC-33: Existing AB tests (mode 0,1,2) are backward compatible as new columns are nullab",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_055"
+    },
+    {
+      "title": "Verify old runtime reading new DB handles unknown columns",
+      "objective": "To ensure that the old runtime ignores unknown columns and safely falls back when encountering getModeFromValue(3).",
+      "preconditions": "<TBD: Setup old runtime environment with new database schema>",
+      "steps": [
+        {
+          "step": "Deploy the old runtime environment with the new database schema.",
+          "test_data": "",
+          "expected": "Old runtime environment is deployed with new schema."
+        },
+        {
+          "step": "Access the database with the old runtime.",
+          "test_data": "",
+          "expected": "Database is accessed without errors."
+        },
+        {
+          "step": "Verify that unknown columns are ignored.",
+          "test_data": "",
+          "expected": "Unknown columns are ignored by the old runtime."
+        },
+        {
+          "step": "Trigger a getModeFromValue(3) call.",
+          "test_data": "",
+          "expected": "Handler treats it as no AB test and safely falls back."
+        }
+      ],
+      "expected_result": "Old runtime safely ignores unknown columns and handles getModeFromValue(3) as no AB test.",
+      "priority": "Normal",
+      "test_type": "Non-functional",
+      "component": "InteractDT",
+      "requirement_ids": [
+        "DOC-34"
+      ],
+      "reference_keys": [
+        "HMI-T31628"
+      ],
+      "traceability": "DOC-34: Old runtime reading new DB ignores unknown columns; getModeFromValue(3) returns ",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_056"
+    },
+    {
+      "title": "Verify backward compatibility of deployment data format with optional new fields",
+      "objective": "Ensure that the deployment data format remains backward compatible when new fields are added as optional in the deployment XML.",
+      "preconditions": "<TBD: Deployment setup with existing XML format>",
+      "steps": [
+        {
+          "step": "Add new optional fields to the deployment XML for MAB configuration.",
+          "test_data": "<TBD: XML with new optional fields>",
+          "expected": "The XML is updated with new optional fields without errors."
+        },
+        {
+          "step": "Deploy the updated XML configuration.",
+          "test_data": "<TBD: Deployment command or process>",
+          "expected": "Deployment completes successfully without any errors."
+        },
+        {
+          "step": "Verify that the system functions correctly with the deployed configuration.",
+          "test_data": "<TBD: System functionality checks>",
+          "expected": "System operates as expected, indicating backward compatibility."
+        }
+      ],
+      "expected_result": "Deployment with new optional fields in XML should succeed without affecting existing functionality.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "Deployment",
+      "requirement_ids": [
+        "DOC-35"
+      ],
+      "reference_keys": [
+        "HMI-T21515",
+        "HMI-T21516"
+      ],
+      "traceability": "DOC-35: Deployment data format is backward compatible as new fields are optional in depl",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_057"
+    },
+    {
+      "title": "Verify API backward compatibility with optional new fields in REST/GraphQL",
+      "objective": "Ensure that the API remains backward compatible when new fields are added as optional in REST/GraphQL requests.",
+      "preconditions": "<TBD: API setup with existing endpoints>",
+      "steps": [
+        {
+          "step": "Invoke the API without including the new optional fields in the request.",
+          "test_data": "<TBD: API request without new fields>",
+          "expected": "API responds successfully without errors."
+        },
+        {
+          "step": "Invoke the API including the new optional fields in the request.",
+          "test_data": "<TBD: API request with new fields>",
+          "expected": "API responds successfully, processing the new fields correctly."
+        },
+        {
+          "step": "Verify that the API response is consistent with expected data structure and values.",
+          "test_data": "<TBD: Expected API response format>",
+          "expected": "API response matches expected format and values, indicating backward compatibility."
+        }
+      ],
+      "expected_result": "API should function correctly with or without the new optional fields, maintaining backward compatibility.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "API",
+      "requirement_ids": [
+        "DOC-36"
+      ],
+      "reference_keys": [
+        "HMI-T30163",
+        "HMI-T31989"
+      ],
+      "traceability": "DOC-36: API backward compatibility is maintained as new fields are optional in REST/Grap",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-401957_058"
+    }
+  ],
+  "requirements": [
+    {
+      "text": "Add a multi-armed bandit option to the A/B testing UI.",
+      "category": "Functional",
+      "evidence": "In addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-01",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_021"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Include a configuration setting for 'Threshold on total presentation of all the branches' in the A/B test UI.",
+      "category": "UI",
+      "evidence": "To do this, the below new configuration settings are added to A/B test UI\n\n# Threshold on total presentation of all the branches.",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-02",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_001"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Include a configuration setting for 'Minimum percentage (minPer) to be selected for random selection' in the A/B test UI.",
+      "category": "UI",
+      "evidence": "To do this, the below new configuration settings are added to A/B test UI\n\n# Minimum percentage (minPer) to be selected for for random selection.",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-03",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_002"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Branches are initially selected randomly based on the initial configured percentage.",
+      "category": "Functional",
+      "evidence": "Initially, the branches are selected randomly based on the initial configured percentage",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-04",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_024"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When the threshold is reached, random selection is applied in only minPercentage of the cases.",
+      "category": "Functional",
+      "evidence": "When the threshold is reached, the random selection is applied in only minPercentage of the cases",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-05",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_026"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When the threshold is reached, the branch with the highest acceptance rate is selected for the rest of the cases.",
+      "category": "Functional",
+      "evidence": "while the branch with the highest acceptance rate is selected for the rest.",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-06",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_027"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The best performant branch is dynamically evaluated based on recent data.",
+      "category": "Functional",
+      "evidence": "The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact & accept counts from the beginning.",
+      "priority": "High",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-07",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_028"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Enable A/B testing' toggle is present and can be switched on or off.",
+      "category": "UI",
+      "evidence": "visual: Enable A/B testing toggle",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-01",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_003"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'From date' field is present with a calendar icon.",
+      "category": "UI",
+      "evidence": "visual: From date field with calendar icon",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-02",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_004"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'To date' field is present with a calendar icon.",
+      "category": "UI",
+      "evidence": "visual: To date field with calendar icon",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-03",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_005"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Selection Mode' dropdown is present with 'Multi-Armed Bandit' selected.",
+      "category": "UI",
+      "evidence": "visual: Selection Mode dropdown with Multi-Armed Bandit",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-04",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_006"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Multi-Armed Bandit Configuration' section is expandable and shows 'Completed' status.",
+      "category": "UI",
+      "evidence": "visual: Multi-Armed Bandit Configuration section with Completed status",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-05",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_007"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Threshold' field is present with a value of 87.",
+      "category": "UI",
+      "evidence": "visual: Threshold field with value 87",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-06",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_008"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'MinPercent' field is present with a value of 80%.",
+      "category": "UI",
+      "evidence": "visual: MinPercent field with value 80%",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-07",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_009"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Re-evaluation In' field is present with a value of 1 and a dropdown for time units.",
+      "category": "UI",
+      "evidence": "visual: Re-evaluation In field with value 1 and dropdown",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-08",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_010"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Recent Transaction Weight' field is present with a value of 80%.",
+      "category": "UI",
+      "evidence": "visual: Recent Transaction Weight field with value 80%",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-09",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_011"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Branches' section is present with a message to add branches for comparison.",
+      "category": "UI",
+      "evidence": "visual: Branches section with message",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-10",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_012"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Branch' button is present and enabled.",
+      "category": "UI",
+      "evidence": "visual: + Branch button",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-11",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_013"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Cancel' button is present and enabled.",
+      "category": "UI",
+      "evidence": "visual: Cancel button",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-12",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_014"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Save' button is present and disabled.",
+      "category": "UI",
+      "evidence": "visual: Save button",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-13",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_015"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Branches' table header includes columns: Branch, Cell Code, Sampling %, Offer, Attributes, Default, Acceptance, State.",
+      "category": "UI",
+      "evidence": "visual: Branches table header",
+      "priority": "High",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-14",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_016"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Personalization Point' is displayed as 'Main Banner PP'.",
+      "category": "UI",
+      "evidence": "visual: Personalization Point: Main Banner PP",
+      "priority": "Normal",
+      "source": "UI screenshot ABT-MAB.png",
+      "source_type": "screenshot",
+      "id": "SCR-15",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-401957_017"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add MultiArmedBandit(3) to the ABTestSelectionMode enum.",
+      "category": "Functional",
+      "evidence": "Add MultiArmedBandit(3) to the ABTestSelectionMode enum.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-01",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_025"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Implement a Multi-Armed Bandit selection mode that explores all branches initially using configured percentages.",
+      "category": "Functional",
+      "evidence": "Explores all branches initially using configured percentages",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-02",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_029"
+      ],
+      "covered": true
+    },
+    {
+      "text": "After a presentation threshold is reached, the Multi-Armed Bandit mode shifts to exploiting the best-performing branch while maintaining a configurable exploration rate.",
+      "category": "Functional",
+      "evidence": "After a presentation threshold is reached, shifts to exploiting the best-performing branch while maintaining a configurable exploration rate",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-03",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_030"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The Multi-Armed Bandit mode dynamically re-evaluates the best branch based on recent acceptance rate data.",
+      "category": "Functional",
+      "evidence": "Dynamically re-evaluates the best branch based on recent acceptance rate data",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-04",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_031"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a new configuration parameter 'Threshold' of type INTEGER for total presentations across all branches before bandit logic activates.",
+      "category": "Data",
+      "evidence": "Threshold INTEGER Total presentations across all branches before bandit logic activates",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-05",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_032"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a new configuration parameter 'MinPercent' of type DOUBLE for the percentage of getOffers calls that continue random exploration after the threshold is reached.",
+      "category": "Data",
+      "evidence": "MinPercent DOUBLE Percentage of getOffers calls that continue random exploration after threshold is reached",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-06",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_033"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a new configuration parameter 'Re-evaluation Interval' of type INTEGER for the interval in hours for re-evaluating the best performing branch.",
+      "category": "Data",
+      "evidence": "Re-evaluation Interval INTEGER Interval in hours for re-evaluating the best performing branch",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-07",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_034"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a new configuration parameter 'Recent Transaction Weight' of type FLOAT for the weightage of recent transactions while calculating the acceptance rates.",
+      "category": "Data",
+      "evidence": "Recent Transaction Weight FLOAT Weightage of recent transactions while calculating the acceptance rates",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-08",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_035"
+      ],
+      "covered": true
+    },
+    {
+      "text": "In Phase 1 (Exploration), when totalPresentations < threshold, select branch randomly based on configured sample percentages.",
+      "category": "Functional",
+      "evidence": "Phase 1 (Exploration): totalPresentations < threshold → Select branch randomly based on configured sample percentages",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-09",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_036"
+      ],
+      "covered": true
+    },
+    {
+      "text": "In Phase 2 (Exploit + Explore), when totalPresentations >= threshold, with probability (minPercent / 100), select randomly per configured percentages.",
+      "category": "Functional",
+      "evidence": "Phase 2 (Exploit + Explore): totalPresentations >= threshold → With probability (minPercent / 100): select randomly per configured percentages",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-10",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_037"
+      ],
+      "covered": true
+    },
+    {
+      "text": "In Phase 2 (Exploit + Explore), when totalPresentations >= threshold, with probability (1 – (minPercent / 100)), select the branch with the highest recent acceptance rate.",
+      "category": "Functional",
+      "evidence": "Phase 2 (Exploit + Explore): totalPresentations >= threshold → With probability (1 – (minPercent / 100)): select the branch with highest recent acceptance rate",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-11",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_038"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The A/B Test configuration panel adds a 'Selection Mode' dropdown with a new option 'Multi-Armed Bandit'.",
+      "category": "UI",
+      "evidence": "The A/B Test configuration panel adds: - Selection Mode dropdown: new option 'Multi-Armed Bandit'",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-12",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_018"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show 'Threshold' as a numeric input with a minimum value of 1.",
+      "category": "UI",
+      "evidence": "When 'Multi-Armed Bandit' is selected, show: - Threshold — numeric input (min: 1)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-13",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_019"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show 'Min Exploration %' as a numeric input with a range of 0–100.",
+      "category": "UI",
+      "evidence": "When 'Multi-Armed Bandit' is selected, show: - Min Exploration % — numeric input (range: 0–100)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-14",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_020"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show 'Re-evaluation Interval'.",
+      "category": "UI",
+      "evidence": "When 'Multi-Armed Bandit' is selected, show: - Re-evaluation Interval",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-15",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_022"
+      ],
+      "covered": true
+    },
+    {
+      "text": "When 'Multi-Armed Bandit' is selected in the A/B Test configuration panel, show 'Recent Transactions Weight'.",
+      "category": "UI",
+      "evidence": "When 'Multi-Armed Bandit' is selected, show: - Recent Transactions Weight",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-16",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_023"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Create a new table 'uaci_abtestperformanceHistory' in the Interact runtime database to hold the last evaluation contactCount, acceptCount, and UpdateDate.",
+      "category": "Data",
+      "evidence": "A new table need to be created in Interact runtime database: uaci_abtestperformanceHistory - need to be created to hold the last evaluation contactCount, acceptCount and UpdateDate.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-17",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_039"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a new column 'acceptanceRate' to the 'uaci_abtestperformance' table to hold the calculated acceptance rates for each branch.",
+      "category": "Data",
+      "evidence": "A new column acceptanceRate need to be added to uaci_abtestperformance table to hold the calculated acceptance rates for each branch.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-18",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_040"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceBatchJob runs on a scheduled interval defined by ABTestPerformanceBatchIntervalInHours.",
+      "category": "Functional",
+      "evidence": "Runs on a scheduled interval (ABTestPerformanceBatchIntervalInHours)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-19",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_041"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceBatchJob uses 'uaci_tasklock' to ensure that only a single RT instance executes the batch.",
+      "category": "Functional",
+      "evidence": "Use uaci_tasklock to make sure that only a single RT instance executes the batch.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-20",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_042"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceBatchJob queries 'uaci_abtestperformance' for overall statistics and 'uaci_abtestperformanceHistory' for last evaluation statistics.",
+      "category": "Functional",
+      "evidence": "Queries uaci_abtestperformance for overall statistics and uaci_abtestperformanceHistory for last evaluation statistics.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-21",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_043"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceBatchJob computes acceptance rate per branch using the formula: acceptanceRate = weight x (acceptance rate in the last interval) + (1.0 - weight) x (acceptance rate before the last interval).",
+      "category": "Functional",
+      "evidence": "Computes acceptance rate per branch: acceptanceRate = weight x (acceptance rate in the last interval) + (1.0 - weight) x (acceptance rate before the last interval)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-22",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_044"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceBatchJob updates the 'uaci_abtestperformance' and 'uaci_abtestperformanceHistory' tables.",
+      "category": "Functional",
+      "evidence": "Update the uaci_abtestperformance and uaci_abtestperformanceHistory tables.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-23",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_045"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The ABTestPerformanceCache is a local cache for each runtime instance that reads the database and stores acceptance rates for each branch.",
+      "category": "Functional",
+      "evidence": "We shall have a local cache for each runtime instance that shall read the database and acceptance rates for each branch in cache for getOffers to refer.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-24",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_046"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The cache will be synced with the database based on the ABTestPerformanceBatch frequency.",
+      "category": "Functional",
+      "evidence": "The cache will be synced with the database based on the ABTestPerformanceBatch frequency.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-25",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_047"
+      ],
+      "covered": true
+    },
+    {
+      "text": "If all branches have 0 accepts, fall back to random selection by percentage.",
+      "category": "Error handling",
+      "evidence": "All branches have 0 accepts Fall back to random selection by percentage",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-26",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_048"
+      ],
+      "covered": true
+    },
+    {
+      "text": "If there are tied acceptance rates, select the branch configured with a higher percentage. If this is still a tie, select the first.",
+      "category": "Error handling",
+      "evidence": "Tied acceptance rates Select the branch configured with higher percentage. If this is still a tie, select the first.",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-27",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_049"
+      ],
+      "covered": true
+    },
+    {
+      "text": "If the best branch becomes disabled/expired, re-evaluate and select the next best from cache; if none available, fallback to random.",
+      "category": "Error handling",
+      "evidence": "Best branch becomes disabled/expired Re-evaluate; select next best from cache; if none available, fallback to random",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-28",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_050"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Validation prevents saving if Threshold is NULL for MAB mode.",
+      "category": "Validation",
+      "evidence": "Threshold = NULL for MAB mode Validation prevents save;",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-29",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_051"
+      ],
+      "covered": true
+    },
+    {
+      "text": "MinPercent = 0 is valid and means 100% exploitation after threshold (no exploration).",
+      "category": "Validation",
+      "evidence": "MinPercent = 0 Valid — means 100% exploitation after threshold (no exploration)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-30",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_052"
+      ],
+      "covered": true
+    },
+    {
+      "text": "MinPercent = 100 is valid and means always random selection (effectively no MAB).",
+      "category": "Validation",
+      "evidence": "MinPercent = 100 Valid — means always random selection (effectively no MAB)",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-31",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_053"
+      ],
+      "covered": true
+    },
+    {
+      "text": "If a single branch remains active, always select that branch regardless of mode.",
+      "category": "Error handling",
+      "evidence": "Single branch remaining active Always select that branch regardless of mode",
+      "priority": "High",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-32",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_054"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Existing AB tests (mode 0,1,2) are backward compatible as new columns are nullable with NULL default.",
+      "category": "Non-functional",
+      "evidence": "Existing AB tests (mode 0,1,2) New columns are nullable with NULL default; no impact",
+      "priority": "Normal",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-33",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_055"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Old runtime reading new DB ignores unknown columns; getModeFromValue(3) returns null and handler treats as no AB test (safe fallback).",
+      "category": "Non-functional",
+      "evidence": "Old runtime reading new DB Ignores unknown columns; getModeFromValue(3) returns null → handler treats as no AB test (safe fallback)",
+      "priority": "Normal",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-34",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_056"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Deployment data format is backward compatible as new fields are optional in deployment XML; old deployments remain valid.",
+      "category": "Non-functional",
+      "evidence": "Deployment data format New fields are optional in deployment XML; old deployments remain valid",
+      "priority": "Normal",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-35",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_057"
+      ],
+      "covered": true
+    },
+    {
+      "text": "API backward compatibility is maintained as new fields are optional in REST/GraphQL; omitting them is valid for non-MAB modes.",
+      "category": "Non-functional",
+      "evidence": "API backward compatibility New fields are optional in REST/GraphQL; omitting them is valid for non-MAB modes",
+      "priority": "Normal",
+      "source": "Design document MultiArmedBandit_ABTest_Design.pdf",
+      "source_type": "design_doc",
+      "id": "DOC-36",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_058"
+      ],
+      "covered": true
+    }
+  ],
+  "rejected_requirements": [],
+  "open_questions": [
+    "[Jira story HMA-401957] What is the logic for 'recent data' in evaluating the best performant branch?",
+    "[Design document MultiArmedBandit_ABTest_Design.pdf] Default value for the 'Threshold' parameter is not specified.",
+    "[Design document MultiArmedBandit_ABTest_Design.pdf] Exact error message for validation preventing save when Threshold is NULL is not specified.",
+    "What is the default value for the 'Threshold' setting?",
+    "What is the default value for the 'MinPercent' setting?",
+    "<TBD: Precondition details for accessing the A/B Testing configuration panel.>",
+    "<TBD: User logged into the system and navigated to the A/B Testing configuration page>",
+    "<TBD: Precondition details for accessing the A/B testing configuration panel>",
+    "What is the exact configuration process for setting up the Multi-Armed Bandit mode in the system?",
+    "What specific data or setup is required to simulate reaching the threshold in the A/B test?",
+    "What are the exact steps to verify the dynamic evaluation of the best performant branch based on recent data?",
+    "<TBD: Setup with Multi-Armed Bandit mode enabled and branches configured with specific percentages>",
+    "<TBD: Branch configuration with specific percentages>",
+    "<TBD: Number of calls>",
+    "<TBD: Setup with Multi-Armed Bandit mode enabled, threshold set, and branches configured>",
+    "<TBD: Branch configuration and threshold value>",
+    "<TBD: Number of calls to reach threshold>",
+    "<TBD: Setup with Multi-Armed Bandit mode enabled and branches configured>",
+    "<TBD: Acceptance rate changes>",
+    "<TBD: Access method>",
+    "<TBD: Valid integer value>",
+    "<TBD: System setup with access to A/B Test configuration UI>",
+    "<TBD: Sample percentages and threshold>",
+    "<TBD: Setup with totalPresentations >= threshold and configured minPercent>",
+    "<TBD: Setup with totalPresentations >= threshold and known acceptance rates>",
+    "<TBD: Database access>",
+    "<TBD: ABTestPerformanceBatchIntervalInHours configuration>",
+    "<TBD: Multiple RT instances setup>",
+    "<TBD: Database setup with necessary tables>",
+    "<TBD: Acceptance rate computation setup>",
+    "<TBD: Setup required for ABTestPerformanceBatchJob>",
+    "<TBD: Trigger method for ABTestPerformanceBatchJob>",
+    "<TBD: Database query for checking table updates>",
+    "<TBD: Setup required for ABTestPerformanceCache>",
+    "<TBD: Initialization method for ABTestPerformanceCache>",
+    "<TBD: Cache inspection method>",
+    "<TBD: Setup required for ABTestPerformanceCache and batch frequency>",
+    "<TBD: Frequency setting method>",
+    "<TBD: Wait time for batch job>",
+    "<TBD: Setup required for branches with 0 accepts>",
+    "<TBD: Simulation method for branches with 0 accepts>",
+    "<TBD: Selection trigger method>",
+    "<TBD: Selection verification method>",
+    "<TBD: Setup with multiple branches having tied acceptance rates>",
+    "<TBD: Setup with a best branch that can be disabled or expired>",
+    "<TBD: Setup with MAB mode selected>",
+    "<TBD: Setup with MinPercent set to 0>",
+    "<TBD: Acceptance rates and branch percentages>",
+    "<TBD: Best branch details>",
+    "<TBD: Threshold value>",
+    "<TBD: Setup A/B test with Multi-Armed Bandit mode>",
+    "<TBD: Setup A/B test with multiple branches, then disable all but one>",
+    "<TBD: Setup existing AB tests with modes 0, 1, and 2>",
+    "<TBD: Setup old runtime environment with new database schema>",
+    "<TBD: Deployment setup with existing XML format>",
+    "<TBD: XML with new optional fields>",
+    "<TBD: Deployment command or process>",
+    "<TBD: System functionality checks>",
+    "<TBD: API setup with existing endpoints>",
+    "<TBD: API request without new fields>",
+    "<TBD: API request with new fields>",
+    "<TBD: Expected API response format>"
+  ],
+  "references": [
+    {
+      "key": "HMI-T31652",
+      "title": "ABTesting_Perf_MultipleBranchesCanBeAdded",
+      "product": "INTERACT",
+      "score": 0.6275,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "1. Click on AB testing Tab\n2. Check the enable check box specify the Effective and expiration dates \nand from the selection Mode select Auto Mode\n3.Click on Add branch multiple times and observe",
+      "test_data": "",
+      "expected_result": "Vertical Scroll should be present and multiple branches should be added",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18413",
+      "title": "TC_DT_ABTesting_TestPerid_004",
+      "product": "INTERACT",
+      "score": 0.6129,
+      "objective": "On A/B testing tab once a Check box Enable A/B testing will be enable for \nthat Rule",
+      "precondition": "",
+      "steps": "1. Create a IC\n 2. Go to Strategy tab of IC\n 3. Add a Strategy\n 4. Add a rule\n 5. Open Advance option of Rule\n 6. Go to A/B Testing tab\n Validate Expected Result a\n7. After Enabling ABT then User can select dates\n8. User can add Branch and make changes and Save it",
+      "test_data": "",
+      "expected_result": "a. By default Enable Check will be disable.\nb Until unless User select Enable Check box A/B testing will not be Enable.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "Covered",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18449",
+      "title": "TC_DT_ABTesting_TestPeriod_Validation_040",
+      "product": "INTERACT",
+      "score": 0.6096,
+      "objective": "On A/B testing Tab validate that for 'Time period' To date should not be \nless then From date",
+      "precondition": "",
+      "steps": "On A/B testing Tab validate that for 'Test period' To date should not be \nless then From date",
+      "test_data": "",
+      "expected_result": "User should not allow to select Expiration date less then Effective data.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T19304",
+      "title": "TC_DT_ABTesting_ABT_Filter_Rule_Edit_Enable_With_Disable_Branches_105",
+      "product": "INTERACT",
+      "score": 0.6084,
+      "objective": "Disable Branches should not display with ABT filter.",
+      "precondition": "",
+      "steps": "1. Add 5  rules to Strategy\n2. for 2 Rules Enable ABT\n3. Enable ABT\n3. Add 3 Branches and add Sampling% as 60 20 20\n3. Add Expression to some of Offer Attributes\n4. Save details\n5. Save Rule\n6. In Rule Edit window\n7. Select \"Show A/B testing rules only\" check box\n8. Expand to see Branches details\n9. Add new branch with sampling % 20 and disable it\n10. Save Rule\n11. Select ABT filter and expand dropdown arrow to check Branches.",
+      "test_data": "",
+      "expected_result": "Disabled Branch should not display.",
+      "priority": "High",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31629",
+      "title": "To check and verify the offer from default branch is served when the date is expired and selection mode is Default Branch selection",
+      "product": "INTERACT",
+      "score": 0.5958,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Expected is, default branch should be used\nOffer should be returned from default branch only.\nAcceptance rate should still be displayed even user select \"Default Branch\"",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31630",
+      "title": "To verify that, Acceptance Rate column when user clicks on the link without posting response on RT",
+      "product": "INTERACT",
+      "score": 0.5582,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "1. Add ABT to a Rule with multiple branch having different offers.\nLet say, Rule1 is having offerA\nRule having 2 branch with offers: Branch1/OfferB & Branch2/OfferC\n2. Set test period with effective date & expiration date. i.e. 1 june 2020\n- 15 June 2020\n3.Select \"Auto Selection\" from drop down \"Selection Mode\"\n4. Deploy IC\n5. Goto runtime\n6. Do startSession, getOffer and PostEvent (Contact and then Accept) using\ntreatment code. Post event using offer code as well.\n7. Now while in ABT test period, use same offer i.e. OfferA, OfferB &\nOfferC in Flex offer and deploy OM\n8. Goto runtime\n9. Do startSession with passing OM parameter -> getOffer -> PostEvent\n(Contact and then Accept) using treatment code. Post event using offer code\nas well.\n10. Observe for the acceptance rate.",
+      "test_data": "",
+      "expected_result": "When no data is posted then No data message is displayed and when contact \nis posted then 0.00% should be displayed",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31585",
+      "title": "UI -To verify that, percent sign is displayed next to the acceptance rate.",
+      "product": "INTERACT",
+      "score": 0.5576,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "Check for UI in AB Test",
+      "test_data": "",
+      "expected_result": "% Sign should be displayed next to acceptance rate",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18462",
+      "title": "TC_RT_ABTesting_GetOffer_With_ABT_052",
+      "product": "INTERACT",
+      "score": 0.557,
+      "objective": "Create A/B Testing with 2 Branches one with 60% and 40% sampling for a Rule \nand Deploy the IC on RT Call GetOffer for Diff CustomerIDs and Observe \nOffer returned",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add multiple rules\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Add  multiple branches with Diff Offers.\n8. for one of Rule add two branches in total and add 60% and 40% for \nsampling %.\n9. Deploy IC\n10. On RT do StartSession and GetOffer\n11. Test with Multiple Rule where for Some Rule ABT is Enable.\nOn RT UACIABTestBranchName will display for those Rule for which ABT is \nEnable",
+      "test_data": "",
+      "expected_result": "For Same CustomerID User will get Diff Offer but mostly with 60% Sampling%.\n\nUser will get UACIABTestBranchName parameter if Abt is Enable for a Rule.\n\nOffer parameters: \nName \tType \tDate value \tString value \tNumeric value\nAttr_Date \tdatetime \t05/05/2020 00:00:00 \t  \t \nAttr_Num \tnumeric \t  \t  \t1.0\nAttr_Select \tstring \t  \tJass \t \nAttr_Str \tstring \t  \tGuru \t \nRTSelectionMethod \tnumeric \t  \t  \t0.0\nScoreInDouble \tnumeric \t  \t  \t50.0\nUACIABTestBranchName \tstring \t  \tBranch15 Default \t \nUACICellCode \tstring \t  \tA000000020 \t \nUACIInteractionPointID \tnumeric \t  \t  \t3.0\nUACIInteractionPointName \tstring \t  \tip1 \t \nUACIOfferID \tnumeric \t  \t  \t30.0\nUACISegmentID \tnumeric \t  \t  \t4.0\nUACIZoneID \tnumeric \t  \t  \t5.0",
+      "priority": "High",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18447",
+      "title": "TC_DT_ABTesting_Sampling_Sum_Validation_038",
+      "product": "INTERACT",
+      "score": 0.5516,
+      "objective": "Verify that the total count for % under Sample row should not extend the \ncount of 100 a validation is present in case",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add 3 to 4 Branches with require details\n9. Set 50 40 30 Sampling%\n10. Click on Apply Changes\n11. Also test with 50 30 10\n\nAlso Test with Disable Branch in Sampling Sum Disable Branch Sampling% \ncount should not Consider.",
+      "test_data": "",
+      "expected_result": "User should Get Waring \"Sum of all enabled branch's sample percent should \nbe equal to 100.\"",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "Covered",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31605",
+      "title": "Verify Enable A/B Testing toggle",
+      "product": "INTERACT",
+      "score": 0.5509,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "1.Navigate to A/B Testing section\n2.Toggle Enable A/B Testing ON",
+      "test_data": "",
+      "expected_result": "1.Branch grid becomes active\n2.+Branch button enabled",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18438",
+      "title": "TC_DT_ABTesting_Many_Branches_029",
+      "product": "INTERACT",
+      "score": 0.5485,
+      "objective": "Test with 10 Branch's in a Rule with diff Sampling %",
+      "precondition": "",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18446",
+      "title": "TC_DT_ABTesting_Validation_Sampling%_037",
+      "product": "INTERACT",
+      "score": 0.547,
+      "objective": "Verify that the Sample column can have only numeric values (Validation \npresent for String , negative , decimal values etc..)",
+      "precondition": "",
+      "steps": "Verify that the Sampling%  column can have only numeric  values (Validation \npresent for String , negative  values etc..) in a Branch\n\nTest on all Browser.",
+      "test_data": "",
+      "expected_result": "Values appart from Number it should added on Samplign% field.",
+      "priority": "High",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31626",
+      "title": "To check and verify the offer with highest acceptance rate is displayed when the date is expired and selection mode is Auto selection",
+      "product": "INTERACT",
+      "score": 0.5444,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Auto selection - After end date - Offer with highest acceptance rate should \nbe displayed",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18580",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_Disable_Branch012",
+      "product": "INTERACT",
+      "score": 0.5397,
+      "objective": "Disable Branch should not consider in Sampling Count",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 5 Branches out of 5 Branches disable 2 Branch\n9. Give Sampling % as 60 20 20 for enable Branches and add 10 10 value for \nDisable branches.\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab validate expected result 1\n13. Enable one of Disable Branch validate expected result 2",
+      "test_data": "",
+      "expected_result": "1. ABT Sampling % should be save\n2. User will get Warning Message\nSum of all enabled branch's sample percent should be equal to 100.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31638",
+      "title": "Verify that disable branch will not consider offers from A/B Test",
+      "product": "INTERACT",
+      "score": 0.5378,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "1. Go to advance option for Rules and Enable ABT\n2. Add 3 Branches\n3. Give Sampling % as 60, 40, 80\n4. Disable Branch with 80%\n5. Save Rules and Deploy IC",
+      "test_data": "",
+      "expected_result": "1. Check on Deployment page Disable branch info should not display.\n2. On RT GetOffer Call Disable branch should not consider.\n3. Validate in UACI_ABTestBranch table Enable Column should set to 0.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18418",
+      "title": "TC_DT_ABTesting_Sampling_Value_009",
+      "product": "INTERACT",
+      "score": 0.5304,
+      "objective": "Verify that clicking on arrow Sampling% value can be decreases and increase",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. After clicking on 'Add Branch' link a new Branch will be added\n9. On Branch user can do in line edit for Sampling and can Increase or \nDecrease Sampling value using arrow.\n10. Value can't set more then 100 and -ve alue.",
+      "test_data": "",
+      "expected_result": "User can change Sampeling value",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31621",
+      "title": "Verify Acceptance Rate for inactive branch",
+      "product": "INTERACT",
+      "score": 0.5258,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Branch State = OFF",
+      "test_data": "",
+      "expected_result": "Acceptance Rate not updated\nValue remains unchanged or shown as “–”",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18421",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_012",
+      "product": "INTERACT",
+      "score": 0.525,
+      "objective": "User should able to change Sampling % and total of Sampling will be 100",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 3 Branches\n9. Give Sampling % as 60 20 20\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab\n13. Change Sampling value of 3rd Branch to 10, User should get Warning\n14 Change Sampling value of 3rd Branch to 30, User should get Warning",
+      "test_data": "",
+      "expected_result": "1. Sampling values entered should get updated.\n2. User should get Warning message\nSum of all enabled branch's sample percent should be equal to 100.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T22165",
+      "title": "HMA-329421 - Interact ABT - Verify that System shows correct number of branches on summary page in edit mode, when ABT is having more than one branch and in-progress",
+      "product": "INTERACT",
+      "score": 0.5216,
+      "objective": "HMA-329421 - Interact ABT - Verify that System shows correct number of \nbranches on summary page in edit mode, when ABT is having more than one \nbranch and in-progress",
+      "precondition": "",
+      "steps": "1. Add ABT in any of rule of strategy\n2. Add multiple branches in ABT\n3. Set date so that it shows status as \"In-progress\"\n4. Save and go to summary page in edit mode\n5. Check for the number of branches on the screen",
+      "test_data": "",
+      "expected_result": "System should show same number of branches on summary page in edit mode as \nnumber of branches in ABT and when it's in in-progress status.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31586",
+      "title": "UI - Verify visual differentiation of Default branch",
+      "product": "INTERACT",
+      "score": 0.5205,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "Check for UI in AB Test",
+      "test_data": "",
+      "expected_result": "Default branch clearly highlighted",
+      "priority": "Low",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18412",
+      "title": "TC_DT_ABTesting_Tab_Details_003",
+      "product": "INTERACT",
+      "score": 0.5175,
+      "objective": "Verify that on Advance option A/B testing Tab below thing should display:\n\n2. Segment Name\n3. Zone name\n4. Check box for Enable: which should be uncheck by default\n5. Test Period\n\nAlso a table for branches and a 'Add Branch' button",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\nVerify below details on A/B testing tab\na. By default Enable is un-selected check box and user can't select Test \nPeriod and add Branch\nb.Enable check box\ne. Test Period will be enable and 'Add Branch' option should display.\nf. Table with Branches with below fields\nBranch name\nCell Code\nSampling%\nOffer\nOffer Attribute\nEnable with Check box\nDefault Branch with radio button",
+      "test_data": "",
+      "expected_result": "Mention detail should present\n1. Without Enabling ABT user will not able to add Test Period and add new \nBranch.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "Covered",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18466",
+      "title": "TC_RT_ABTesting_MAXSCORE_Multiple_Offer_to Same_Segment_056",
+      "product": "INTERACT",
+      "score": 0.5159,
+      "objective": "Add multiple rules to a Strategy and in one of Rule Add A/B testing with \nmultiple Branch add 'Set rule to highest priority' to Rule without A/B \ntesting and Suppression Count as 1, Deploy IC, On RT it should return Offer \nfrom A/B test",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add multiple rules\n5. For one of Rule Add Offer to Same Segment and Zone\n6. Enable ABT to one of Rule win in Same Segment and 2 Branches\n7. Also enable Suppression Count to 2 and Highest Priority Enable\n8. Deploy IC\n9. Also test with setting Suppression count 1",
+      "test_data": "",
+      "expected_result": "1. on RT for GetOffer it will return 2 Offer One from  Rule and other one \nis from ABT\n2. On Multiple GetOffer call user will get diff Offer from Branch as per \nSampling%.\n3. With Suppression count 1 only offer from ABT will display.",
+      "priority": "High",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31632",
+      "title": "To verify that, it does not show perfomance information i.e. acceptRate when auto selection ON but effective date is future date",
+      "product": "INTERACT",
+      "score": 0.5127,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "1. ABT status should be Yet-To-Start\n2. Performance information i.e. acceptance rate should not be displayed\nbefore passed the effective date though Auto Selection is ON",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T18437",
+      "title": "TC_DT_ABTesting_Unique_Branch_Name_028",
+      "product": "INTERACT",
+      "score": 0.5083,
+      "objective": "Validate that Branch name should be Unique.",
+      "precondition": "",
+      "steps": "1. For a Rule go to ABT tab\n   2. Enable ABT\n   3. Add 2 Branches\n   4. For Brach 1 change Branch name as 'Branch1' with Sampling% 50\n   5. For Brach 2 change Branch name as 'Branch2' with Sampling% 50\n   6. Click on Apply changes\n   7. Click on Save Rule\n   8. Again go to ABT tab\n   9. Add new Branch change branch name to Branch 2 with Sampling% 10\n  10. Change Sampling% for old Branch2 to 40 \n  11. Click on 'Apply changes'\n  12. A Error message will display click on ok validate expected result 1.\n  13. Delete new Branch2 and change Sampling% of old Branch2 to 50\n  14. Click on 'Apply changes'\n  15. On Rule List Click on Save button\n\n\nAlso validate Case Sensitive  Branch name, Branch name is case Sensative",
+      "test_data": "",
+      "expected_result": "1. User should get Waring Message \"Branch Name should be unique.\"\n2.  Rules should save.",
+      "priority": "High",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31631",
+      "title": "To verify that, correct acceptance rate is displayed for the offer belong to that particular branch even though the same offer is being used in base rule, flex offer.",
+      "product": "INTERACT",
+      "score": 0.5053,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "It should display acceptance rate of the offer which was used in ABT\nagainst the treatment code and offer code.\nIt should not mix the accept count of the offer which was made for flex\noffers.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31622",
+      "title": "Verify Acceptance Rate API response structure",
+      "product": "INTERACT",
+      "score": 0.5023,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Capture A/B Test metrics API response",
+      "test_data": "",
+      "expected_result": "API contains acceptance rate per branch\nBranch ID mapping correct",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31830",
+      "title": "Verify Distribution Across Variants with Sampling",
+      "product": "INTERACT",
+      "score": 0.4931,
+      "objective": "Ensure sampled users are evenly distributed across variants - Sampling \n<100% with multiple variants",
+      "precondition": "",
+      "steps": "Add 4 branches with sampling = 10",
+      "test_data": "sampling = 10 for each branch",
+      "expected_result": "Sampled users split according to variant ratios with each branch 25%",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T21494",
+      "title": "Tc_OfferList_RT_ABT_Auto_Selection_33",
+      "product": "INTERACT",
+      "score": 0.4929,
+      "objective": "Validate Static/Dynamic OL with ABT Enable and Selection Mode is \"Auto \nSelection\"",
+      "precondition": "",
+      "steps": "Validate Static/Dynamic OL with ABT Enable and Selection Mode is \"Auto \nSelection\"",
+      "test_data": "",
+      "expected_result": "1. On RT User will get Offer from Branch\n2. Once ABT time period is over user will get Offer for branch whose \nAcceptance rate will be highiest",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1.1/RTP Test cases/Support of Offer List in RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31832",
+      "title": "Verify update of sampling and check on RT",
+      "product": "INTERACT",
+      "score": 0.4758,
+      "objective": "After updating the sampling offer should be served as per samplings",
+      "precondition": "Existing sampling of branches\n1 - 10\n2 - 5\n3 - 20\n4 - 15",
+      "steps": "update sampling of branches\n1 - 15\n2 - 10\n3 - 5\n4 - 20",
+      "test_data": "",
+      "expected_result": "On RT after update the offers should be served as per updated sampling",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T19295",
+      "title": "TC_DT_ABTesting_ABT_Filter_Rule_Edit_Enable_Validate_Details_96",
+      "product": "INTERACT",
+      "score": 0.4644,
+      "objective": "With ABT Filter enable validate detail on UI",
+      "precondition": "",
+      "steps": "1. Add 5  rules to Strategy\n2. for 2 Rules Enable ABT\n3. Enable ABT\n3. Add 3 Branches and add Sampling% as 60 20 20\n3. Add Expression to some of Offer Attributes\n4. Save details\n5. Save Rule\n6. In Rule Edit window\n7. Select \"Show A/B testing rules only\" check box\nValidate details\n\n8. Test Expand and collapse of Branches.",
+      "test_data": "",
+      "expected_result": "1. Only 2 Rules should display\n2. Also a down arrow will be present and on clicking on it all branches \nwill be display\n3. For Branch Offer name will display along with Sampling% like Offername \n(45%)\n4. In Offer Attributes column it will display count for Attributes with \nExpression e.g 4 Attributes\n5 Also if Expression apply to Base Rule then it's count also display for \nBase rule 'Offer Attributes' column.\n5. In Default Branch column  a tick mark in a check will be display for \nDefault branch.\n\nUser should able to expand and Collapse the branches.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "Manual",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18414",
+      "title": "TC_DT_ABTesting_Default_Branch_005",
+      "product": "INTERACT",
+      "score": 0.4614,
+      "objective": "After Enabling A/B testing for a Rule On A/B test tab in Branch table there \nwill be default row is added having default 100% Sampling and Default \nBranch is selected and Enabled checkbox will be selected.",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Click 3 dots on rule and select A/B option",
+      "test_data": "",
+      "expected_result": ". After Selecting Enable Checkbox Default branch will be auto populate with \nbelow details\na. Branch Name: will be auto populated with Rule_name_Timestamp\nb. Cell Code: Auto populate or New Cell Code can also be generate\nc. Sampling% will 100%\nd. Offer name will be base Rule's offer\ne. Offer's Attributes will be pre-populate\ng. Default Branch radio button will be selected",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "Covered",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18424",
+      "title": "TC_DT_ABTesting_Enable/Disable_Branches_015",
+      "product": "INTERACT",
+      "score": 0.4512,
+      "objective": "For A/B testing with multiple Branch user can Enable/Disable branches",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add 3 to 4 Branches\n9. Click on Disable Check box for a Branch\nValidate same in UACI_ABTestBranch table Branch value should be set to 0 \nfor Disable branch.",
+      "test_data": "",
+      "expected_result": "1. Branch can be Enable or disable using check box and same should be \nupdated in table UACI_ABTestBranch.\n2. Validate Active branches count on Summary page.\n3. On Runtime Disable branch should not consider.\n4. Also Disable branch Sampling% should not consider in Sum.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T18415",
+      "title": "TC_DT_ABTesting_New_Branch_Details_006",
+      "product": "INTERACT",
+      "score": 0.4506,
+      "objective": "On A/B testing Tab on clicking on 'Add Branch' link a new branch will be \nadded and validate details\nDefault Branch name should be rule__Name_TimeStamp",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5.Click  3 dots on rule and select A/B option\n7.  On ABT tab select check-box Enable, Default branch will be auto \npopulate with below name\nBranch Name: Rule_Name_TimeStamp\n8. After clicking on 'Add Branch' link a new Branch will be added below to \nDefault one.",
+      "test_data": "",
+      "expected_result": "For new branch validate below details:\n1. Branch Name: Rule_Name_TimeStamo\n2. Cell Code will be same as of default one.\n3.  Sampling% will be 0.\n4. Offer will be same as of Default one.\n5. Offer Attributes will display as per selected.\n5. Enabled: Should be checked\n6. Default Branch open should not be selected",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING"
+      ]
+    },
+    {
+      "key": "HMI-T31651",
+      "title": "To verify that, test period and name of branch along with it's sampling rate and offer assigned is displayed on Runtime Deployment page.",
+      "product": "INTERACT",
+      "score": 0.4426,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "1. Click on AB testing Tab\n2. Set test period\n3. Set selection mode\n4. Add few branch with same/different offers and sampling rate\n5. Click on apply changes\n6. Mark strategy for deployment\n7. Deploy IC\n8. Observe the runtime page for your IC",
+      "test_data": "",
+      "expected_result": "Should display test period and name of branch along with it's sampling rate \nand offer assigned on Runtime Deployment page for your IC",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31619",
+      "title": "Verify Acceptance Rate updates dynamically",
+      "product": "INTERACT",
+      "score": 0.4422,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Execute additional transactions\nRefresh grid",
+      "test_data": "",
+      "expected_result": "Acceptance Rate updates based on latest data",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T29101",
+      "title": "Verify value of percent vs Last month value from Acceptance Rate section is displayed correctly for default 7 days timeframe",
+      "product": "INTERACT",
+      "score": 0.4327,
+      "objective": "Rolling time",
+      "precondition": "",
+      "steps": "1. Login to Unica Application & navigate to menu - Interact> Real-time \nPersonalization\n2. Click on Reports icon",
+      "test_data": "",
+      "expected_result": "1) The Total percent value should be calculated as per the required logic",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Reports",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T29102",
+      "title": "Verify value of percent vs Last month value from Acceptance Rate section is displayed correctly as per selected Timeframe",
+      "product": "INTERACT",
+      "score": 0.4257,
+      "objective": "Last 7 Days\nLast 4 weeks\nLast 3 months\nLast 6 months",
+      "precondition": "",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "1. The Total percent value should be calculated correctly based on \ntimeframe and displayed accordingly\n2. The label Vs should be displayed after Percent value",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Reports",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T28697",
+      "title": "1007_Till When_Check and verify field From date from Eligibility >> Effective During  - From Eligibility",
+      "product": "INTERACT",
+      "score": 0.4213,
+      "objective": "Check and verify field From date from Eligibility >> Effective During \n- From Eligibility",
+      "precondition": "",
+      "steps": "1) Login to RTP\n2) Go to Webdomains\n3) Open existing Web domain or Create New\n4) Edit Webpage/ Add Webpage\n5) Click on info (i) icon and Till When\n6) Click on 'ADD ELIGIBILITY' button and Expand Effective During section \nand check Event pattern and Trigger Event section",
+      "test_data": "",
+      "expected_result": "1) The label should be From date\n2) User should be able to select date using calendar\n3) Field should be non-mandatory\n4) The eligibility should be applicable from 'From date' if it is saved\n5) Cross icon should be displayed and after clicking selected date should \nbe cleared",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Till_When",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T28698",
+      "title": "1008_Till When_Check and verify field To date from Eligibility >> Effective During  - From Eligibility",
+      "product": "INTERACT",
+      "score": 0.4189,
+      "objective": "Check and verify field To date from Eligibility >> Effective During - From \nEligibility",
+      "precondition": "",
+      "steps": "1) Login to RTP\n2) Go to Webdomains\n3) Open existing Web domain or Create New\n4) Edit Webpage/ Add Webpage\n5) Click on info icon and Till When\n6) Click on 'ADD ELIGIBILITY' button and Expand Effective During section \nand check 'To date' field",
+      "test_data": "",
+      "expected_result": "1) The label should be To date\n2) User should be able to select date using calemdar\n3) Field should be non-mandatory\n4) The eligibility should be applicable till To date if it is saved",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Till_When",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T29536",
+      "title": "Verify value of percent vs Last month value from Acceptance Rate section is displayed correctly as per selected Timeframe (cloned)",
+      "product": "INTERACT",
+      "score": 0.4142,
+      "objective": "Last 7 Days\nLast 4 weeks\nLast 3 months\nLast 6 months",
+      "precondition": "",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "1. The Total percent value should be calculated correctly based on \ntimeframe and displayed accordingly\n2. The label Vs should be displayed after Percent value",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/PVT_RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T28724",
+      "title": "1034_Till When_Check and verify field To date from Eligibility >> Effective During  - From Suppression",
+      "product": "INTERACT",
+      "score": 0.4058,
+      "objective": "Check and verify field To date from Eligibility >> Effective During - From \nSuppression",
+      "precondition": "",
+      "steps": "1) Login to RTP\n2) Go to Webdomains\n3) Open existing Web domain or Create New\n4) Edit Webpage/ Add Webpage\n5) Click on info icon and Till When\n6) Click on Suppression and Expand Effective During section and check To \ndate field",
+      "test_data": "",
+      "expected_result": "1) The label should be To date\n2) User should be able to select date using calemdar\n3) Field should be non-mandatory\n4) The eligibility should be applicable till To date if it is saved",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Till_When",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T28723",
+      "title": "1033_Till When_Check and verify field From date from Eligibility >> Effective During  - From Suppression",
+      "product": "INTERACT",
+      "score": 0.4055,
+      "objective": "Check and verify field From date from Eligibility >> Effective During \n- From Suppression",
+      "precondition": "",
+      "steps": "1) Login to RTP\n2) Go to Webdomains\n3) Open existing Web domain or Create New\n4) Edit Webpage/ Add Webpage\n5) Click on info icon and Till When\n6) Click on Suppression and Expand Effective During section and check From \ndate field",
+      "test_data": "",
+      "expected_result": "1) The label should be From date\n2) User should be able to select date using calendar\n3) Field should be non-mandatory\n4) The eligibility should be applicable from From date if it is saved",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Till_When",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31628",
+      "title": "To verify that, base rule is used irrespective of performance rate, if user select \"Use Base\" from drop down \"Selection Mode\"",
+      "product": "INTERACT",
+      "score": 0.3957,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Expected is, offer should be returned from base rule and not from any\nbranch.\nAcceptance rate should still be displayed even user select \"Use Base\"",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T29685",
+      "title": "Statistics_1013_Verify the total count for Statistics  details for  Offers",
+      "product": "INTERACT",
+      "score": 0.3953,
+      "objective": "Statistics_1013_Verify the total count for Statistics details for Offers",
+      "precondition": "",
+      "steps": "1) Login to unica\n2) Go to Home\n3) Click on Customize Dashboard and select Statistics report and check \nstatistics of Offers",
+      "test_data": "",
+      "expected_result": "System should display total count of Active & Inactive Offers under \nStatistics details",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/Superset Report_RTP/Statistics",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T30604",
+      "title": "Verify only numeric fields are  be accepted for both fields",
+      "product": "INTERACT",
+      "score": 0.3941,
+      "objective": "Verify only numeric fields are be accepted for both fields",
+      "precondition": "",
+      "steps": "Login to Unica\nNavigate to settings\nGo to Interact Node\nNavigate to mentioned \npath:Affinium|interact|partitions|partition1|RTPConnector|RateLimiter\nClick on Rate limiter\nProvide othe than numeric value",
+      "test_data": "",
+      "expected_result": "RT should be down",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/Rate_limiter_RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T21515",
+      "title": "Tc_OfferList_RT_DeploymentPage_Valadation_54",
+      "product": "INTERACT",
+      "score": 0.3492,
+      "objective": "Validate that After deployment of IC with Dynamic OL and for OA Expression \nis added for few OA.\n\nOn Deployment page in Rules there will “Parameterized offer attributes” \ncolumn which will only show OA for which expression is add",
+      "precondition": "",
+      "steps": "Validate that After deployment of IC with Dynamic OL and for OA Expression \nis added for few OA.\n\nOn Deployment page in Rules there will “Parameterized offer attributes” \ncolumn which will only show OA for which expression is add",
+      "test_data": "",
+      "expected_result": "",
+      "priority": "Normal",
+      "severity": "medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1.1/RTP Test cases/Support of Offer List in RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T21516",
+      "title": "Tc_OfferList_RT_Deploymet_Page_Valdation_OL_55",
+      "product": "INTERACT",
+      "score": 0.3386,
+      "objective": "Validate that After deployment of IC with Static OL and for OA Expression \nis added for few OA.\n\nOn Deployment page in Rules there will “Parameterized offer attributes” \ncolumn which will only show OA for which expression is add",
+      "precondition": "",
+      "steps": "Validate that After deployment of IC with Static OL and for OA Expression \nis added for few OA.\n\nOn Deployment page in Rules there will “Parameterized offer attributes” \ncolumn which will only show OA for which expression is add",
+      "test_data": "",
+      "expected_result": "",
+      "priority": "Normal",
+      "severity": "medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1.1/RTP Test cases/Support of Offer List in RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T21391",
+      "title": "Tc_OfferList_Deployment_Page66",
+      "product": "INTERACT",
+      "score": 0.3121,
+      "objective": "Validate that on Deployment page In Stratgey Sestion Offer type column is \nadded in Smart Rules table with value as Offer/Offer List",
+      "precondition": "",
+      "steps": "Validate that on Deployment page In Strategy section Offer type column is \nadded in Smart Rules table with value as Offer/Offer List",
+      "test_data": "",
+      "expected_result": "",
+      "priority": "Normal",
+      "severity": "medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1.1/RTP Test cases/Support of Offer List in RTP",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T30163",
+      "title": "Verify the valid format -",
+      "product": "INTERACT",
+      "score": 0.2971,
+      "objective": "Verify the supported format - A new placeholder for profile attribute can \nbe added in the creative definition like shown below:\n${profile.name}/${profile.SALARY}",
+      "precondition": "",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "With valid format deployment should be done without error and on RT the \nresprctive attribute value should be displayed",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/TC_HMA-377320:RTP: supporting Profile attributes for personalization",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    },
+    {
+      "key": "HMI-T31989",
+      "title": "Prevent deployment without mandatory configs",
+      "product": "INTERACT",
+      "score": 0.2903,
+      "objective": "Prevent deployment without mandatory configs",
+      "precondition": "",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Error listing missing items; no deployment",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Mobile_testing_New",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "type": "jira",
+      "id": "HMA-401957",
+      "title": "Basic Multi-armed Bandit option for A/B testing",
+      "url": "https://hclsw-jirafederal.atlassian.net/browse/HMA-401957"
+    },
+    {
+      "type": "screenshot",
+      "id": "ABT-MAB.png"
+    },
+    {
+      "type": "design_doc",
+      "id": "MultiArmedBandit_ABTest_Design.pdf",
+      "chars": 10329
+    }
+  ],
+  "warnings": [],
+  "requirement_preview": "## Jira story HMA-401957\nSummary: Basic Multi-armed Bandit option for A/B testing\nType: Story | Status: In Development\nComponents: - | Labels: -\nDescription / Acceptance criteria:\nIn addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit ([https://en.wikipedia.org/wiki/Multi-armed_bandit|https://en.wikipedia.org/wiki/Multi-armed_bandit|smart-link] ) as a move towards integrating more AI capability, even though we only implement the basic case.\n\nTo do this, the below new configuration settings are added to A/B test UI\n\n# Threshold on total presentation of all the branches.\n# Minimum percentage (minPer) to be selected for for random selection.\n\nThis is how it works\n\n# Initially, the branches are selected randomly based on the initial configured percentage\n# When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest. For example, if minPer=10, random selection is applied in 10% of the getOffers call, and the best performant branch is selected in 90% of the cases.\n# The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact & accept counts from the beginning. The logic for “recent data“ is to be decided.\n\n## UI screenshot ABT-MAB.png\n(UI screenshot attached - analyse only what is visible)\n\n## Design document MultiArmedBandit_ABTest_Design.pdf\nClassification: Internal \nDesign Document: Multi-Armed Bandit Selection \nMode for A/B Testing \nField Value \nFeature Multi-Armed Bandit (MAB) Selection Mode for \nAB Testing \nVersion Unica Interact 26.2 \nDate June 2026 \nStatus Draft \nComponents InteractDT (Design Time), RTP \n(RealTimePersonalization), Interact Runtime \n \n \n1. Overview \n \nA multi-armed bandit (MAB) is a dynamic testing method that continuously shifts traffic toward \nthe best-performing variation. Unlike traditional A/B testing, it prioritizes maximizing \nconversions over strict statistical significance. It automatically reduces traffic to poor \nperformers, saving revenue while the test is running. \n \nMAB algorithms balance two goals simultaneously:  \n• Exploration: Randomly testing all variations to gather data and find the best one. \n• Exploitation: Directing most of your traffic to the variation with the highest proven \nsuccess rate. \n \n \n1.1 Background \nThe existing A/B Testing feature in Unica Interact supports three selection modes: \n \nMode Value Description \nUseDefault 0 When threshold reached, use \nthe configured default branch \n \nClassification: Internal \nMode Value Description \nAutoSelect 1 System automatically selects \nthe best-performing branch \nUseBase 2 Use the base/control branch \n \nThese modes provide static or semi-static branch selection. To move towards AI-driven \ndecisioning, we introduce a Multi-Armed Bandit approach that dynamically balances \nexploration (trying all branches) and exploitation (favouring the best performer). \n1.2 Objective \nImplement a basic Multi-Armed Bandit (Epsilon-Greedy variant) selection mode that: \n \n- Explores all branches initially using configured percentages \n- After a presentation threshold is reached, shifts to exploiting the best-performing branch \nwhile maintaining a configurable exploration rate \n- Dynamically re-evaluates the best branch based on recent acceptance rate data \n \n \n2. Functional Requirements \n2.1 New Selection Mode \nAdd MultiArmedBandit(3) to the ABTestSelectionMode enum. \n2.2 New Configuration Parameters (per AB Test) \nParameter Type Description Range \nThreshold INTEGER Total presentations \nacross all branches \nbefore bandit logic \nactivates \nDefault: ? \nMinPercent DOUBLE Percentage of \ngetOffers calls that \ncontinue random \nexploration after \nthreshold is reached \n0-100 \n \nClassification: Internal \nParameter Type Description Range \nRe-evaluation \nInterval \nINTEGER Interval in hours for \nre-evaluating the best \nperforming branch \nMinimum 1 hour. \nRecent \nTransaction \nWeight \nFLOAT Weightage of recent \ntransactions while \ncalculating the \nacceptance rates  \nDecimal value \nbetween 0 and 1. \n2.3 Behavior \n\u0000Phase 1 (Exploration): totalPresentations < threshold \n  → Select branch randomly based on configured sample percentages \n \nPhase 2 (Exploit + Explore): totalPresentations >= threshold \n  → With probability (minPercent / 100): select randomly per configured percentages \n  → With probability (1 – (minPercent / 100)): select the branch with highest recent \nacceptance rate \n\u00002.4 Example \n- 3 branches configured with percentages 40%, 35%, 25% \n- Threshold = 500, MinPercent = 10 \n- For first 500 presentations:  \n- random selection (40/35/25 distribution) \n- After 500 total presentations: \n- 10% of getOffers calls → random selection (40/35/25 distribution) \n- 90% of getOffers calls → best-performing branch selected \n \n \n \nClassification: Internal \n3. Design Time / RTP Changes \n3.1 Database Schema Changes \n3.1.1 ALTER TABLE — UACI_ABTest \nColumn Type Nullable Default Description \nOtherSetting\ns \nText YES NULL JSON formatted \nsettings for AB Test \nlevel. \nFor MAB, we would \nstore Threshold, \nMinPercent, Re-\nevaluation \nInterval, Recent \nTransaction \nWeight \n \n \n\u0000ALTER TABLE UACI_ABTest ADD (OtherSettings VARCHAR2(1000) DEFAULT NULL); \n\u0000 \nNote: DDL scripts must be added/updated for all supported databases: Oracle, \nDB2, SQL Server, PostgreSQL, MariaDB, Informix. \n \n\u00003.2 UI Changes \nThe A/B Test configuration panel adds: \n \n- Selection Mode dropdown: new option \"Multi-Armed Bandit\" \n- When \"Multi-Armed Bandit\" is selected, show: \n- Threshold — numeric input (min: 1) \n- Min Exploration % — numeric input (range: 0–100) \n- Re-evaluation Interval  \n- Recent Transactions Weight \n \n \n \nClassification: Internal \n4. Runtime Changes \n \nDatabase Schema Changes \n \nA new table need to be created in Interact runtime database: \nuaci_abtestperforma",
+  "stats": {
+    "requirements": 58,
+    "covered": 58,
+    "test_cases": 58,
+    "with_tbd": 46
+  }
+}

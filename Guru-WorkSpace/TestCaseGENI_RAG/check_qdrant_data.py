@@ -1,0 +1,301 @@
+#!/usr/bin/env python3
+"""
+Query and inspect Qdrant database for ingested test cases.
+Run: python3 check_qdrant_data.py [command] [options]
+"""
+
+from qdrant_client import QdrantClient
+from qdrant_client.models import PointStruct
+import json
+import sys
+from typing import Optional
+from dotenv import load_dotenv
+import os
+
+load_dotenv('.env')
+
+QDRANT_URL = os.getenv('QDRANT_URL', 'http://localhost:6333')
+COLLECTION_NAME = 'jira_test_cases_all'
+
+def get_client():
+    """Initialize Qdrant client"""
+    return QdrantClient(QDRANT_URL, api_key=os.getenv('QDRANT_API_KEY') or None, check_compatibility=False)
+
+def collection_stats():
+    """Show collection statistics"""
+    client = get_client()
+    
+    try:
+        info = client.get_collection(COLLECTION_NAME)
+        print(f"\n{'='*60}")
+        print(f"QDRANT COLLECTION: {COLLECTION_NAME}")
+        print(f"{'='*60}")
+        print(f"✓ Total Points: {info.points_count}")
+        print(f"✓ Vector Dimension: {info.config.params.vectors.size}")
+        print(f"✓ Distance Metric: {info.config.params.vectors.distance}")
+        print(f"✓ Status: {info.status}")
+        print(f"{'='*60}\n")
+        return info.points_count
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return 0
+
+def list_products():
+    """List all unique products in the database"""
+    client = get_client()
+    
+    try:
+        # Scroll through all points and extract unique products
+        points, _ = client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=10000,
+            with_payload=True,
+        )
+        
+        products = set()
+        for point in points:
+            if hasattr(point, 'payload') and point.payload:
+                if 'product' in point.payload:
+                    products.add(point.payload['product'])
+        
+        print(f"\n{'='*60}")
+        print("PRODUCTS IN DATABASE")
+        print(f"{'='*60}")
+        for product in sorted(products):
+            # Count points per product
+            count = sum(1 for p in points if hasattr(p, 'payload') and p.payload.get('product') == product)
+            print(f"  {product:<15} : {count:>4} test cases")
+        print(f"{'='*60}\n")
+        
+    except Exception as e:
+        print(f"✗ Error: {e}")
+
+def list_by_product(product: str):
+    """List all test cases for a specific product"""
+    client = get_client()
+    
+    try:
+        points, _ = client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=10000,
+            with_payload=True,
+        )
+        
+        filtered = [p for p in points 
+                   if hasattr(p, 'payload') and p.payload.get('product') == product.upper()]
+        
+        print(f"\n{'='*60}")
+        print(f"TEST CASES IN PRODUCT: {product.upper()}")
+        print(f"{'='*60}")
+        print(f"Total: {len(filtered)} test cases\n")
+        
+        for i, point in enumerate(filtered[:20], 1):  # Show first 20
+            payload = point.payload if hasattr(point, 'payload') else {}
+            key = payload.get('key', 'N/A')
+            summary = payload.get('summary', 'N/A')[:50]
+            component = payload.get('metadata', {}).get('component', 'N/A') if isinstance(payload.get('metadata'), dict) else 'N/A'
+            print(f"{i:2d}. [{key}] {summary:<50} | {component}")
+        
+        if len(filtered) > 20:
+            print(f"\n... and {len(filtered) - 20} more")
+        
+        print(f"{'='*60}\n")
+        
+    except Exception as e:
+        print(f"✗ Error: {e}")
+
+def show_point(point_id: int):
+    """Show detailed information about a specific point"""
+    client = get_client()
+    
+    try:
+        point = client.get_point(
+            collection_name=COLLECTION_NAME,
+            point_id=point_id,
+            with_payload=True,
+            with_vectors=False
+        )
+        
+        print(f"\n{'='*60}")
+        print(f"POINT ID: {point_id}")
+        print(f"{'='*60}")
+        
+        if point.payload:
+            for key, value in point.payload.items():
+                if key == 'content':
+                    print(f"\n{key}:")
+                    print(f"  {str(value)[:200]}...")
+                elif key == 'metadata' and isinstance(value, dict):
+                    print(f"\n{key}:")
+                    for mk, mv in value.items():
+                        print(f"  {mk}: {mv}")
+                else:
+                    print(f"{key}: {value}")
+        
+        print(f"{'='*60}\n")
+        
+    except Exception as e:
+        print(f"✗ Error: {e}")
+
+def search_by_keyword(keyword: str, limit: int = 5):
+    """Search for test cases by keyword (approximate - uses text in payload)"""
+    client = get_client()
+    
+    try:
+        points, _ = client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=10000,
+            with_payload=True,
+        )
+        
+        # Simple text search in content and summary
+        matches = []
+        for point in points:
+            payload = point.payload if hasattr(point, 'payload') else {}
+            content = str(payload.get('content', '')).lower()
+            summary = str(payload.get('summary', '')).lower()
+            
+            if keyword.lower() in content or keyword.lower() in summary:
+                matches.append((point.id, payload))
+        
+        print(f"\n{'='*60}")
+        print(f"SEARCH RESULTS FOR: '{keyword}'")
+        print(f"{'='*60}")
+        print(f"Found: {len(matches)} matches\n")
+        
+        for i, (point_id, payload) in enumerate(matches[:limit], 1):
+            key = payload.get('key', 'N/A')
+            summary = payload.get('summary', 'N/A')[:60]
+            product = payload.get('product', 'N/A')
+            print(f"{i}. [{product}] {key}: {summary}")
+            print(f"   Point ID: {point_id}\n")
+        
+        if len(matches) > limit:
+            print(f"... and {len(matches) - limit} more matches")
+        
+        print(f"{'='*60}\n")
+        
+    except Exception as e:
+        print(f"✗ Error: {e}")
+
+def export_by_product(product: str, output_file: Optional[str] = None):
+    """Export all test cases for a product to JSON"""
+    client = get_client()
+    
+    if output_file is None:
+        output_file = f"test_cases_{product.upper()}_export.json"
+    
+    try:
+        points, _ = client.scroll(
+            collection_name=COLLECTION_NAME,
+            limit=10000,
+            with_payload=True,
+        )
+        
+        filtered = [
+            {
+                'id': p.id,
+                'payload': p.payload if hasattr(p, 'payload') else {}
+            }
+            for p in points 
+            if hasattr(p, 'payload') and p.payload.get('product') == product.upper()
+        ]
+        
+        with open(output_file, 'w') as f:
+            json.dump(filtered, f, indent=2, default=str)
+        
+        print(f"\n{'='*60}")
+        print(f"✓ EXPORT COMPLETE")
+        print(f"{'='*60}")
+        print(f"Product: {product.upper()}")
+        print(f"Test Cases: {len(filtered)}")
+        print(f"Output File: {output_file}")
+        print(f"{'='*60}\n")
+        
+    except Exception as e:
+        print(f"✗ Error: {e}")
+
+def health_check():
+    """Check Qdrant connection and basic health"""
+    try:
+        client = get_client()
+        collections = client.get_collections()
+        
+        print(f"\n{'='*60}")
+        print("QDRANT HEALTH CHECK")
+        print(f"{'='*60}")
+        print(f"✓ Connected to: {QDRANT_URL}")
+        print(f"✓ Total Collections: {len(collections.collections)}")
+        
+        for coll in collections.collections:
+            print(f"  • {coll.name} ({coll.points_count} points)")
+        
+        print(f"{'='*60}\n")
+        return True
+        
+    except Exception as e:
+        print(f"✗ Connection Failed: {e}")
+        return False
+
+def main():
+    """Main CLI handler"""
+    
+    if len(sys.argv) < 2:
+        print("""
+QDRANT DATA INSPECTION TOOL
+Usage: python3 check_qdrant_data.py [command] [options]
+
+COMMANDS:
+  health              - Check Qdrant connection
+  stats               - Show collection statistics
+  products            - List all products and their counts
+  by-product <PROD>   - List test cases for a product
+  search <KEYWORD>    - Search for test cases by keyword
+  point <ID>          - Show detailed info for a point
+  export <PROD>       - Export all test cases for a product to JSON
+
+EXAMPLES:
+  python3 check_qdrant_data.py health
+  python3 check_qdrant_data.py stats
+  python3 check_qdrant_data.py products
+  python3 check_qdrant_data.py by-product HMI
+  python3 check_qdrant_data.py search "A/B testing"
+  python3 check_qdrant_data.py point 1
+  python3 check_qdrant_data.py export HMI
+        """)
+        return
+    
+    command = sys.argv[1].lower()
+    
+    if command == 'health':
+        health_check()
+    elif command == 'stats':
+        collection_stats()
+    elif command == 'products':
+        list_products()
+    elif command == 'by-product':
+        if len(sys.argv) < 3:
+            print("Usage: python3 check_qdrant_data.py by-product <PRODUCT>")
+            return
+        list_by_product(sys.argv[2])
+    elif command == 'search':
+        if len(sys.argv) < 3:
+            print("Usage: python3 check_qdrant_data.py search <KEYWORD>")
+            return
+        keyword = ' '.join(sys.argv[2:])
+        search_by_keyword(keyword)
+    elif command == 'point':
+        if len(sys.argv) < 3:
+            print("Usage: python3 check_qdrant_data.py point <POINT_ID>")
+            return
+        show_point(int(sys.argv[2]))
+    elif command == 'export':
+        if len(sys.argv) < 3:
+            print("Usage: python3 check_qdrant_data.py export <PRODUCT>")
+            return
+        export_by_product(sys.argv[2])
+    else:
+        print(f"Unknown command: {command}")
+
+if __name__ == '__main__':
+    main()

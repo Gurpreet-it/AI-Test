@@ -1,0 +1,1584 @@
+{
+  "test_cases": [
+    {
+      "title": "TC_MAB_Selection_Mode_Configuration",
+      "objective": "Verify Multi-Armed Bandit selection mode can be configured.",
+      "preconditions": "A/B Testing feature is enabled.",
+      "steps": [
+        {
+          "step": "Navigate to A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the selection mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is selected."
+        }
+      ],
+      "expected_result": "Multi-Armed Bandit selection mode is configured successfully.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.1 New Selection Mode",
+      "reference_keys": [
+        "HMI-T18580"
+      ],
+      "tc_id": "TC_HMA-401957_001"
+    },
+    {
+      "title": "TC_MAB_Threshold_Validation",
+      "objective": "Validate that the threshold value is enforced correctly.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a threshold value less than 1.",
+          "test_data": "0",
+          "expected": "Validation error is displayed."
+        },
+        {
+          "step": "Enter a valid threshold value.",
+          "test_data": "100",
+          "expected": "Threshold value is accepted."
+        }
+      ],
+      "expected_result": "Threshold value must be greater than or equal to 1.",
+      "priority": "Normal",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_002"
+    },
+    {
+      "title": "TC_MAB_MinPercent_Validation",
+      "objective": "Ensure MinPercent value is within valid range.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a MinPercent value less than 0.",
+          "test_data": "-5",
+          "expected": "Validation error is displayed."
+        },
+        {
+          "step": "Enter a MinPercent value greater than 100.",
+          "test_data": "105",
+          "expected": "Validation error is displayed."
+        }
+      ],
+      "expected_result": "MinPercent value must be between 0 and 100.",
+      "priority": "Normal",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_003"
+    },
+    {
+      "title": "TC_MAB_Reevaluation_Interval_Setting",
+      "objective": "Verify re-evaluation interval can be set correctly.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Set re-evaluation interval to a value less than 1 hour.",
+          "test_data": "0.5",
+          "expected": "Validation error is displayed."
+        },
+        {
+          "step": "Set re-evaluation interval to a valid value.",
+          "test_data": "2",
+          "expected": "Re-evaluation interval is accepted."
+        }
+      ],
+      "expected_result": "Re-evaluation interval must be at least 1 hour.",
+      "priority": "Normal",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "tc_id": "TC_HMA-401957_004"
+    },
+    {
+      "title": "TC_MAB_Recent_Transaction_Weight_Validation",
+      "objective": "Ensure Recent Transaction Weight is within valid range.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a Recent Transaction Weight value less than 0.",
+          "test_data": "-0.1",
+          "expected": "Validation error is displayed."
+        },
+        {
+          "step": "Enter a Recent Transaction Weight value greater than 1.",
+          "test_data": "1.1",
+          "expected": "Validation error is displayed."
+        }
+      ],
+      "expected_result": "Recent Transaction Weight must be between 0 and 1.",
+      "priority": "Normal",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_005"
+    },
+    {
+      "title": "TC_MAB_Exploration_Phase_Behavior",
+      "objective": "Verify random selection during exploration phase.",
+      "preconditions": "Multi-Armed Bandit mode is selected and threshold not reached.",
+      "steps": [
+        {
+          "step": "Simulate getOffers call below threshold.",
+          "test_data": "",
+          "expected": "Branches are selected randomly based on configured percentages."
+        }
+      ],
+      "expected_result": "Random selection is applied as per configuration.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_006"
+    },
+    {
+      "title": "TC_MAB_Exploit_Explore_Phase_Behavior",
+      "objective": "Verify selection behavior after threshold is reached.",
+      "preconditions": "Multi-Armed Bandit mode is selected and threshold reached.",
+      "steps": [
+        {
+          "step": "Simulate getOffers call above threshold.",
+          "test_data": "",
+          "expected": "Branches are selected based on minPercent and highest acceptance rate."
+        }
+      ],
+      "expected_result": "Selection behavior shifts according to exploit and explore logic.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_007"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Identification",
+      "objective": "Verify correct identification of the best-performing branch.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Simulate different acceptance rates for branches.",
+          "test_data": "",
+          "expected": "Branch with highest acceptance rate is identified as best."
+        }
+      ],
+      "expected_result": "Correct branch is identified as best-performing.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_008"
+    },
+    {
+      "title": "TC_MAB_Dynamic_Reevaluation",
+      "objective": "Verify dynamic re-evaluation of the best branch.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Change acceptance pattern.",
+          "test_data": "",
+          "expected": "Cache update reflects new best branch."
+        }
+      ],
+      "expected_result": "Dynamic re-evaluation correctly identifies new best branch.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_009"
+    },
+    {
+      "title": "TC_MAB_Lookback_Window_Validation",
+      "objective": "Verify exclusion of old data from acceptance rate calculation.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Simulate acceptance rate calculation with old data.",
+          "test_data": "",
+          "expected": "Old data is excluded from acceptance rate calculation."
+        }
+      ],
+      "expected_result": "Acceptance rate calculation excludes old data.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_010"
+    },
+    {
+      "title": "TC_MAB_UI_Threshold_Input",
+      "objective": "Verify UI input field for threshold accepts valid values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a valid threshold value in the UI.",
+          "test_data": "100",
+          "expected": "Threshold value is accepted and displayed correctly."
+        }
+      ],
+      "expected_result": "UI accepts and displays valid threshold values.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_011"
+    },
+    {
+      "title": "TC_MAB_UI_MinPercent_Input",
+      "objective": "Verify UI input field for MinPercent accepts valid values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a valid MinPercent value in the UI.",
+          "test_data": "20",
+          "expected": "MinPercent value is accepted and displayed correctly."
+        }
+      ],
+      "expected_result": "UI accepts and displays valid MinPercent values.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_012"
+    },
+    {
+      "title": "TC_MAB_UI_Reevaluation_Interval_Input",
+      "objective": "Verify UI input field for re-evaluation interval accepts valid values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a valid re-evaluation interval in the UI.",
+          "test_data": "2",
+          "expected": "Re-evaluation interval is accepted and displayed correctly."
+        }
+      ],
+      "expected_result": "UI accepts and displays valid re-evaluation interval values.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_013"
+    },
+    {
+      "title": "TC_MAB_UI_Recent_Transaction_Weight_Input",
+      "objective": "Verify UI input field for Recent Transaction Weight accepts valid values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a valid Recent Transaction Weight in the UI.",
+          "test_data": "0.7",
+          "expected": "Recent Transaction Weight is accepted and displayed correctly."
+        }
+      ],
+      "expected_result": "UI accepts and displays valid Recent Transaction Weight values.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_014"
+    },
+    {
+      "title": "TC_MAB_Single_Branch_Active",
+      "objective": "Verify behavior when only one branch is active.",
+      "preconditions": "Multi-Armed Bandit mode is selected with a single active branch.",
+      "steps": [
+        {
+          "step": "Deactivate all but one branch.",
+          "test_data": "",
+          "expected": "Only the active branch is selected regardless of mode."
+        }
+      ],
+      "expected_result": "Single active branch is selected consistently.",
+      "priority": "Low",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_015"
+    },
+    {
+      "title": "TC_MAB_Tied_Acceptance_Rates",
+      "objective": "Verify behavior when branches have tied acceptance rates.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Simulate tied acceptance rates for branches.",
+          "test_data": "",
+          "expected": "Branch with higher configured percentage is selected."
+        }
+      ],
+      "expected_result": "Branch with higher configured percentage is selected in case of tie.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_016"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Disabled",
+      "objective": "Verify behavior when the best branch becomes disabled.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Disable the branch identified as best.",
+          "test_data": "",
+          "expected": "Next best branch is selected from cache."
+        }
+      ],
+      "expected_result": "Next best branch is selected when best branch is disabled.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_017"
+    },
+    {
+      "title": "TC_MAB_Threshold_Null_Validation",
+      "objective": "Ensure threshold cannot be null in MAB mode.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Attempt to save configuration with null threshold.",
+          "test_data": "",
+          "expected": "Validation prevents saving configuration."
+        }
+      ],
+      "expected_result": "Threshold cannot be null in Multi-Armed Bandit mode.",
+      "priority": "Normal",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_018"
+    },
+    {
+      "title": "TC_MAB_MinPercent_Zero_Validation",
+      "objective": "Verify behavior when MinPercent is set to zero.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Set MinPercent to 0.",
+          "test_data": "",
+          "expected": "100% exploitation occurs after threshold."
+        }
+      ],
+      "expected_result": "Setting MinPercent to 0 results in 100% exploitation.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_019"
+    },
+    {
+      "title": "TC_MAB_Selection_Mode_Activation",
+      "objective": "Verify that the Multi-Armed Bandit selection mode can be activated in the A/B testing configuration.",
+      "preconditions": "A/B testing feature is enabled.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' from the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is selected."
+        }
+      ],
+      "expected_result": "Multi-Armed Bandit mode is activated without errors.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.1 New Selection Mode",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_020"
+    },
+    {
+      "title": "TC_MAB_Threshold_Input_Validation",
+      "objective": "Ensure that the threshold input accepts only valid integer values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a negative number in the Threshold input field.",
+          "test_data": "-10",
+          "expected": "Error message displayed: 'Threshold must be a positive integer.'"
+        },
+        {
+          "step": "Enter a non-integer value in the Threshold input field.",
+          "test_data": "5.5",
+          "expected": "Error message displayed: 'Threshold must be a positive integer.'"
+        }
+      ],
+      "expected_result": "Threshold input accepts only positive integers.",
+      "priority": "Normal",
+      "test_type": "Negative",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_021"
+    },
+    {
+      "title": "TC_MAB_MinPercent_Input_Validation",
+      "objective": "Ensure that the MinPercent input accepts only valid percentage values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a value greater than 100 in the MinPercent input field.",
+          "test_data": "110",
+          "expected": "Error message displayed: 'MinPercent must be between 0 and 100.'"
+        },
+        {
+          "step": "Enter a negative value in the MinPercent input field.",
+          "test_data": "-5",
+          "expected": "Error message displayed: 'MinPercent must be between 0 and 100.'"
+        }
+      ],
+      "expected_result": "MinPercent input accepts only values between 0 and 100.",
+      "priority": "Normal",
+      "test_type": "Negative",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_022"
+    },
+    {
+      "title": "TC_MAB_Reevaluation_Interval_Input_Validation",
+      "objective": "Ensure that the Re-evaluation Interval input accepts only valid integer values.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a value less than 1 in the Re-evaluation Interval input field.",
+          "test_data": "0",
+          "expected": "Error message displayed: 'Re-evaluation Interval must be at least 1 hour.'"
+        },
+        {
+          "step": "Enter a non-integer value in the Re-evaluation Interval input field.",
+          "test_data": "1.5",
+          "expected": "Error message displayed: 'Re-evaluation Interval must be an integer.'"
+        }
+      ],
+      "expected_result": "Re-evaluation Interval input accepts only positive integers.",
+      "priority": "Normal",
+      "test_type": "Negative",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_023"
+    },
+    {
+      "title": "TC_MAB_Recent_Transaction_Weight_Input_Validation",
+      "objective": "Ensure that the Recent Transaction Weight input accepts only valid decimal values between 0 and 1.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Enter a value greater than 1 in the Recent Transaction Weight input field.",
+          "test_data": "1.5",
+          "expected": "Error message displayed: 'Recent Transaction Weight must be between 0 and 1.'"
+        },
+        {
+          "step": "Enter a negative value in the Recent Transaction Weight input field.",
+          "test_data": "-0.2",
+          "expected": "Error message displayed: 'Recent Transaction Weight must be between 0 and 1.'"
+        }
+      ],
+      "expected_result": "Recent Transaction Weight input accepts only values between 0 and 1.",
+      "priority": "Normal",
+      "test_type": "Negative",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_024"
+    },
+    {
+      "title": "TC_MAB_Threshold_Boundary_Transition",
+      "objective": "Verify the transition from exploration to exploitation phase at the threshold boundary.",
+      "preconditions": "Multi-Armed Bandit mode is active with a threshold set.",
+      "steps": [
+        {
+          "step": "Simulate getOffers calls until the total presentations reach just below the threshold.",
+          "test_data": "",
+          "expected": "Random selection is applied."
+        },
+        {
+          "step": "Simulate one more getOffers call to reach the threshold.",
+          "test_data": "",
+          "expected": "Transition to exploitation phase occurs."
+        }
+      ],
+      "expected_result": "Transition to exploitation phase occurs exactly at the threshold.",
+      "priority": "High",
+      "test_type": "Boundary",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_025"
+    },
+    {
+      "title": "TC_MAB_Epsilon_Exploration_Rate",
+      "objective": "Verify that the epsilon exploration rate is maintained during the exploitation phase.",
+      "preconditions": "Multi-Armed Bandit mode is active with a set MinPercent.",
+      "steps": [
+        {
+          "step": "Simulate multiple getOffers calls after reaching the threshold.",
+          "test_data": "",
+          "expected": "Approximately MinPercent% of calls are random."
+        }
+      ],
+      "expected_result": "Exploration rate is maintained as per MinPercent configuration.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_026"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Dynamic_Selection",
+      "objective": "Verify that the best-performing branch is dynamically selected based on recent data.",
+      "preconditions": "Multi-Armed Bandit mode is active with recent transaction weight set.",
+      "steps": [
+        {
+          "step": "Simulate varying acceptance rates for branches over time.",
+          "test_data": "",
+          "expected": "Best-performing branch is dynamically selected based on recent data."
+        }
+      ],
+      "expected_result": "Dynamic selection of best-performing branch occurs correctly.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_027"
+    },
+    {
+      "title": "TC_MAB_Recent_Data_Exclusion",
+      "objective": "Ensure that old data is excluded from acceptance rate calculation.",
+      "preconditions": "Multi-Armed Bandit mode is active with recent transaction weight set.",
+      "steps": [
+        {
+          "step": "Simulate acceptance rates over a long period.",
+          "test_data": "",
+          "expected": "Only recent data is used for acceptance rate calculation."
+        }
+      ],
+      "expected_result": "Old data is excluded from acceptance rate calculation.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_028"
+    },
+    {
+      "title": "TC_MAB_UI_Selection_Mode_Display",
+      "objective": "Verify that the UI correctly displays the Multi-Armed Bandit selection mode options.",
+      "preconditions": "A/B Testing configuration panel is accessible.",
+      "steps": [
+        {
+          "step": "Open the A/B Testing configuration panel.",
+          "test_data": "",
+          "expected": "A/B Testing configuration panel is displayed."
+        },
+        {
+          "step": "Check the Selection Mode dropdown.",
+          "test_data": "",
+          "expected": "'Multi-Armed Bandit' option is available."
+        }
+      ],
+      "expected_result": "UI displays Multi-Armed Bandit selection mode correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_029"
+    },
+    {
+      "title": "TC_MAB_UI_Threshold_Input_Display",
+      "objective": "Verify that the UI correctly displays the Threshold input field.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Check the Threshold input field in the configuration panel.",
+          "test_data": "",
+          "expected": "Threshold input field is displayed with a numeric input box."
+        }
+      ],
+      "expected_result": "Threshold input field is displayed correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_030"
+    },
+    {
+      "title": "TC_MAB_UI_MinPercent_Input_Display",
+      "objective": "Verify that the UI correctly displays the MinPercent input field.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Check the MinPercent input field in the configuration panel.",
+          "test_data": "",
+          "expected": "MinPercent input field is displayed with a numeric input box."
+        }
+      ],
+      "expected_result": "MinPercent input field is displayed correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_031"
+    },
+    {
+      "title": "TC_MAB_UI_Reevaluation_Interval_Input_Display",
+      "objective": "Verify that the UI correctly displays the Re-evaluation Interval input field.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Check the Re-evaluation Interval input field in the configuration panel.",
+          "test_data": "",
+          "expected": "Re-evaluation Interval input field is displayed with a numeric input box."
+        }
+      ],
+      "expected_result": "Re-evaluation Interval input field is displayed correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_032"
+    },
+    {
+      "title": "TC_MAB_UI_Recent_Transaction_Weight_Input_Display",
+      "objective": "Verify that the UI correctly displays the Recent Transaction Weight input field.",
+      "preconditions": "Multi-Armed Bandit mode is selected.",
+      "steps": [
+        {
+          "step": "Check the Recent Transaction Weight input field in the configuration panel.",
+          "test_data": "",
+          "expected": "Recent Transaction Weight input field is displayed with a numeric input box."
+        }
+      ],
+      "expected_result": "Recent Transaction Weight input field is displayed correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_033"
+    },
+    {
+      "title": "TC_MAB_Cache_Stale_After_Restart",
+      "objective": "Verify that the cache is refreshed after a server restart to prevent stale data.",
+      "preconditions": "Multi-Armed Bandit mode is active.",
+      "steps": [
+        {
+          "step": "Restart the server.",
+          "test_data": "",
+          "expected": "Server restarts successfully."
+        },
+        {
+          "step": "Check the cache for updated acceptance rates.",
+          "test_data": "",
+          "expected": "Cache is refreshed with updated acceptance rates."
+        }
+      ],
+      "expected_result": "Cache is refreshed after server restart.",
+      "priority": "High",
+      "test_type": "Integration",
+      "component": "Interact Runtime",
+      "traceability": "4.4 Cache",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_034"
+    },
+    {
+      "title": "TC_MAB_Background_Process_Execution",
+      "objective": "Verify that the background process executes at the configured interval.",
+      "preconditions": "Multi-Armed Bandit mode is active with a set batch interval.",
+      "steps": [
+        {
+          "step": "Wait for the configured interval to pass.",
+          "test_data": "",
+          "expected": "Interval passes without errors."
+        },
+        {
+          "step": "Check the execution log of the background process.",
+          "test_data": "",
+          "expected": "Background process executes as scheduled."
+        }
+      ],
+      "expected_result": "Background process executes at the configured interval.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "4.3 Background Process",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_035"
+    },
+    {
+      "title": "TC_MAB_API_Backward_Compatibility",
+      "objective": "Ensure that the API remains backward compatible with non-MAB modes.",
+      "preconditions": "API is accessible.",
+      "steps": [
+        {
+          "step": "Make an API call without specifying MAB parameters.",
+          "test_data": "",
+          "expected": "API call succeeds without errors."
+        },
+        {
+          "step": "Verify the response for non-MAB modes.",
+          "test_data": "",
+          "expected": "Response is valid for non-MAB modes."
+        }
+      ],
+      "expected_result": "API remains backward compatible with non-MAB modes.",
+      "priority": "High",
+      "test_type": "Regression",
+      "component": "RTP",
+      "traceability": "6. Backward Compatibility",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_036"
+    },
+    {
+      "title": "TC_MAB_Deployment_Data_Format_Compatibility",
+      "objective": "Verify that the deployment data format remains compatible with existing deployments.",
+      "preconditions": "Deployment environment is set up.",
+      "steps": [
+        {
+          "step": "Deploy a configuration without MAB parameters.",
+          "test_data": "",
+          "expected": "Deployment succeeds without errors."
+        },
+        {
+          "step": "Verify the deployment data format.",
+          "test_data": "",
+          "expected": "Data format is compatible with existing deployments."
+        }
+      ],
+      "expected_result": "Deployment data format remains compatible.",
+      "priority": "Normal",
+      "test_type": "Regression",
+      "component": "InteractDT",
+      "traceability": "6. Backward Compatibility",
+      "reference_keys": [],
+      "tc_id": "TC_HMA-401957_037"
+    },
+    {
+      "title": "TC_MAB_Threshold_Activation",
+      "objective": "Verify the activation of MAB logic upon reaching the threshold.",
+      "preconditions": "MAB mode is enabled with a set threshold.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "Threshold=500",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate 500 getOffers calls.",
+          "test_data": "None",
+          "expected": "Threshold is reached."
+        },
+        {
+          "step": "Check if MAB logic is activated.",
+          "test_data": "None",
+          "expected": "MAB logic is activated."
+        }
+      ],
+      "expected_result": "MAB logic activates upon reaching the threshold.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "tc_id": "TC_HMA-401957_038"
+    },
+    {
+      "title": "TC_MAB_MinPercent_Exploration",
+      "objective": "Validate the exploration rate when minPercent is set.",
+      "preconditions": "MAB mode is enabled with minPercent set.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "MinPercent=10",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate 1000 getOffers calls.",
+          "test_data": "None",
+          "expected": "Offers are presented."
+        },
+        {
+          "step": "Calculate the percentage of random selections.",
+          "test_data": "None",
+          "expected": "Approximately 10% of selections are random."
+        }
+      ],
+      "expected_result": "Exploration occurs at the configured minPercent rate.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_039"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Dynamic_Change",
+      "objective": "Ensure the best branch changes dynamically based on recent data.",
+      "preconditions": "MAB mode is enabled with dynamic evaluation.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "RecentTransactionWeight=0.8",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate varying acceptance rates for branches.",
+          "test_data": "Branch A=30%, Branch B=50%",
+          "expected": "Acceptance rates are recorded."
+        },
+        {
+          "step": "Check the selected best branch.",
+          "test_data": "None",
+          "expected": "Branch B is selected as the best."
+        }
+      ],
+      "expected_result": "The best branch is dynamically updated based on recent data.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_040"
+    },
+    {
+      "title": "TC_MAB_UI_Configuration_Display",
+      "objective": "Verify UI elements for MAB configuration are displayed correctly.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Select Multi-Armed Bandit from the selection mode dropdown.",
+          "test_data": "None",
+          "expected": "MAB configuration options are displayed."
+        }
+      ],
+      "expected_result": "UI displays all MAB configuration options correctly.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_041"
+    },
+    {
+      "title": "TC_MAB_Recent_Transaction_Weight_Effect",
+      "objective": "Validate the effect of recent transaction weight on acceptance rate calculation.",
+      "preconditions": "MAB mode is enabled with recent transaction weight set.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "RecentTransactionWeight=0.5",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate acceptance rates for branches over time.",
+          "test_data": "None",
+          "expected": "Acceptance rates are recorded."
+        },
+        {
+          "step": "Evaluate the calculated acceptance rate.",
+          "test_data": "None",
+          "expected": "Acceptance rate reflects recent transaction weight."
+        }
+      ],
+      "expected_result": "Acceptance rate calculation considers recent transaction weight.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18580"
+      ],
+      "tc_id": "TC_HMA-401957_042"
+    },
+    {
+      "title": "TC_MAB_Threshold_Exceedance",
+      "objective": "Check behavior when presentations exceed the threshold.",
+      "preconditions": "MAB mode is enabled with a set threshold.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "Threshold=500",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate 600 getOffers calls.",
+          "test_data": "None",
+          "expected": "Threshold is exceeded."
+        },
+        {
+          "step": "Verify MAB logic remains active.",
+          "test_data": "None",
+          "expected": "MAB logic continues to operate."
+        }
+      ],
+      "expected_result": "MAB logic remains active after threshold is exceeded.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "InteractDT",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_043"
+    },
+    {
+      "title": "TC_MAB_UI_Branch_Configuration",
+      "objective": "Verify UI allows configuration of multiple branches.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Add multiple branches to the test.",
+          "test_data": "3 branches",
+          "expected": "Branches are added successfully."
+        }
+      ],
+      "expected_result": "UI allows adding and configuring multiple branches.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_044"
+    },
+    {
+      "title": "TC_MAB_Exploration_Rate_Adjustment",
+      "objective": "Ensure exploration rate can be adjusted dynamically.",
+      "preconditions": "MAB mode is enabled with adjustable minPercent.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "MinPercent=20",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Adjust minPercent to 30.",
+          "test_data": "None",
+          "expected": "minPercent is updated."
+        },
+        {
+          "step": "Simulate getOffers calls.",
+          "test_data": "None",
+          "expected": "Exploration rate reflects new minPercent."
+        }
+      ],
+      "expected_result": "Exploration rate adjusts according to minPercent changes.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18421"
+      ],
+      "tc_id": "TC_HMA-401957_045"
+    },
+    {
+      "title": "TC_MAB_UI_Threshold_Validation_Message",
+      "objective": "Verify UI displays validation message for threshold input.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Enter an invalid threshold value.",
+          "test_data": "Threshold=-1",
+          "expected": "Validation message is displayed."
+        }
+      ],
+      "expected_result": "UI displays a validation message for invalid threshold input.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_046"
+    },
+    {
+      "title": "TC_MAB_UI_MinPercent_Validation_Message",
+      "objective": "Verify UI displays validation message for minPercent input.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Enter an invalid minPercent value.",
+          "test_data": "MinPercent=110",
+          "expected": "Validation message is displayed."
+        }
+      ],
+      "expected_result": "UI displays a validation message for invalid minPercent input.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_047"
+    },
+    {
+      "title": "TC_MAB_UI_Reevaluation_Interval_Validation_Message",
+      "objective": "Verify UI displays validation message for reevaluation interval input.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Enter an invalid reevaluation interval.",
+          "test_data": "Interval=0",
+          "expected": "Validation message is displayed."
+        }
+      ],
+      "expected_result": "UI displays a validation message for invalid reevaluation interval input.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_048"
+    },
+    {
+      "title": "TC_MAB_UI_Recent_Transaction_Weight_Validation_Message",
+      "objective": "Verify UI displays validation message for recent transaction weight input.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Enter an invalid recent transaction weight.",
+          "test_data": "Weight=1.5",
+          "expected": "Validation message is displayed."
+        }
+      ],
+      "expected_result": "UI displays a validation message for invalid recent transaction weight input.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_049"
+    },
+    {
+      "title": "TC_MAB_UI_Save_Configuration",
+      "objective": "Ensure the MAB configuration can be saved successfully.",
+      "preconditions": "Access the A/B test configuration panel with valid inputs.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Enter valid MAB configuration values.",
+          "test_data": "Threshold=100, MinPercent=20",
+          "expected": "Values are entered."
+        },
+        {
+          "step": "Click on 'Save'.",
+          "test_data": "None",
+          "expected": "Configuration is saved successfully."
+        }
+      ],
+      "expected_result": "MAB configuration is saved without errors.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_050"
+    },
+    {
+      "title": "TC_MAB_Background_Process_Interval",
+      "objective": "Verify the background process runs at the configured interval.",
+      "preconditions": "MAB mode is enabled with a set batch interval.",
+      "steps": [
+        {
+          "step": "Set the background process interval.",
+          "test_data": "Interval=2 hours",
+          "expected": "Interval is set."
+        },
+        {
+          "step": "Monitor the background process execution.",
+          "test_data": "None",
+          "expected": "Process runs every 2 hours."
+        }
+      ],
+      "expected_result": "Background process executes at the configured interval.",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "4.3 Background Process",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_051"
+    },
+    {
+      "title": "TC_MAB_Cache_Sync_After_Update",
+      "objective": "Ensure cache syncs with the database after updates.",
+      "preconditions": "MAB mode is enabled with cache implemented.",
+      "steps": [
+        {
+          "step": "Update the acceptance rates in the database.",
+          "test_data": "None",
+          "expected": "Database is updated."
+        },
+        {
+          "step": "Trigger cache sync.",
+          "test_data": "None",
+          "expected": "Cache syncs with the database."
+        }
+      ],
+      "expected_result": "Cache reflects the updated database values.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "4.4 Cache",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_052"
+    },
+    {
+      "title": "TC_MAB_Threshold_Zero_Validation",
+      "objective": "Check system behavior when threshold is set to zero.",
+      "preconditions": "MAB mode is enabled.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "Threshold=0",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate getOffers calls.",
+          "test_data": "None",
+          "expected": "MAB logic is activated immediately."
+        }
+      ],
+      "expected_result": "MAB logic activates without delay when threshold is zero.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_053"
+    },
+    {
+      "title": "TC_MAB_MinPercent_Hundred_Validation",
+      "objective": "Check system behavior when minPercent is set to 100.",
+      "preconditions": "MAB mode is enabled.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "MinPercent=100",
+          "expected": "AB test is created successfully."
+        },
+        {
+          "step": "Simulate getOffers calls.",
+          "test_data": "None",
+          "expected": "All selections are random."
+        }
+      ],
+      "expected_result": "100% random selection occurs when minPercent is 100.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "InteractDT",
+      "traceability": "2.2 New Configuration Parameters",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_054"
+    },
+    {
+      "title": "TC_MAB_Threshold_Default_Validation",
+      "objective": "Verify default behavior when threshold is not set.",
+      "preconditions": "MAB mode is enabled without a threshold value.",
+      "steps": [
+        {
+          "step": "Create a new AB test with MAB mode.",
+          "test_data": "Threshold=NULL",
+          "expected": "Validation prevents save."
+        }
+      ],
+      "expected_result": "System prevents saving MAB configuration without a threshold.",
+      "priority": "High",
+      "test_type": "Validation",
+      "component": "InteractDT",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_055"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Disabled_Selection",
+      "objective": "Ensure correct branch selection when the best branch is disabled.",
+      "preconditions": "MAB mode is enabled with a best branch identified.",
+      "steps": [
+        {
+          "step": "Disable the best-performing branch.",
+          "test_data": "None",
+          "expected": "Branch is disabled."
+        },
+        {
+          "step": "Simulate getOffers calls.",
+          "test_data": "None",
+          "expected": "Next best branch is selected."
+        }
+      ],
+      "expected_result": "System selects the next best branch when the best is disabled.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "InteractDT",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_056"
+    },
+    {
+      "title": "TC_MAB_UI_Branch_Disable_Enable",
+      "objective": "Verify UI allows disabling and enabling branches.",
+      "preconditions": "Access the A/B test configuration panel.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B test configuration panel.",
+          "test_data": "None",
+          "expected": "Configuration panel is displayed."
+        },
+        {
+          "step": "Disable a branch.",
+          "test_data": "None",
+          "expected": "Branch is disabled."
+        },
+        {
+          "step": "Enable the branch again.",
+          "test_data": "None",
+          "expected": "Branch is enabled."
+        }
+      ],
+      "expected_result": "UI allows toggling branch enablement.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_057"
+    },
+    {
+      "title": "TC_MAB_Threshold_Activation_Behavior",
+      "objective": "Verify the behavior of the system when the threshold for multi-armed bandit activation is reached.",
+      "preconditions": "A/B testing is configured with multiple branches and a defined threshold.",
+      "steps": [
+        {
+          "step": "Create an A/B test with 3 branches and set the threshold to 100 presentations.",
+          "test_data": "",
+          "expected": "A/B test is created with the specified configuration."
+        },
+        {
+          "step": "Simulate 100 getOffers calls.",
+          "test_data": "",
+          "expected": "The system records 100 presentations."
+        },
+        {
+          "step": "Observe the selection mode after reaching the threshold.",
+          "test_data": "",
+          "expected": "The system transitions to exploit mode, selecting the best-performing branch with a probability of 90% (if minPercent is set to 10)."
+        }
+      ],
+      "expected_result": "The system correctly transitions to exploit mode after the threshold is reached.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Interact Runtime",
+      "traceability": "2.3 Behavior",
+      "reference_keys": [
+        "HMI-T18418"
+      ],
+      "tc_id": "TC_HMA-401957_058"
+    },
+    {
+      "title": "TC_MAB_Best_Branch_Disabled_Fallback",
+      "objective": "Ensure the system correctly falls back to random selection if the best branch becomes disabled.",
+      "preconditions": "A/B testing is configured with multiple branches, and the best-performing branch is identified.",
+      "steps": [
+        {
+          "step": "Identify the best-performing branch through multiple getOffers calls.",
+          "test_data": "",
+          "expected": "The best-performing branch is identified based on recent acceptance rates."
+        },
+        {
+          "step": "Disable the best-performing branch.",
+          "test_data": "",
+          "expected": "The branch is successfully disabled in the system."
+        },
+        {
+          "step": "Simulate additional getOffers calls.",
+          "test_data": "",
+          "expected": "The system falls back to random selection among the remaining branches."
+        }
+      ],
+      "expected_result": "The system correctly falls back to random selection when the best branch is disabled.",
+      "priority": "High",
+      "test_type": "Negative",
+      "component": "Interact Runtime",
+      "traceability": "5. Edge Cases and Error Handling",
+      "reference_keys": [
+        "HMI-T18466"
+      ],
+      "tc_id": "TC_HMA-401957_059"
+    },
+    {
+      "title": "TC_MAB_UI_Branch_Configuration_Validation",
+      "objective": "Validate the UI configuration for branches in MAB mode.",
+      "preconditions": "A/B testing is enabled in the system.",
+      "steps": [
+        {
+          "step": "Navigate to the A/B testing configuration panel.",
+          "test_data": "",
+          "expected": "The A/B testing configuration panel is displayed."
+        },
+        {
+          "step": "Select 'Multi-Armed Bandit' as the selection mode.",
+          "test_data": "",
+          "expected": "The UI displays additional configuration fields for MAB."
+        },
+        {
+          "step": "Add multiple branches and configure sampling percentages.",
+          "test_data": "Sampling %: 40, 35, 25",
+          "expected": "Branches are added with the specified sampling percentages."
+        },
+        {
+          "step": "Attempt to save the configuration with an incorrect total sampling percentage.",
+          "test_data": "Sampling %: 50, 30, 30",
+          "expected": "The system displays a validation error message indicating the sum should be 100%."
+        }
+      ],
+      "expected_result": "The UI correctly validates branch configuration and displays appropriate error messages.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "InteractDT",
+      "traceability": "3.2 UI Changes",
+      "reference_keys": [
+        "HMI-T18447"
+      ],
+      "tc_id": "TC_HMA-401957_060"
+    }
+  ],
+  "references": [
+    {
+      "key": "HMI-T18580",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_Disable_Branch012",
+      "product": "INTERACT",
+      "score": 0.5532,
+      "objective": "Disable Branch should not consider in Sampling Count",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 5 Branches out of 5 Branches disable 2 Branch\n9. Give Sampling % as 60 20 20 for enable Branches and add 10 10 value for \nDisable branches.\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab validate expected result 1\n13. Enable one of Disable Branch validate expected result 2",
+      "test_data": "",
+      "expected_result": "1. ABT Sampling % should be save\n2. User will get Warning Message\nSum of all enabled branch's sample percent should be equal to 100.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "03-Automated"
+    },
+    {
+      "key": "HMI-T18418",
+      "title": "TC_DT_ABTesting_Sampling_Value_009",
+      "product": "INTERACT",
+      "score": 0.5406,
+      "objective": "Verify that clicking on arrow Sampling% value can be decreases and increase",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. After clicking on 'Add Branch' link a new Branch will be added\n9. On Branch user can do in line edit for Sampling and can Increase or \nDecrease Sampling value using arrow.\n10. Value can't set more then 100 and -ve alue.",
+      "test_data": "",
+      "expected_result": "User can change Sampeling value",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": ""
+    },
+    {
+      "key": "HMI-T18447",
+      "title": "TC_DT_ABTesting_Sampling_Sum_Validation_038",
+      "product": "INTERACT",
+      "score": 0.537,
+      "objective": "Verify that the total count for % under Sample row should not extend the \ncount of 100 a validation is present in case",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add 3 to 4 Branches with require details\n9. Set 50 40 30 Sampling%\n10. Click on Apply Changes\n11. Also test with 50 30 10\n\nAlso Test with Disable Branch in Sampling Sum Disable Branch Sampling% \ncount should not Consider.",
+      "test_data": "",
+      "expected_result": "User should Get Waring \"Sum of all enabled branch's sample percent should \nbe equal to 100.\"",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "Covered"
+    },
+    {
+      "key": "HMI-T18421",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_012",
+      "product": "INTERACT",
+      "score": 0.5313,
+      "objective": "User should able to change Sampling % and total of Sampling will be 100",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 3 Branches\n9. Give Sampling % as 60 20 20\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab\n13. Change Sampling value of 3rd Branch to 10, User should get Warning\n14 Change Sampling value of 3rd Branch to 30, User should get Warning",
+      "test_data": "",
+      "expected_result": "1. Sampling values entered should get updated.\n2. User should get Warning message\nSum of all enabled branch's sample percent should be equal to 100.\n\n",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated"
+    },
+    {
+      "key": "HMI-T18466",
+      "title": "TC_RT_ABTesting_MAXSCORE_Multiple_Offer_to Same_Segment_056",
+      "product": "INTERACT",
+      "score": 0.5085,
+      "objective": "Add multiple rules to a Strategy and in one of Rule Add A/B testing with \nmultiple Branch add 'Set rule to highest priority' to Rule without A/B \ntesting and Suppression Count as 1, Deploy IC, On RT it should return Offer \nfrom A/B test",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add multiple rules\n5. For one of Rule Add Offer to Same Segment and Zone\n6. Enable ABT to one of Rule win in Same Segment and 2 Branches\n7. Also enable Suppression Count to 2 and Highest Priority Enable\n8. Deploy IC\n9. Also test with setting Suppression count 1 ",
+      "test_data": "",
+      "expected_result": "1. on RT for GetOffer it will return 2 Offer One from  Rule and other one \nis from ABT\n2. On Multiple GetOffer call user will get diff Offer from Branch as per \nSampling%.\n3. With Suppression count 1 only offer from ABT will display.",
+      "priority": "High",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": ""
+    }
+  ],
+  "sources": [
+    {
+      "type": "jira",
+      "id": "HMA-401957",
+      "title": "Basic Multi-armed Bandit option for A/B testing",
+      "url": "https://hclsw-jirafederal.atlassian.net/browse/HMA-401957"
+    },
+    {
+      "type": "screenshot",
+      "id": "ABT-MAB.png"
+    },
+    {
+      "type": "design_doc",
+      "id": "MultiArmedBandit_ABTest_Design.pdf",
+      "chars": 10329
+    }
+  ],
+  "warnings": [],
+  "requirement_preview": "## Jira story HMA-401957 (Story, In Development)\nSummary: Basic Multi-armed Bandit option for A/B testing\nComponents: - | Labels: -\nDescription / Acceptance criteria:\nIn addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit ([https://en.wikipedia.org/wiki/Multi-armed_bandit|https://en.wikipedia.org/wiki/Multi-armed_bandit|smart-link] ) as a move towards integrating more AI capability, even though we only implement the basic case.\n\nTo do this, the below new configuration settings are added to A/B test UI\n\n# Threshold on total presentation of all the branches.\n# Minimum percentage (minPer) to be selected for for random selection.\n\nThis is how it works\n\n# Initially, the branches are selected randomly based on the initial configured percentage\n# When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest. For example, if minPer=10, random selection is applied in 10% of the getOffers call, and the best performant branch is selected in 90% of the cases.\n# The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact & accept counts from the beginning. The logic for “recent data“ is to be decided.\n\n## Figma / UI screenshot\n(See attached image - derive fields, buttons, validations, states and navigation from it.)\n\n## Design document: MultiArmedBandit_ABTest_Design.pdf\nClassification: Internal \nDesign Document: Multi-Armed Bandit Selection \nMode for A/B Testing \nField Value \nFeature Multi-Armed Bandit (MAB) Selection Mode for \nAB Testing \nVersion Unica Interact 26.2 \nDate June 2026 \nStatus Draft \nComponents InteractDT (Design Time), RTP \n(RealTimePersonalization), Interact Runtime \n \n \n1. Overview \n \nA multi-armed bandit (MAB) is a dynamic testing method that continuously shifts traffic toward \nthe best-performing variation. Unlike traditional A/B testing, it prioritizes maximizing \nconversions over strict statistical significance. It automatically reduces traffic to poor \nperformers, saving revenue while the test is running. \n \nMAB algorithms balance two goals simultaneously:  \n• Exploration: Randomly testing all variations to gather data and find the best one. \n• Exploitation: Directing most of your traffic to the variation with the highest proven \nsuccess rate. \n \n \n1.1 Background \nThe existing A/B Testing feature in Unica Interact supports three selection modes: \n \nMode Value Description \nUseDefault 0 When threshold reached, use \nthe configured default branch \n \nClassification: Internal \nMode Value Description \nAutoSelect 1 System automatically selects \nthe best-performing branch \nUseBase 2 Use the base/control branch \n \nThese modes provide static or semi-static branch selection. To move towards AI-driven \ndecisioning, we introduce a Multi-Armed Bandit app"
+}

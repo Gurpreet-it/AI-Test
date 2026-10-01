@@ -1,0 +1,877 @@
+{
+  "test_cases": [
+    {
+      "title": "Verify Dropdown Label and Default Selection",
+      "objective": "Ensure the dropdown is labeled 'How would you like to create mappings?' with 'Auto Parsed' as the default selection.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Locate the dropdown labeled 'How would you like to create mappings?'",
+          "test_data": "",
+          "expected": "Dropdown is visible and labeled 'How would you like to create mappings?'."
+        },
+        {
+          "step": "Check the default selected option in the dropdown.",
+          "test_data": "",
+          "expected": "The default selected option is 'Auto Parsed'."
+        }
+      ],
+      "expected_result": "The dropdown is correctly labeled and 'Auto Parsed' is selected by default.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-01"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-01: The screen should display a dropdown labeled 'How would you like to create mappi",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_001"
+    },
+    {
+      "title": "Verify Presence of 'Clear Mapping' Link",
+      "objective": "Ensure there is a 'Clear Mapping' link next to the dropdown.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Locate the 'Clear Mapping' link next to the dropdown.",
+          "test_data": "",
+          "expected": "'Clear Mapping' link is visible next to the dropdown."
+        }
+      ],
+      "expected_result": "'Clear Mapping' link is present and visible next to the dropdown.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-02"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-02: There should be a 'Clear Mapping' link next to the dropdown.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_002"
+    },
+    {
+      "title": "Verify Table Column Labels",
+      "objective": "Ensure the table has the correct column labels.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Locate the table on the Mapping page.",
+          "test_data": "",
+          "expected": "Table is visible on the page."
+        },
+        {
+          "step": "Verify the column labels in the table.",
+          "test_data": "",
+          "expected": "Table columns are labeled 'Attribute N...', 'Type* (Targ...', 'Value (Map...', 'Transforma...', 'Source Dat...', 'Description', 'Key Attribute', 'Time Stamp', and 'Profile'."
+        }
+      ],
+      "expected_result": "The table has all the specified column labels.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-03"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-03: The table should have columns labeled 'Attribute N...', 'Type* (Targ...', 'Value",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_003"
+    },
+    {
+      "title": "Verify Input Fields in Table Rows",
+      "objective": "Ensure each row in the table has input fields corresponding to each column.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Locate a row in the table.",
+          "test_data": "",
+          "expected": "A row is visible in the table."
+        },
+        {
+          "step": "Verify input fields in the row for each column.",
+          "test_data": "",
+          "expected": "Each column in the row has a corresponding input field."
+        }
+      ],
+      "expected_result": "Each row in the table has input fields for all specified columns.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-04"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-04: Each row in the table should have input fields corresponding to each column.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_004"
+    },
+    {
+      "title": "Verify Profile Column Dropdown Default Option",
+      "objective": "Ensure the 'Profile' column has a dropdown with 'Select' as the default option.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the 'Feeds' screen.",
+          "test_data": "",
+          "expected": "The 'Feeds' screen is displayed."
+        },
+        {
+          "step": "Locate the 'Profile' column in the table.",
+          "test_data": "",
+          "expected": "The 'Profile' column is visible."
+        },
+        {
+          "step": "Check the default option in the dropdown of the 'Profile' column.",
+          "test_data": "",
+          "expected": "The default option is 'Select'."
+        }
+      ],
+      "expected_result": "The 'Profile' column dropdown has 'Select' as the default option.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-05"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-05: The 'Profile' column should have a dropdown with 'Select' as the default option.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-411293_005"
+    },
+    {
+      "title": "Verify '+ Attribute' Button Presence",
+      "objective": "Ensure there is a '+ Attribute' button above the table.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the 'Feeds' screen.",
+          "test_data": "",
+          "expected": "The 'Feeds' screen is displayed."
+        },
+        {
+          "step": "Locate the area above the table.",
+          "test_data": "",
+          "expected": "The area above the table is visible."
+        },
+        {
+          "step": "Check for the presence of the '+ Attribute' button.",
+          "test_data": "",
+          "expected": "The '+ Attribute' button is present above the table."
+        }
+      ],
+      "expected_result": "The '+ Attribute' button is present above the table.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-06"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-06: There should be a '+ Attribute' button above the table.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-411293_006"
+    },
+    {
+      "title": "Verify 'Cancel' Button Presence",
+      "objective": "Ensure there is a 'Cancel' button at the bottom of the screen.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the 'Feeds' screen.",
+          "test_data": "",
+          "expected": "The 'Feeds' screen is displayed."
+        },
+        {
+          "step": "Scroll to the bottom of the screen.",
+          "test_data": "",
+          "expected": "The bottom of the screen is visible."
+        },
+        {
+          "step": "Check for the presence of the 'Cancel' button.",
+          "test_data": "",
+          "expected": "The 'Cancel' button is present at the bottom of the screen."
+        }
+      ],
+      "expected_result": "The 'Cancel' button is present at the bottom of the screen.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-07"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-07: There should be a 'Cancel' button at the bottom of the screen.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-411293_007"
+    },
+    {
+      "title": "Verify 'Previous' Button Presence",
+      "objective": "Ensure there is a 'Previous' button at the bottom of the screen.",
+      "preconditions": "<TBD>",
+      "steps": [
+        {
+          "step": "Navigate to the 'Feeds' screen.",
+          "test_data": "",
+          "expected": "The 'Feeds' screen is displayed."
+        },
+        {
+          "step": "Scroll to the bottom of the screen.",
+          "test_data": "",
+          "expected": "The bottom of the screen is visible."
+        },
+        {
+          "step": "Check for the presence of the 'Previous' button.",
+          "test_data": "",
+          "expected": "The 'Previous' button is present at the bottom of the screen."
+        }
+      ],
+      "expected_result": "The 'Previous' button is present at the bottom of the screen.",
+      "priority": "Normal",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-08"
+      ],
+      "reference_keys": [],
+      "traceability": "SCR-08: There should be a 'Previous' button at the bottom of the screen.",
+      "has_tbd": true,
+      "tc_id": "TC_HMA-411293_008"
+    },
+    {
+      "title": "Verify 'Save as Draft' button presence",
+      "objective": "Ensure the 'Save as Draft' button is present at the bottom of the screen.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Navigate to the Mapping page.",
+          "test_data": "",
+          "expected": "The Mapping page is displayed."
+        },
+        {
+          "step": "Check for the presence of the 'Save as Draft' button at the bottom of the screen.",
+          "test_data": "",
+          "expected": "The 'Save as Draft' button is visible at the bottom of the screen."
+        }
+      ],
+      "expected_result": "The 'Save as Draft' button is present at the bottom of the screen.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-09"
+      ],
+      "reference_keys": [
+        "CED-T5311"
+      ],
+      "traceability": "SCR-09: There should be a 'Save as Draft' button at the bottom of the screen.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_009"
+    },
+    {
+      "title": "Verify 'Next' button presence",
+      "objective": "Ensure the 'Next' button is present at the bottom of the screen.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Navigate to the Mapping page.",
+          "test_data": "",
+          "expected": "The Mapping page is displayed."
+        },
+        {
+          "step": "Check for the presence of the 'Next' button at the bottom of the screen.",
+          "test_data": "",
+          "expected": "The 'Next' button is visible at the bottom of the screen."
+        }
+      ],
+      "expected_result": "The 'Next' button is present at the bottom of the screen.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-10"
+      ],
+      "reference_keys": [
+        "CED-T5303"
+      ],
+      "traceability": "SCR-10: There should be a 'Next' button at the bottom of the screen.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_010"
+    },
+    {
+      "title": "Verify progress indicator steps",
+      "objective": "Ensure the progress indicator displays 'Configuration', 'Mapping', and 'Review and Publish'.",
+      "preconditions": "User is on the Mapping page.",
+      "steps": [
+        {
+          "step": "Navigate to the Mapping page.",
+          "test_data": "",
+          "expected": "The Mapping page is displayed."
+        },
+        {
+          "step": "Check the left panel for the progress indicator.",
+          "test_data": "",
+          "expected": "The progress indicator displays 'Configuration', 'Mapping', and 'Review and Publish'."
+        }
+      ],
+      "expected_result": "The progress indicator shows the correct steps.",
+      "priority": "High",
+      "test_type": "UI",
+      "component": "Detect-UI",
+      "requirement_ids": [
+        "SCR-11"
+      ],
+      "reference_keys": [
+        "CED-T5303"
+      ],
+      "traceability": "SCR-11: The left panel should display a progress indicator with steps: 'Configuration', ",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_011"
+    },
+    {
+      "title": "Create a feed from the UI",
+      "objective": "Verify that a user can create a feed from the UI.",
+      "preconditions": "User has valid credentials and is logged into the platform.",
+      "steps": [
+        {
+          "step": "Navigate to the Feed Management > Feed Applications.",
+          "test_data": "",
+          "expected": "The Feed Applications page is displayed."
+        },
+        {
+          "step": "Click on '+ New Feed'.",
+          "test_data": "",
+          "expected": "The feed creation page is displayed."
+        },
+        {
+          "step": "Enter valid feed details (e.g., Name, Batch Size, Cluster, Topic).",
+          "test_data": "Name: TestFeed, Batch Size: 100, Cluster: Cluster1, Topic: Topic1",
+          "expected": "The feed details are entered correctly."
+        },
+        {
+          "step": "Click 'Next' to proceed to the Mapping page.",
+          "test_data": "",
+          "expected": "The Mapping page is displayed."
+        },
+        {
+          "step": "Complete the mapping configuration.",
+          "test_data": "",
+          "expected": "The mapping configuration is completed."
+        },
+        {
+          "step": "Click 'Next' to proceed to the Review and Publish page.",
+          "test_data": "",
+          "expected": "The Review and Publish page is displayed."
+        },
+        {
+          "step": "Click 'Save and Publish'.",
+          "test_data": "",
+          "expected": "The feed is saved and published successfully."
+        }
+      ],
+      "expected_result": "The user can create and publish a feed successfully from the UI.",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "Detect",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "reference_keys": [
+        "CED-T5312"
+      ],
+      "traceability": "STORY-01: The system must allow users to create a feed from the UI.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-411293_012"
+    }
+  ],
+  "requirements": [
+    {
+      "text": "The system must allow users to create a feed from the UI.",
+      "category": "Functional",
+      "evidence": "Summary: Detect - Create Feed from UI",
+      "priority": "High",
+      "source": "Jira story HMA-411293",
+      "source_type": "jira",
+      "id": "STORY-01",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-411293_012"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The screen should display a dropdown labeled 'How would you like to create mappings?' with 'Auto Parsed' as the selected option.",
+      "category": "UI",
+      "evidence": "visual: How would you like to create mappings? Auto Parsed",
+      "priority": "High",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-01",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_001"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a 'Clear Mapping' link next to the dropdown.",
+      "category": "UI",
+      "evidence": "visual: Clear Mapping",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-02",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_002"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The table should have columns labeled 'Attribute N...', 'Type* (Targ...', 'Value (Map...', 'Transforma...', 'Source Dat...', 'Description', 'Key Attribute', 'Time Stamp', and 'Profile'.",
+      "category": "UI",
+      "evidence": "visual: table columns",
+      "priority": "High",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-03",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_003"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Each row in the table should have input fields corresponding to each column.",
+      "category": "UI",
+      "evidence": "visual: input fields in table row",
+      "priority": "High",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-04",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_004"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The 'Profile' column should have a dropdown with 'Select' as the default option.",
+      "category": "UI",
+      "evidence": "visual: Profile column dropdown",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-05",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_005"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a '+ Attribute' button above the table.",
+      "category": "UI",
+      "evidence": "visual: + Attribute button",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-06",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_006"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a 'Cancel' button at the bottom of the screen.",
+      "category": "UI",
+      "evidence": "visual: Cancel button",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-07",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_007"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a 'Previous' button at the bottom of the screen.",
+      "category": "UI",
+      "evidence": "visual: Previous button",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-08",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_008"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a 'Save as Draft' button at the bottom of the screen.",
+      "category": "UI",
+      "evidence": "visual: Save as Draft button",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-09",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_009"
+      ],
+      "covered": true
+    },
+    {
+      "text": "There should be a 'Next' button at the bottom of the screen.",
+      "category": "UI",
+      "evidence": "visual: Next button",
+      "priority": "High",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-10",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_010"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The left panel should display a progress indicator with steps: 'Configuration', 'Mapping', and 'Review and Publish'.",
+      "category": "UI",
+      "evidence": "visual: progress indicator",
+      "priority": "Normal",
+      "source": "UI screenshot SCR-20260929-kvcf.png",
+      "source_type": "screenshot",
+      "id": "SCR-11",
+      "visual_only": true,
+      "test_cases": [
+        "TC_HMA-411293_011"
+      ],
+      "covered": true
+    }
+  ],
+  "rejected_requirements": [],
+  "open_questions": [
+    "[Jira story HMA-411293] What specific fields and options are available for creating a feed from the UI?",
+    "[Jira story HMA-411293] What validations are required when creating a feed from the UI?",
+    "[Jira story HMA-411293] Are there any specific permissions required to create a feed from the UI?",
+    "[Jira story HMA-411293] What is the expected behavior if feed creation fails?",
+    "[Jira story HMA-411293] Is there any integration with other systems when creating a feed from the UI?",
+    "[Jira story HMA-411293] What are the error messages displayed if feed creation encounters an error?",
+    "<TBD: Precondition details for accessing the 'Feeds' screen.>"
+  ],
+  "references": [
+    {
+      "key": "CED-T5311",
+      "title": "TC_REV_FUNC_09_Save_As_Draft_From_Review",
+      "product": "DETECT",
+      "score": 0.671,
+      "objective": "Verify that clicking \"Save as Draft\" from the Review page saves all \nprogress.",
+      "precondition": "1. User is on the Review and Publish page.",
+      "steps": "1. Click \"Save as Draft\".\n\n2. Check the Feed Applications list.",
+      "test_data": "",
+      "expected_result": "The feed is saved successfully, and its status in the list is displayed as \n\"Draft\" (yellow/orange pill).",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Publish",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5187",
+      "title": "TC_FEED_POS_17_Save_As_Draft",
+      "product": "DETECT",
+      "score": 0.6046,
+      "objective": "Verify that saving the configuration as a draft retains the information and \ndisplays it in the list.",
+      "precondition": "1. User has valid credentials.",
+      "steps": "1. Navigate to Platform URL and login...\n\n4. Navigate to Feed Management > Feed Applications.\n\n5. Click on \"+ New Feed\".\n\n6. Enter valid Name (e.g., \"DraftFeed\"), Batch Size, Cluster, Topic.\n\n7. Click \"Save as Draft\".",
+      "test_data": "",
+      "expected_result": "The UI displays a success toast/message. The user can return to the main \nFeed Applications page and \"DraftFeed\" appears in the left panel list.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Configuration",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5310",
+      "title": "TC_REV_FUNC_08_Save_As_Draft_State",
+      "product": "DETECT",
+      "score": 0.5952,
+      "objective": "Verify that clicking \"Save as Draft\" from the Mapping page saves all \nprogress up to that point.",
+      "precondition": "1. User is on the Mapping page with valid inputs.",
+      "steps": "1. Click \"Save as Draft\".\n\n2. Navigate away from the page (e.g., to Home).\n\n3. Return to Feed Applications list.\n\n4. Locate the saved draft feed and click \"Edit\".\n\n5. Navigate to the Mapping page.",
+      "test_data": "",
+      "expected_result": "The feed is saved successfully as a Draft. Upon editing, all previously \nentered Configuration and Mapping data is fully populated and intact.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Publish",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5117",
+      "title": "Verify Reset Button Visibility and Availability",
+      "product": "DETECT",
+      "score": 0.5383,
+      "objective": "Verify that the Reset button is available next to the Attribute Mapping \nsection label once a data table is selected.",
+      "precondition": "1. User is on the Create Profile form view. 2. Data Source Name and DB \nTable Name are populated.",
+      "steps": "1. Observe the upper right area of the Attribute Mapping section next to \nthe 'Map database columns to profile attributes.' text subtitle.",
+      "test_data": "",
+      "expected_result": "A square button enclosing a circular dual-arrow refresh/reset icon is \nclearly visible and enabled.",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Profile Creation",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5303",
+      "title": "TC_REV_UI_01_Page_Load",
+      "product": "DETECT",
+      "score": 0.5318,
+      "objective": "Verify UI elements and stepper update correctly on the Review and Publish \nstep.",
+      "precondition": "1. Logged into Platform.\n\n2. Configuration and Mapping steps completed with valid data.",
+      "steps": "1. Navigate to Detect > Feed Management > Feed Applications.\n\n2. Create/Edit a feed.\n\n3. Complete Configuration > click Next.\n\n4. Complete Mapping > click Next.",
+      "test_data": "",
+      "expected_result": "The \"Review and Publish\" page opens. The left-hand stepper shows \n\"Configuration\" and \"Mapping\" with green checkmarks, and \"Review and \nPublish\" as the active step (filled circle).",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Publish",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5090",
+      "title": "Verify Cancel Form Action Redirection",
+      "product": "DETECT",
+      "score": 0.5273,
+      "objective": "Verify that clicking Cancel clears changes and gracefully terminates the \ncreation panel.",
+      "precondition": "User has unsaved edits or selections inside the profile formulation view.",
+      "steps": "1. Click the 'Cancel' button positioned at the bottom action section.",
+      "test_data": "",
+      "expected_result": "The profile editor closes instantly and redirects back to the parent \nProfiles screen without mutating any system settings.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Profile Creation",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5245",
+      "title": "TC_MAP_FUNC_40_Auto_Parsed_Dropdown",
+      "product": "DETECT",
+      "score": 0.5075,
+      "objective": "Verify the main mapping strategy dropdown functionality.",
+      "precondition": "1. User is on the Mapping page.",
+      "steps": "1. Click the top dropdown (showing \"Auto Parsed\" by default).\n\n2. Switch to \"Manual Mapping\" (if option exists).",
+      "test_data": "",
+      "expected_result": "UI updates based on selection. If manual, it might clear auto-detected \nrows.",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Parser_Mappings",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5083",
+      "title": "Verify Dynamic Mapping Grid Triggers",
+      "product": "DETECT",
+      "score": 0.4936,
+      "objective": "Verify that choosing valid source and table parameters populates the \ncolumns mapping grid.",
+      "precondition": "1. User is on the Create Profile screen. 2. Data Source Name is set to \n'Customer Data'.",
+      "steps": "1. Select a valid entry inside the 'DB Table Name' drop-down list (e.g., \n'Customer.Pune').",
+      "test_data": "",
+      "expected_result": "The central-to-right section dynamically transitions from the empty \nwatermark view to reveal the 'DB Column Name (Type)' attribute grid table.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Profile Creation",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T19673",
+      "title": "TC_FlexOffers_List_Functional_009",
+      "product": "INTERACT",
+      "score": 0.4929,
+      "objective": "Verify that user is able to create new offer Mapping table with some \ndefault required column Names - All situations",
+      "precondition": "",
+      "steps": "1.Create a Table say Table1 having more than 100 records on Prod DB , \nTable2 on Test Db and Table3 on RT\n2.Open any existing IC , navigate to FlexOffers Tab and Create Table \nmapping , select Input from file and Select an existing .csv file.",
+      "test_data": "",
+      "expected_result": "",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/FlexOffers/FlexOffers functional/FlexOffers List",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T4269",
+      "title": "TC_021_DT_Verify Profile Dropdown",
+      "product": "DETECT",
+      "score": 0.4924,
+      "objective": "Test the user profile menu in the header.",
+      "precondition": "1. User \"David Carter\" is logged in.",
+      "steps": "1. Click on the profile name/arrow in the top right.",
+      "test_data": "",
+      "expected_result": "A dropdown menu appears with options like \"Logout\" or \"Settings\".",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1_New_UI/System Health",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5312",
+      "title": "TC_REV_E2E_10_Save_And_Publish_Success",
+      "product": "DETECT",
+      "score": 0.4829,
+      "objective": "E2E: Verify the final \"Save and Publish\" action successfully deploys the \nfeed.",
+      "precondition": "1. User is on the Review and Publish page.\n\n2. Backend Kafka and Detect engines are running.",
+      "steps": "1. Click the \"Save and Publish\" button.\n\n2. Wait for the action to complete.\n\n3. Check the Feed Applications list view.",
+      "test_data": "",
+      "expected_result": "A \"Feed Published\" success message/toast appears. The user is returned to \nthe list view, and the feed's status is now \"Published\" (green pill). The \nfeed is actively deployed to the engine and ready for E2E pipeline usage.",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Publish",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5214",
+      "title": "TC_MAP_POS_09_Type_Target_Dropdown",
+      "product": "DETECT",
+      "score": 0.4756,
+      "objective": "Verify Type (Target) dropdown options are populated.",
+      "precondition": "1. User is on the Mapping page.",
+      "steps": "1. Click \"+ Attribute\".\n\n2. Click the \"Type (Target)\" dropdown.",
+      "test_data": "",
+      "expected_result": "Dropdown displays standard data types (e.g., String, Double, Integer, \nDateTime, Boolean).",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Parser_Mappings",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T29371",
+      "title": "Verify all the coloumn is displayed of selected profile table",
+      "product": "INTERACT",
+      "score": 0.4751,
+      "objective": "Verify all the coloumn is displayed of selected profile table",
+      "precondition": "",
+      "steps": "Login to Real Time Personalization setup giving User details.\nNavigate to Audience Option from side menu bar.\nClick on ADD Audience option\nVerify all the coloumn is displayed of selected profile table",
+      "test_data": "",
+      "expected_result": "All the coloumn should be displayed of selected profile table",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 25.1/RTP ENH/RTP/RTP_Audiences_New",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T14697",
+      "title": "TC_Self_Learning_013 (IC_SelfLearningTab - Add-Edit Self Learning Response Model -   Cancel button)",
+      "product": "INTERACT",
+      "score": 0.4748,
+      "objective": "Objective:\nObjective of this test case is to verify the functionality of \"Cancel\"\nbutton on Add/Edit Self Learning Response Model pop-up.",
+      "precondition": "",
+      "steps": "Step 1: Login to unica as asm_admin\nStep 2: Click on Campaign > Interactive Channel menu option\nStep 3: Open existing Interactive Channel.\nClick on Self Learning tab.\nStep 4: Click on Add Learning Model button.\nStep 5: Learning Model Name: Learning_Model_Customized\nLearning Model Description: Learning Model is customized to use custom\nlearning attributs\nSelect attributes from profile and dimenssion tables.\n\n\nClick on Cancel button.",
+      "test_data": "",
+      "expected_result": "Step 1: Verify login is successful.\nStep 2: Verify all Interactive Channel page is displayed\nStep 3: Verify Self Learning tab is displayed.\nStep 4: Verify Add/Edit Learning model dialog is displayed\nStep 5: Verify the Learning model is NOT saved.\n\nVerify Add/Edit Learning Model dialog popup is closed. Verify no new\nlearning model record added in learning model list.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/RT - Self Learning/PVT - Self Learning",
+      "test_type": "",
+      "automation_status": "07-NA",
+      "features": [],
+      "labels": ""
+    },
+    {
+      "key": "CED-T5292",
+      "title": "TC_MAP_AUTO_FUNC_05_Mix_Auto_And_Manual",
+      "product": "DETECT",
+      "score": 0.4526,
+      "objective": "Verify users can add manual attributes alongside auto-populated attributes \nfrom a custom parser.",
+      "precondition": "1. Custom parser selected, rows auto-populated.",
+      "steps": "1. With auto-populated rows visible, click the \"+ Attribute\" button.\n\n2. Add a manual attribute (e.g., branchCode).\n\n3. Set branchCode to map to master_profile.",
+      "test_data": "",
+      "expected_result": "The UI successfully retains both the auto-parsed rows and the newly added \nmanual row without conflicts.",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Regression_Re-Architecture-26.1 onward/26.1.0.1/Feed Applications/Feed_Parser_Mappings",
+      "test_type": "",
+      "automation_status": "",
+      "features": [],
+      "labels": ""
+    }
+  ],
+  "sources": [
+    {
+      "type": "jira",
+      "id": "HMA-411293",
+      "title": "Detect - Create Feed from UI",
+      "url": "https://hclsw-jirafederal.atlassian.net/browse/HMA-411293"
+    },
+    {
+      "type": "screenshot",
+      "id": "SCR-20260929-kvcf.png"
+    }
+  ],
+  "warnings": [],
+  "requirement_preview": "## Jira story HMA-411293\nSummary: Detect - Create Feed from UI\nType: Story | Status: Verified and Closed\nComponents: - | Labels: Detect, Detect-UI\nDescription / Acceptance criteria:\n\n\n## UI screenshot SCR-20260929-kvcf.png\n(UI screenshot attached - analyse only what is visible)",
+  "stats": {
+    "requirements": 12,
+    "covered": 12,
+    "test_cases": 12,
+    "with_tbd": 4
+  }
+}

@@ -1,0 +1,1061 @@
+{
+  "test_cases": [
+    {
+      "title": "Test Case for Story-01: Threshold Setting",
+      "objective": "Verify that the threshold setting for total branch presentations is correctly implemented in A/B testing.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold value (e.g., 50%).",
+          "test_data": "50%",
+          "expected": "Threshold value is correctly set."
+        },
+        {
+          "step": "3. Present branches beyond the threshold value.",
+          "test_data": "10 branches",
+          "expected": "Random selection is applied to 50% of the cases."
+        }
+      ],
+      "expected_result": "Random selection is applied to the correct percentage of cases when the threshold is reached.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "traceability": "STORY-01: Add a threshold setting for total branch presentations in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_001"
+    },
+    {
+      "title": "Test Case for Story-02: MinPer Setting",
+      "objective": "Verify that the minPer setting for minimum percentage of random selection is correctly implemented in A/B testing.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the minPer value (e.g., 10%).",
+          "test_data": "10%",
+          "expected": "Minimum percentage value is correctly set."
+        },
+        {
+          "step": "3. Present cases to meet the minPer threshold.",
+          "test_data": "100 cases",
+          "expected": "Random selection is applied to 10% of the cases."
+        }
+      ],
+      "expected_result": "Random selection is applied to the correct percentage of cases when the minPer threshold is reached.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-02"
+      ],
+      "traceability": "STORY-02: Add a minPer setting for minimum percentage for random selection in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_002"
+    },
+    {
+      "title": "Test Case for Story-03: Random Selection Application",
+      "objective": "Verify that random selection is applied when the threshold is reached in A/B testing.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold and minPer values (e.g., 50% threshold and 10% minPer).",
+          "test_data": "50% threshold and 10% minPer",
+          "expected": "Threshold and minPer values are correctly set."
+        },
+        {
+          "step": "3. Present branches beyond the threshold value.",
+          "test_data": "10 branches",
+          "expected": "Random selection is applied to 5 cases."
+        }
+      ],
+      "expected_result": "Random selection is applied to the correct number of cases when the threshold is reached.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-03"
+      ],
+      "traceability": "STORY-03: Apply random selection in minPercentage of cases when the threshold is reached i",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_003"
+    },
+    {
+      "title": "Test Case for Story-04: Highest Acceptance Rate Selection",
+      "objective": "Verify that the branch with the highest acceptance rate is selected for the remaining cases in A/B testing.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold and minPer values (e.g., 50% threshold and 10% minPer).",
+          "test_data": "50% threshold and 10% minPer",
+          "expected": "Threshold and minPer values are correctly set."
+        },
+        {
+          "step": "3. Present branches with varying acceptance rates.",
+          "test_data": "Branch A: 80%, Branch B: 60%, Branch C: 40%",
+          "expected": "Branch A is selected for the remaining cases."
+        }
+      ],
+      "expected_result": "The branch with the highest acceptance rate is selected for the remaining cases.",
+      "priority": "Normal",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-04"
+      ],
+      "traceability": "STORY-04: Select the branch with the highest acceptance rate for the remaining cases in A/",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_004"
+    },
+    {
+      "title": "Test Case for Boundary Condition - Threshold at 0%",
+      "objective": "Verify that the threshold setting works correctly when set to 0%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold value to 0%.",
+          "test_data": "0%",
+          "expected": "Threshold value is correctly set to 0%."
+        },
+        {
+          "step": "3. Present branches beyond the threshold value.",
+          "test_data": "10 branches",
+          "expected": "No random selection is applied."
+        }
+      ],
+      "expected_result": "No random selection is applied when the threshold is set to 0%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "traceability": "STORY-01: Add a threshold setting for total branch presentations in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_005"
+    },
+    {
+      "title": "Test Case for Boundary Condition - MinPer at 100%",
+      "objective": "Verify that the minPer setting works correctly when set to 100%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the minPer value to 100%.",
+          "test_data": "100%",
+          "expected": "Minimum percentage value is correctly set to 100%."
+        },
+        {
+          "step": "3. Present cases to meet the minPer threshold.",
+          "test_data": "100 cases",
+          "expected": "All cases are subject to random selection."
+        }
+      ],
+      "expected_result": "All cases are subject to random selection when the minPer is set to 100%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-02"
+      ],
+      "traceability": "STORY-02: Add a minPer setting for minimum percentage for random selection in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_006"
+    },
+    {
+      "title": "Test Case for Boundary Condition - Random Selection at 100% MinPer",
+      "objective": "Verify that random selection is applied correctly when minPer is set to 100%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the minPer value to 100%.",
+          "test_data": "100%",
+          "expected": "Minimum percentage value is correctly set to 100%."
+        },
+        {
+          "step": "3. Present cases to meet the minPer threshold.",
+          "test_data": "100 cases",
+          "expected": "All cases are subject to random selection."
+        }
+      ],
+      "expected_result": "All cases are subject to random selection when the minPer is set to 100%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-02"
+      ],
+      "traceability": "STORY-02: Add a minPer setting for minimum percentage for random selection in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_007"
+    },
+    {
+      "title": "Test Case for Boundary Condition - Random Selection at 0% MinPer",
+      "objective": "Verify that random selection is not applied when minPer is set to 0%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the minPer value to 0%.",
+          "test_data": "0%",
+          "expected": "Minimum percentage value is correctly set to 0%."
+        },
+        {
+          "step": "3. Present cases to meet the minPer threshold.",
+          "test_data": "100 cases",
+          "expected": "No random selection is applied."
+        }
+      ],
+      "expected_result": "No random selection is applied when the minPer is set to 0%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-02"
+      ],
+      "traceability": "STORY-02: Add a minPer setting for minimum percentage for random selection in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_008"
+    },
+    {
+      "title": "Test Case for Boundary Condition - Threshold at 100%",
+      "objective": "Verify that the threshold setting works correctly when set to 100%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold value to 100%.",
+          "test_data": "100%",
+          "expected": "Threshold value is correctly set to 100%."
+        },
+        {
+          "step": "3. Present branches beyond the threshold value.",
+          "test_data": "10 branches",
+          "expected": "All branches are subject to random selection."
+        }
+      ],
+      "expected_result": "All branches are subject to random selection when the threshold is set to 100%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "traceability": "STORY-01: Add a threshold setting for total branch presentations in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_009"
+    },
+    {
+      "title": "Test Case for Boundary Condition - Random Selection at 100% Threshold",
+      "objective": "Verify that random selection is applied correctly when the threshold is set to 100%.",
+      "preconditions": [
+        "A/B testing interface is open and configured with the necessary rules."
+      ],
+      "steps": [
+        {
+          "step": "1. Navigate to the A/B Testing tab.",
+          "test_data": null,
+          "expected": "A/B Testing tab opens."
+        },
+        {
+          "step": "2. Set the threshold value to 100%.",
+          "test_data": "100%",
+          "expected": "Threshold value is correctly set to 100%."
+        },
+        {
+          "step": "3. Present branches beyond the threshold value.",
+          "test_data": "10 branches",
+          "expected": "All branches are subject to random selection."
+        }
+      ],
+      "expected_result": "All branches are subject to random selection when the threshold is set to 100%.",
+      "priority": "Low",
+      "test_type": "Boundary",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-01"
+      ],
+      "traceability": "STORY-01: Add a threshold setting for total branch presentations in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_010"
+    },
+    {
+      "title": "Verify Best Performer is Selected Based on Recent Data",
+      "objective": "Verify that the branch with the highest acceptance rate is selected based on recent data.",
+      "preconditions": [
+        "User is on AB Test screen",
+        "Branch A has an acceptance rate of 50%",
+        "Branch B has an acceptance rate of 90%",
+        "Recent data shows a higher concentration of Branch B responses"
+      ],
+      "steps": [
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Verify that the acceptance rate for Branch B is displayed as 90%",
+          "test_data": null,
+          "expected": "Branch B acceptance rate is 90%"
+        }
+      ],
+      "expected_result": "Branch B is selected and displayed with a 90% acceptance rate",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T31619"
+      ],
+      "traceability": "STORY-05: The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_011"
+    },
+    {
+      "title": "Verify Branch with Lower Acceptance Rate is Selected",
+      "objective": "Verify that a branch with a lower acceptance rate is selected when the best performer is not available.",
+      "preconditions": [
+        "User is on AB Test screen",
+        "Branch A has an acceptance rate of 50%",
+        "Branch B has an acceptance rate of 90%",
+        "No recent data shows a higher concentration of Branch B responses"
+      ],
+      "steps": [
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|0|string",
+          "expected": "Branch A is selected"
+        },
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|0|string",
+          "expected": "Branch A is selected"
+        },
+        {
+          "step": "Verify that the acceptance rate for Branch A is displayed as 50%",
+          "test_data": null,
+          "expected": "Branch A acceptance rate is 50%"
+        }
+      ],
+      "expected_result": "Branch A is selected and displayed with a 50% acceptance rate",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T31622"
+      ],
+      "traceability": "STORY-05: The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_012"
+    },
+    {
+      "title": "Test Dynamic Evaluation with Minimum Recent Data",
+      "objective": "Verify that the best performer is selected based on the most recent data when only a small number of responses are available.",
+      "preconditions": [
+        "User is on AB Test screen",
+        "Branch A has an acceptance rate of 50%",
+        "Branch B has an acceptance rate of 90%",
+        "Recent data shows only one response for Branch B"
+      ],
+      "steps": [
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Verify that the acceptance rate for Branch B is displayed as 90%",
+          "test_data": null,
+          "expected": "Branch B acceptance rate is 90%"
+        }
+      ],
+      "expected_result": "Branch B is selected and displayed with a 90% acceptance rate",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T31613"
+      ],
+      "traceability": "STORY-05: The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_013"
+    },
+    {
+      "title": "Test Dynamic Evaluation with Maximum Recent Data",
+      "objective": "Verify that the best performer is selected based on the most recent data when a large number of responses are available.",
+      "preconditions": [
+        "User is on AB Test screen",
+        "Branch A has an acceptance rate of 50%",
+        "Branch B has an acceptance rate of 90%",
+        "Recent data shows a high concentration of Branch B responses"
+      ],
+      "steps": [
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|100|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|100|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Verify that the acceptance rate for Branch B is displayed as 90%",
+          "test_data": null,
+          "expected": "Branch B acceptance rate is 90%"
+        }
+      ],
+      "expected_result": "Branch B is selected and displayed with a 90% acceptance rate",
+      "priority": "High",
+      "test_type": "Functional",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T31621"
+      ],
+      "traceability": "STORY-05: The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_014"
+    },
+    {
+      "title": "Verify UI Shows Recent Data Evaluation",
+      "objective": "Verify that the UI displays recent data evaluation when the best performer is selected.",
+      "preconditions": [
+        "User is on AB Test screen",
+        "Branch A has an acceptance rate of 50%",
+        "Branch B has an acceptance rate of 90%",
+        "Recent data shows a higher concentration of Branch B responses"
+      ],
+      "steps": [
+        {
+          "step": "Start session with the following parameters:",
+          "test_data": "UACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|string",
+          "expected": "Branch B is selected"
+        },
+        {
+          "step": "Verify that the UI displays recent data evaluation",
+          "test_data": null,
+          "expected": "Recent data evaluation is displayed"
+        }
+      ],
+      "expected_result": "Recent data evaluation is displayed in the UI",
+      "priority": "Normal",
+      "test_type": "Functional",
+      "component": "A/B Testing",
+      "requirement_ids": [
+        "STORY-05"
+      ],
+      "reference_keys": [
+        "HMI-T31619"
+      ],
+      "traceability": "STORY-05: The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "has_tbd": false,
+      "tc_id": "TC_HMA-401957_015"
+    }
+  ],
+  "requirements": [
+    {
+      "text": "Add a threshold setting for total branch presentations in A/B testing.",
+      "category": "Configuration",
+      "evidence": "This is how it works: Initially, the branches are selected randomly based on the initial configured percentage.",
+      "priority": "Normal",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-01",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_001",
+        "TC_HMA-401957_005",
+        "TC_HMA-401957_009",
+        "TC_HMA-401957_010"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Add a minPer setting for minimum percentage for random selection in A/B testing.",
+      "category": "Configuration",
+      "evidence": "This is how it works: Initially, the branches are selected randomly based on the initial configured percentage.",
+      "priority": "Normal",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-02",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_002",
+        "TC_HMA-401957_006",
+        "TC_HMA-401957_007",
+        "TC_HMA-401957_008"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Apply random selection in minPercentage of cases when the threshold is reached in A/B testing.",
+      "category": "Behavior",
+      "evidence": "This is how it works: When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest.",
+      "priority": "Normal",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-03",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_003"
+      ],
+      "covered": true
+    },
+    {
+      "text": "Select the branch with the highest acceptance rate for the remaining cases in A/B testing.",
+      "category": "Behavior",
+      "evidence": "This is how it works: When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest.",
+      "priority": "Normal",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-04",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_004"
+      ],
+      "covered": true
+    },
+    {
+      "text": "The best performer is dynamically evaluated based on recent data in A/B testing.",
+      "category": "Evaluation",
+      "evidence": "This is how it works: The logic for “recent data“ is to be decided.",
+      "priority": "Normal",
+      "source": "Jira story HMA-401957",
+      "source_type": "jira",
+      "id": "STORY-05",
+      "visual_only": false,
+      "test_cases": [
+        "TC_HMA-401957_011",
+        "TC_HMA-401957_012",
+        "TC_HMA-401957_013",
+        "TC_HMA-401957_014",
+        "TC_HMA-401957_015"
+      ],
+      "covered": true
+    }
+  ],
+  "rejected_requirements": [
+    {
+      "text": "Add IC as shown below.",
+      "category": "UI",
+      "evidence": "Visual: Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "priority": "Normal",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACIO8erDedupeAttribute|Discount|string.",
+      "category": "Functional",
+      "evidence": "Test case 1",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACINoAttributeDedupeIfFewerO8er|0|string.",
+      "category": "Functional",
+      "evidence": "Test case 1",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "getO8ersForMultipleInteractionPoints parameter: {IP1,3,1}{IP2,3,1}",
+      "category": "Functional",
+      "evidence": "Test case 1",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Result: IP1 got one O8er (O8erA1 with score 50) and IP2 NO OFFER.",
+      "category": "Functional",
+      "evidence": "Test case 1",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACIO8erDedupeAttribute|Discount|string.",
+      "category": "Functional",
+      "evidence": "Test case 2",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACINoAttributeDedupeIfFewerO8er|0|string.",
+      "category": "Functional",
+      "evidence": "Test case 2",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "getO8ersForMultipleInteractionPoints parameter: {IP1,3,2}{IP2,3,2}",
+      "category": "Functional",
+      "evidence": "Test case 2",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Result: IP1 got one O8er (O8erA1 with score 50) and IP2 NO OFFER.",
+      "category": "Functional",
+      "evidence": "Test case 2",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACIO8erDedupeAttribute|Discount|string.",
+      "category": "Functional",
+      "evidence": "Test case 3",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACINoAttributeDedupeIfFewerO8er|1|string.",
+      "category": "Functional",
+      "evidence": "Test case 3",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "getO8ersForMultipleInteractionPoints parameter: {IP1,3,1}{IP2,3,1}",
+      "category": "Functional",
+      "evidence": "Test case 3",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Result: IP1 got one O8er (O8erA1 with score 50) and IP2 got one O8er (O8erB1 with score 90).",
+      "category": "Functional",
+      "evidence": "Test case 3",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACIO8erDedupeAttribute|Discount|string.",
+      "category": "Functional",
+      "evidence": "Test case 4",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "StartSession parameter: UACINoAttributeDedupeIfFewerO8er|1|string.",
+      "category": "Functional",
+      "evidence": "Test case 4",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "getO8ersForMultipleInteractionPoints parameter: {IP1,3,1}{IP2,3,1}",
+      "category": "Functional",
+      "evidence": "Test case 4",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Result: IP1 got one O8er (O8erA1 with score 50) and IP2 got two O8ers (O8erB1 with score 90 and O8erA1 with score 80 ).",
+      "category": "Functional",
+      "evidence": "Test case 4",
+      "priority": "High",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Question: It seems like when we set UACINoAttributeDedupeIfFewerO8er=1 and duplicationPolicy=2 (Allow duplicates) it returns duplicate O8ers.",
+      "category": "Functional",
+      "evidence": "Question in source",
+      "priority": "Normal",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "Definition of UACINoAttributeDedupeIfFewerO8er (as per Guide): However, to ensure that the deduplication happens when fewer than requested o8ers are returned, the UACINoAttributeDedupeIfFewerO8er parameter must be provided and must be set to 1.",
+      "category": "Functional",
+      "evidence": "Question in source",
+      "priority": "Normal",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    },
+    {
+      "text": "What should be correct behaviour?",
+      "category": "Functional",
+      "evidence": "Question in source",
+      "priority": "Normal",
+      "source": "Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "source_type": "design_doc",
+      "reason": "Evidence quote not found in source"
+    }
+  ],
+  "open_questions": [
+    "[Jira story HMA-401957] What is the exact mechanism for evaluating the best performer based on recent data?",
+    "[Jira story HMA-401957] What is the exact value for the threshold on total presentation of all the branches?",
+    "[Jira story HMA-401957] What is the exact value for the minPercentage to be selected for random selection?",
+    "[Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf] <TBD: what is missing>",
+    "What is the exact error message for when the sum of enabled branch percentages doesn't equal 100%?",
+    "What are the exact values for the acceptance rates used in the test cases?",
+    "What is the exact error message when a branch with lower acceptance rate is selected?",
+    "What is the minimum number of responses required for recent data evaluation?"
+  ],
+  "references": [
+    {
+      "key": "HMI-T18580",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_Disable_Branch012",
+      "product": "INTERACT",
+      "score": 0.6046,
+      "objective": "Disable Branch should not consider in Sampling Count",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 5 Branches out of 5 Branches disable 2 Branch\n9. Give Sampling % as 60 20 20 for enable Branches and add 10 10 value for \nDisable branches.\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab validate expected result 1\n13. Enable one of Disable Branch validate expected result 2",
+      "test_data": "",
+      "expected_result": "1. ABT Sampling % should be save\n2. User will get Warning Message\nSum of all enabled branch's sample percent should be equal to 100.",
+      "priority": "Normal",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T19304",
+      "title": "TC_DT_ABTesting_ABT_Filter_Rule_Edit_Enable_With_Disable_Branches_105",
+      "product": "INTERACT",
+      "score": 0.5981,
+      "objective": "Disable Branches should not display with ABT filter.",
+      "precondition": "",
+      "steps": "1. Add 5  rules to Strategy\n2. for 2 Rules Enable ABT\n3. Enable ABT\n3. Add 3 Branches and add Sampling% as 60 20 20\n3. Add Expression to some of Offer Attributes\n4. Save details\n5. Save Rule\n6. In Rule Edit window\n7. Select \"Show A/B testing rules only\" check box\n8. Expand to see Branches details\n9. Add new branch with sampling % 20 and disable it\n10. Save Rule\n11. Select ABT filter and expand dropdown arrow to check Branches.",
+      "test_data": "",
+      "expected_result": "Disabled Branch should not display.",
+      "priority": "High",
+      "severity": "High",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "Enhancement",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31628",
+      "title": "To verify that, base rule is used irrespective of performance rate, if user select \"Use Base\" from drop down \"Selection Mode\"",
+      "product": "INTERACT",
+      "score": 0.5964,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Expected is, offer should be returned from base rule and not from any\nbranch.\nAcceptance rate should still be displayed even user select \"Use Base\"",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31629",
+      "title": "To check and verify the offer from default branch is served when the date is expired and selection mode is Default Branch selection",
+      "product": "INTERACT",
+      "score": 0.5908,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "A/B Test screen",
+      "steps": "",
+      "test_data": "",
+      "expected_result": "Expected is, default branch should be used\nOffer should be returned from default branch only.\nAcceptance rate should still be displayed even user select \"Default Branch\"",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31619",
+      "title": "Verify Acceptance Rate updates dynamically",
+      "product": "INTERACT",
+      "score": 0.5841,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Execute additional transactions\nRefresh grid",
+      "test_data": "",
+      "expected_result": "Acceptance Rate updates based on latest data",
+      "priority": "High",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31634",
+      "title": "Verify A/B Test master record in DB",
+      "product": "INTERACT",
+      "score": 0.577,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on PP configuration screen",
+      "steps": "1.Login to DB\n2. Query AB Test master table",
+      "test_data": "",
+      "expected_result": "PP, status, dates match UI",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T18421",
+      "title": "TC_DT_ABTesting_Validate_Sampling%_012",
+      "product": "INTERACT",
+      "score": 0.5766,
+      "objective": "User should able to change Sampling % and total of Sampling will be 100",
+      "precondition": "",
+      "steps": "1. Create a IC\n2. Go to Strategy tab of IC\n3. Add a Strategy\n4. Add a rule\n5. Open Advance option of Rule\n6. Go to A/B Testing tab\n7. Default branch will be auto populate with below name\nBranch Name: rule__br_\n8. Add total 3 Branches\n9. Give Sampling % as 60 20 20\n10.  Click on 'Apply Changes'\n11.  Save Rule\n12. Open ABT tab\n13. Change Sampling value of 3rd Branch to 10, User should get Warning\n14 Change Sampling value of 3rd Branch to 30, User should get Warning",
+      "test_data": "",
+      "expected_result": "1. Sampling values entered should get updated.\n2. User should get Warning message\nSum of all enabled branch's sample percent should be equal to 100.",
+      "priority": "Normal",
+      "severity": "Medium",
+      "component": "",
+      "folder": "/Functional Test Cases/Features 12.0.x/AB Testing",
+      "test_type": "",
+      "automation_status": "03-Automated",
+      "features": [
+        "AB_TESTING"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31613",
+      "title": "Verify logical & mathematical operators - Advance option",
+      "product": "INTERACT",
+      "score": 0.5754,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Insert logical & mathematical operators",
+      "test_data": "",
+      "expected_result": "Operators evaluated correctly at runtime",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31621",
+      "title": "Verify Acceptance Rate for inactive branch",
+      "product": "INTERACT",
+      "score": 0.5747,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Branch State = OFF",
+      "test_data": "",
+      "expected_result": "Acceptance Rate not updated\nValue remains unchanged or shown as “–”",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    },
+    {
+      "key": "HMI-T31622",
+      "title": "Verify Acceptance Rate API response structure",
+      "product": "INTERACT",
+      "score": 0.5564,
+      "objective": "Validate core A/B Testing functionality",
+      "precondition": "User on AB Test screen",
+      "steps": "Capture A/B Test metrics API response",
+      "test_data": "",
+      "expected_result": "API contains acceptance rate per branch\nBranch ID mapping correct",
+      "priority": "Normal",
+      "severity": "",
+      "component": "",
+      "folder": "/Functional Test Cases/Features of 26.1/RTP Test Cases/Support of AB Test in RTP rules",
+      "test_type": "",
+      "automation_status": "",
+      "features": [
+        "AB_TESTING",
+        "RTP"
+      ],
+      "labels": ""
+    }
+  ],
+  "sources": [
+    {
+      "type": "jira",
+      "id": "HMA-401957",
+      "title": "Basic Multi-armed Bandit option for A/B testing",
+      "url": "https://hclsw-jirafederal.atlassian.net/browse/HMA-401957"
+    },
+    {
+      "type": "screenshot",
+      "id": "ABT-MAB.png"
+    },
+    {
+      "type": "design_doc",
+      "id": "Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf",
+      "chars": 1906
+    }
+  ],
+  "warnings": [
+    "Images supplied but OLLAMA_VISION=false - UI requirements from images cannot be extracted.",
+    "Requirement extraction failed for UI screenshot ABT-MAB.png: LLM did not return valid JSON",
+    "20 extracted requirement(s) were rejected because their evidence could not be found in the source (see Requirements tab)."
+  ],
+  "requirement_preview": "## Jira story HMA-401957\nSummary: Basic Multi-armed Bandit option for A/B testing\nType: Story | Status: In Development\nComponents: - | Labels: -\nDescription / Acceptance criteria:\nIn addition to existing options in A/B testing for selecting the branch, we will add multi-armed bandit ([https://en.wikipedia.org/wiki/Multi-armed_bandit|https://en.wikipedia.org/wiki/Multi-armed_bandit|smart-link] ) as a move towards integrating more AI capability, even though we only implement the basic case.\n\nTo do this, the below new configuration settings are added to A/B test UI\n\n# Threshold on total presentation of all the branches.\n# Minimum percentage (minPer) to be selected for for random selection.\n\nThis is how it works\n\n# Initially, the branches are selected randomly based on the initial configured percentage\n# When the threshold is reached, the random selection is applied in only minPercentage of the cases; while the branch with the highest acceptance rate is selected for the rest. For example, if minPer=10, random selection is applied in 10% of the getOffers call, and the best performant branch is selected in 90% of the cases.\n# The best performant branch is dynamically evaluated, although not necessarily for every getOffers call. The evaluation for best offer should consider the recent data rather than considering the contact & accept counts from the beginning. The logic for “recent data“ is to be decided.\n\n## UI screenshot ABT-MAB.png\n(UI screenshot attached - analyse only what is visible)\n\n## Design document Design_Document__PDF_Dedup with getOffersForMultipleInteractionPoints.pdf\n1. Add IC as shown below. \n \n \n2. StartSession and getO8ersForMultipleInteractionPoints call with below parameters. \nstartSession :- \nUACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|0|strin\ng \ngetO8ersForMultipleInteractionPoints :- {IP1,3,1}{IP2,3,1} \nResult :- IP1 got one O8er (O8erA1 with score 50) and IP2  NO OFFER \n \n \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n3. StartSession and getO8ersForMultipleInteractionPoints call with below parameters. \nstartSession :- \nUACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|0|strin\ng \ngetO8ersForMultipleInteractionPoints :- {IP1,3,2}{IP2,3,2} \nResult :- IP1 got one O8er (O8erA1 with score 50) and IP2  NO OFFER \n \n \n\n \n4. StartSession and getO8ersForMultipleInteractionPoints call with below parameters. \nstartSession :- \nUACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|strin\ng \ngetO8ersForMultipleInteractionPoints :- {IP1,3,1}{IP2,3,1} \n \nResult :- IP1 got one O8er (O8erA1 with score 50) and IP2 got one O8er (O8erB1 with \nscore 90) \n\n \n\n \n \n \n \n \n \n \n \n \n \n\n5. StartSession and getO8ersForMultipleInteractionPoints call with below parameters. \nstartSession :- \nUACIO8erDedupeAttribute|Discount|string;UACINoAttributeDedupeIfFewerO8er|1|strin\ng \ngetO8ersForMultipleInteractionPoints :- {IP1,3,1}{IP2,3,1} \n \nResult:- IP1 got one O8er(O8erA1 with score 50) and IP2 got two O8ers (O8erB1 with \nscore 90 and O8erA1 with score 80 ) \n \n\n \n\n \n \nQuestion :- It seems like when we set UACINoAttributeDedupeIfFewerO8er=1 and \nduplicationPolicy=2 (Allow duplicates) it returns duplicate O8ers. \n \nDeﬁnition of UACINoAttributeDedupeIfFewerO8er (as per Guide) :- \nHowever, to ensure that the deduplication happens when fewer than requested o8ers \nare returned, the UACINoAttributeDedupeIfFewerO8er parameter must be provided and \nmust be set to 1. \n \nWhat should be correct behaviour ?\n\n",
+  "stats": {
+    "requirements": 5,
+    "covered": 5,
+    "test_cases": 15,
+    "with_tbd": 0
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "_readme": [
+    "Feature glossary used by ingest_from_excel.py, tag_existing_points.py and the web app.",
+    "label    : canonical name shown in the UI and added to embedded text.",
+    "aliases  : every name the team uses; added to embedded text / queries so similarity search links them.",
+    "patterns : case-insensitive regexes used to DETECT the feature in test cases and queries.",
+    "           Boundaries are added automatically (no letter/digit directly before or after), so",
+    "           'ABT' matches 'ABT_034' and 'Open ABT tab' but not 'ABTRACT'.",
+    "           Avoid very short/ambiguous patterns (e.g. bare 'AB').",
+    "After editing: python3 glossary.py --check   (validates and runs each entry's examples)"
+  ],
+  "features": {
+    "AB_TESTING": {
+      "label": "A/B Testing",
+      "aliases": ["A/B", "A/B test", "A/B testing", "AB test", "AB testing", "ABTesting", "ABTest", "ABT"],
+      "patterns": [
+        "a\\s*/\\s*b(?:[\\s_-]*test(?:ing|s)?)?",
+        "ab[\\s_-]*test(?:ing|s)?",
+        "abt"
+      ],
+      "examples_match": ["A/B Testing", "A/B \ntesting", "AB Testing", "TC_DT_ABTesting_DDL_001",
+                         "ABT_034", "Open ABT tab", "ABTest", "ABt_Rule_Only_Filter_044", "a/b test"],
+      "examples_no_match": ["ABTRACT", "LAB test", "Tab testing", "table ABC", "AB", "ABS value", "stab_test"]
+    },
+    "RTP": {
+      "label": "Real-time Personalization",
+      "aliases": ["RTP", "Real-time personalization", "Real time personalization", "Realtime personalization",
+                  "Real-time personalisation"],
+      "patterns": [
+        "rtp",
+        "real[\\s_-]*time[\\s_-]*personali[sz]ation"
+      ],
+      "examples_match": ["RTP", "TC_RTP_Offer_001", "Verify RTP rules", "Real-time personalization",
+                         "real time personalization", "RealTimePersonalization", "Real-Time\nPersonalization",
+                         "real_time_personalisation"],
+      "examples_no_match": ["RT", "TC_RT_ABTesting_074", "RTDeployment_Page__039", "RTSelectionMethod",
+                            "real-time deployment", "HTTP", "SRTP", "RTPS", "personalization"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9
+python-dotenv
+requests
+qdrant-client>=1.10
+sentence-transformers
+openai>=1.30
+jira
+openpyxl
+pypdf
+python-docx

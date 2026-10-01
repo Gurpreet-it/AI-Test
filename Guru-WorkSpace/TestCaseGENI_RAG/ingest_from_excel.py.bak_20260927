@@ -1,0 +1,438 @@
+#!/usr/bin/env python3
+"""
+Excel (.xlsx) → Qdrant Test Case Ingestion
+
+Import test cases from Jira Excel exports into Qdrant.
+Handles the Zephyr Scale Excel format with rich test case metadata.
+Automatically moves processed files after successful ingestion.
+
+Usage:
+  python3 ingest_from_excel.py atm-exporter.xlsx --clear
+  python3 ingest_from_excel.py test_cases_inbox/HMI/current/ --clear
+  python3 ingest_from_excel.py ./test_cases_folder/ --clear
+"""
+
+import os
+import sys
+import argparse
+import shutil
+from pathlib import Path
+from dotenv import load_dotenv
+import pandas as pd
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import Distance, VectorParams, PointStruct
+from sentence_transformers import SentenceTransformer
+import uuid
+import glossary  # feature synonyms (A/B = ABT = AB testing ...) - see glossary.json
+import products  # product list = config.json "products" (single source of truth)
+
+# Load environment
+load_dotenv('.env')
+
+# Configuration
+QDRANT_URL = os.getenv('QDRANT_URL', 'http://localhost:6333')
+COLLECTION_NAME = 'jira_test_cases_all'
+EMBEDDING_MODEL = 'all-MiniLM-L6-v2'
+VECTOR_SIZE = 384
+
+# Initialize clients
+qdrant = QdrantClient(QDRANT_URL, api_key=os.getenv('QDRANT_API_KEY') or None, check_compatibility=False)
+embedder = SentenceTransformer(EMBEDDING_MODEL)
+
+def extract_product_from_path(file_path):
+    """Extract product key from file path (e.g., test_cases_inbox/DETECT/current/ → DETECT).
+    Products come from config.json; filename fallback matches whole tokens only (see products.py)."""
+    return products.product_from_path(file_path)
+
+def get_excel_files(input_path):
+    """Get list of Excel files from path (file or folder)"""
+    path = Path(input_path)
+    
+    if path.is_file():
+        if path.suffix.lower() in ['.xlsx', '.xls']:
+            return [path]
+        else:
+            print(f"✗ File is not an Excel file: {input_path}")
+            sys.exit(1)
+    
+    elif path.is_dir():
+        # Search for Excel files
+        excel_files = list(path.glob('*.xlsx')) + list(path.glob('*.xls')) + list(path.glob('**/*.xlsx')) + list(path.glob('**/*.xls'))
+        if not excel_files:
+            print(f"✗ No Excel files found in: {input_path}")
+            sys.exit(1)
+        # Skip Excel lock/temp files ("~$Name.xlsx" exists while the workbook is open in Excel)
+        excel_files = [f for f in excel_files if not f.name.startswith('~$')]
+        if not excel_files:
+            print(f"✗ No Excel files found in: {input_path} (only lock files - close Excel?)")
+            sys.exit(1)
+        return sorted(set(excel_files))  # Remove duplicates and sort
+    
+    else:
+        print(f"✗ Path not found: {input_path}")
+        sys.exit(1)
+
+# Stable namespace for deterministic point IDs (do not change once data is ingested)
+POINT_NAMESPACE = uuid.UUID("6f1c2d3e-8a4b-4c5d-9e0f-a1b2c3d4e5f6")
+
+
+def make_point_id(product, key, excel_file, row_num):
+    """Deterministic UUID per (product, test-case key).
+    - Re-ingesting the same test case UPDATES it instead of duplicating it.
+    - Different products / files never overwrite each other (old code restarted IDs at 1 every run).
+    """
+    k = str(key).strip()
+    ident = f"{product or 'UNKNOWN'}:{k}" if k and not k.startswith('UNKNOWN_') \
+        else f"{product or 'UNKNOWN'}:{Path(excel_file).name}:{row_num}"
+    return str(uuid.uuid5(POINT_NAMESPACE, ident))
+
+
+def _clean(value):
+    """Excel NaN/None -> '' ; everything else -> stripped str."""
+    if value is None:
+        return ''
+    try:
+        if pd.isna(value):
+            return ''
+    except (TypeError, ValueError):
+        pass
+    return str(value).strip()
+
+
+def ensure_payload_indexes():
+    """Keyword indexes so product/feature filters stay fast. Safe to call repeatedly."""
+    for field in ('product', 'features'):
+        try:
+            qdrant.create_payload_index(COLLECTION_NAME, field_name=field, field_schema='keyword')
+        except Exception as e:  # already exists / older server
+            if 'already exists' not in str(e).lower():
+                print(f"  ⚠ Could not create payload index on '{field}': {str(e)[:80]}")
+
+
+STEP_COL = 'Test Script (Step-by-Step) - Step'
+DATA_COL = 'Test Script (Step-by-Step) - Test Data'
+EXP_COL = 'Test Script (Step-by-Step) - Expected Result'
+
+
+def merge_continuation_rows(df):
+    """Zephyr Scale exports step 2, 3, ... of a test case as extra rows WITHOUT Key/Name.
+    Fold those rows into the test case above them so no steps/expected results are lost.
+    Single-step test cases are left exactly as exported.
+    Returns (df_with_one_row_per_test_case, merged_step_rows, orphan_rows)."""
+    key_col = next((c for c in ('Key', 'key') if c in df.columns), None)
+    name_col = next((c for c in ('Name', 'name') if c in df.columns), None)
+    step_cols = [c for c in (STEP_COL, DATA_COL, EXP_COL) if c in df.columns]
+    if not key_col or not step_cols:
+        return df, 0, 0
+
+    keep, parts, last, merged, orphans = [], {}, None, 0, 0
+    for idx, row in df.iterrows():
+        is_case = _clean(row.get(key_col)) != '' or (name_col and _clean(row.get(name_col)) != '')
+        vals = {c: _clean(row.get(c)) for c in step_cols}
+        if is_case:
+            last = idx
+            keep.append(idx)
+            parts[idx] = [vals]
+        elif any(vals.values()):
+            if last is None:
+                orphans += 1          # step row before any test case - cannot be assigned
+                continue
+            parts[last].append(vals)
+            merged += 1
+        # else: fully blank row -> dropped
+
+    out = df.loc[keep].copy()
+    for c in step_cols:
+        out[c] = out[c].astype(object)
+    for idx, steps in parts.items():
+        if len(steps) < 2:
+            continue
+        for c in step_cols:
+            lines = [f"Step {n}: {st[c]}" for n, st in enumerate(steps, 1) if st[c]]
+            out.at[idx, c] = "\n".join(lines)
+    return out, merged, orphans
+
+
+def ingest_excel_file(excel_file, point_id_counter, product=None):
+    """Ingest a single Excel file. Returns (updated_point_id, count, success)."""
+    print(f"\n[FILE] Processing: {excel_file.name}")
+    
+    # Auto-detect product from file path if not provided
+    if not product:
+        product = extract_product_from_path(excel_file)
+        if product:
+            print(f"  ℹ Auto-detected product: {product}")
+    
+    point_id = point_id_counter
+    points_batch = []
+    total_ingested = 0
+    ingestion_success = False
+    
+    try:
+        # Read Excel file
+        df = pd.read_excel(excel_file, sheet_name=0)
+        
+        if df.empty:
+            print("  ⚠ Excel file is empty, skipping")
+            return point_id, 0, False
+        
+        df, merged_rows, orphan_rows = merge_continuation_rows(df)
+        print(f"  ℹ Found {len(df)} test cases")
+        if merged_rows:
+            print(f"  ℹ Merged {merged_rows} extra step row(s) into their parent test case")
+        if orphan_rows:
+            print(f"  ⚠ {orphan_rows} step row(s) had no test case above them and were skipped")
+        
+        for idx, row in df.iterrows():
+            row_num = idx + 2  # Excel row number (header is row 1); index preserved by merge
+            # Extract fields from Excel columns (handle various column names)
+            key = row.get('Key') or row.get('key') or f'UNKNOWN_{point_id}'
+            name = row.get('Name') or row.get('name') or ''
+            objective = row.get('Objective') or row.get('objective') or ''
+            precondition = row.get('Precondition') or row.get('precondition') or ''
+            status = row.get('Status') or row.get('status') or ''
+            priority = row.get('Priority') or row.get('priority') or ''
+            severity = row.get('Severity') or row.get('severity') or ''
+            component = row.get('Component') or row.get('component') or ''
+            folder = row.get('Folder') or row.get('folder') or ''
+            test_type = row.get('Test_Type') or row.get('test_type') or ''
+            automation_status = row.get('Automation_Status') or row.get('automation_status') or ''
+            
+            # Test script fields (multiple formats possible)
+            steps = row.get('Test Script (Step-by-Step) - Step') or row.get('steps') or ''
+            test_data = row.get('Test Script (Step-by-Step) - Test Data') or row.get('test_data') or ''
+            expected_result = row.get('Test Script (Step-by-Step) - Expected Result') or row.get('expected_result') or ''
+            plain_text_script = row.get('Test Script (Plain Text)') or ''
+            bdd_script = row.get('Test Script (BDD)') or ''
+            
+            # Use plain text or BDD as fallback if step-based script is empty
+            if pd.isna(steps) or (isinstance(steps, str) and not steps.strip()):
+                if pd.notna(plain_text_script) and isinstance(plain_text_script, str):
+                    steps = plain_text_script
+                elif pd.notna(bdd_script) and isinstance(bdd_script, str):
+                    steps = bdd_script
+            
+            # Clean up NaN values (the previous locals()[...] = '' approach had no effect in a
+            # function, so empty cells were stored as the text "nan")
+            key, name, objective, precondition, status, priority, severity, component, folder, \
+                test_type, automation_status, steps, test_data, expected_result = map(_clean, (
+                    key, name, objective, precondition, status, priority, severity, component, folder,
+                    test_type, automation_status, steps, test_data, expected_result))
+            if not key or key.lower() == 'nan':
+                key = f'UNKNOWN_{point_id}'
+
+            # Feature tagging from glossary.json (e.g. A/B = ABT = AB testing)
+            features = glossary.detect_features(
+                f"{name} {folder} {component} {objective} {precondition} {steps} {expected_result}")
+            
+            # Build comprehensive test case text
+            test_case_text = f"""
+Test Case: {name}
+Key: {key}
+Objective: {objective}
+Precondition: {precondition}
+Steps: {steps}
+Test Data: {test_data}
+Expected Result: {expected_result}
+Folder: {folder}
+Component: {component}
+Type: {test_type}
+{glossary.feature_line(features)}
+            """.strip()
+            
+            if not test_case_text or not name:
+                continue
+            
+            try:
+                # Embed
+                embedding = embedder.encode(test_case_text).tolist()
+                
+                # Create payload with rich metadata
+                payload = {
+                    'key': str(key),
+                    'summary': str(name),
+                    'product': product if product else 'UNKNOWN',  # ✅ ADD PRODUCT FIELD
+                    'content': test_case_text,
+                    'features': features,          # e.g. ["AB_TESTING"] - filterable
+                    'metadata': {
+                        'objective': str(objective),
+                        'precondition': str(precondition),
+                        'steps': str(steps),
+                        'test_data': str(test_data),
+                        'expected_result': str(expected_result),
+                        'priority': str(priority),
+                        'severity': str(severity),
+                        'status': str(status),
+                        'component': str(component),
+                        'folder': str(folder),
+                        'test_type': str(test_type),
+                        'automation_status': str(automation_status),
+                        'excel_file': excel_file.name,
+                        'excel_row': row_num,
+                    }
+                }
+                
+                points_batch.append(
+                    PointStruct(id=make_point_id(product, key, excel_file, row_num),
+                                vector=embedding, payload=payload)
+                )
+                point_id += 1
+                total_ingested += 1
+                
+                if len(points_batch) >= 50:
+                    qdrant.upsert(
+                        collection_name=COLLECTION_NAME,
+                        points=points_batch
+                    )
+                    print(f"  ✓ Batch {total_ingested}: {len(points_batch)} test cases")
+                    points_batch = []
+            
+            except Exception as e:
+                print(f"  ⚠ Row {row_num}: Skipped - {str(e)[:60]}")
+                continue
+        
+        # Final batch
+        if points_batch:
+            qdrant.upsert(
+                collection_name=COLLECTION_NAME,
+                points=points_batch
+            )
+            print(f"  ✓ Final batch: {len(points_batch)} test cases")
+        
+        print(f"  ✓ File complete: {total_ingested} test cases ingested")
+        ingestion_success = True
+        return point_id, total_ingested, ingestion_success
+    
+    except Exception as e:
+        print(f"  ✗ Error reading Excel file: {e}")
+        return point_id, 0, False
+
+def move_processed_file(excel_file, product_key=None):
+    """Move successfully processed Excel file to processed folder"""
+    
+    # Auto-detect product if not provided
+    if not product_key:
+        product_key = extract_product_from_path(excel_file)
+    
+    if not product_key:
+        print(f"  ⚠ Could not determine product for {excel_file.name}, not moving")
+        return False
+    
+    # Determine destination folder
+    processed_folder = Path(f'test_cases_processed/{product_key}')
+    
+    # Create processed folder if it doesn't exist
+    processed_folder.mkdir(parents=True, exist_ok=True)
+    
+    # Move file
+    destination = processed_folder / excel_file.name
+    try:
+        shutil.move(str(excel_file), str(destination))
+        print(f"  ✓ Moved to: {destination}")
+        return True
+    except Exception as e:
+        print(f"  ⚠ Warning: Could not move file - {e}")
+        return False
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Ingest test cases from Jira Excel exports into Qdrant. Auto-moves files after ingestion.'
+    )
+    parser.add_argument('input_path', help='Excel file or folder containing Excel files')
+    parser.add_argument('--clear', action='store_true', help='Clear collection before ingesting')
+    parser.add_argument('--no-move', action='store_true', help='Do not move files after ingestion')
+    args = parser.parse_args()
+
+    if not os.path.exists(args.input_path):
+        print(f"✗ Path not found: {args.input_path}")
+        sys.exit(1)
+    
+    # Get list of Excel files
+    excel_files = get_excel_files(args.input_path)
+    
+    print()
+    print("=" * 70)
+    print("EXCEL → QDRANT TEST CASE INGESTION (AUTO FILE MOVEMENT)")
+    print(f"Input: {args.input_path}")
+    print(f"Excel files found: {len(excel_files)}")
+    print(f"Auto-move: {'OFF' if args.no_move else 'ON'}")
+    print("=" * 70)
+    print()
+
+    # Clear collection if requested
+    if args.clear:
+        print("[SETUP] Initializing Qdrant collection...")
+        try:
+            qdrant.delete_collection(COLLECTION_NAME)
+            print(f"  ✓ Cleared old collection")
+        except:
+            pass
+
+        try:
+            qdrant.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
+            )
+            print(f"  ✓ Created collection: {COLLECTION_NAME}")
+        except Exception as e:
+            print(f"  ✗ Failed to create collection: {e}")
+            sys.exit(1)
+        print()
+
+    # Process each Excel file
+    print(f"[INGESTION] Processing {len(excel_files)} Excel file(s)...\n")
+    
+    ensure_payload_indexes()
+
+    # Warn if the collection still holds points from the OLD integer-ID scheme: appending
+    # without --clear would then create duplicates (old int IDs + new UUIDs).
+    if not args.clear:
+        try:
+            pts, _ = qdrant.scroll(COLLECTION_NAME, limit=1, with_payload=False, with_vectors=False)
+            if pts and isinstance(pts[0].id, int):
+                print("  ⚠ Collection contains points from the old integer-ID scheme.")
+                print("    Re-ingest ALL products once, starting with --clear, to avoid duplicates.\n")
+        except Exception:
+            pass
+
+    point_id = 1  # counter only (used for UNKNOWN_ keys); real point IDs are deterministic UUIDs
+    total_all_files = 0
+    files_moved = 0
+    
+    for excel_file in excel_files:
+        product = extract_product_from_path(excel_file)
+        point_id, file_count, success = ingest_excel_file(excel_file, point_id, product)
+        total_all_files += file_count
+        
+        # Move file to processed folder if ingestion was successful
+        if success and file_count > 0 and not args.no_move:
+            if move_processed_file(excel_file, product):
+                files_moved += 1
+    
+    # Verify
+    print()
+    print("[VERIFICATION] Final status...")
+    info = qdrant.get_collection(COLLECTION_NAME)
+    print(f"  ✓ Collection: {COLLECTION_NAME}")
+    print(f"  ✓ Total points: {info.points_count}")
+    
+    print()
+    print("=" * 70)
+    print("✓ INGESTION COMPLETE")
+    print("=" * 70)
+    print()
+    print("Summary:")
+    print(f"  Excel files processed: {len(excel_files)}")
+    print(f"  Test cases ingested: {total_all_files}")
+    print(f"  Excel files moved: {files_moved}/{len(excel_files)}")
+    print(f"  Total points in Qdrant: {info.points_count}")
+    print()
+    if not args.no_move:
+        print("File movement:")
+        print(f"  Moved to: test_cases_processed/{{PRODUCT}}/")
+    print()
+    print("Next step:")
+    print(f"  python3 agent.py HMA-401957")
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,188 @@
+{
+  "_readme": [
+    "Feature glossary used by ingest_from_excel.py, tag_existing_points.py and the web app.",
+    "label    : canonical name shown in the UI and added to embedded text.",
+    "aliases  : every name the team uses; added to embedded text / queries so similarity search links them.",
+    "patterns : case-insensitive regexes used to DETECT the feature in test cases and queries.",
+    "           Boundaries are added automatically (no letter/digit directly before or after), so",
+    "           'ABT' matches 'ABT_034' and 'Open ABT tab' but not 'ABTRACT'.",
+    "           Avoid very short/ambiguous patterns (e.g. bare 'AB').",
+    "After editing: python3 glossary.py --check   (validates and runs each entry's examples)",
+    "query_intents: QA wording in a QUESTION that must not be confused with product terms. The matched phrase is REPLACED by 'search_as' for retrieval, and 'guidance' is given to the chat LLM.",
+    "label_tag: optional Zephyr label (normalised, upper-case) - cases with this label are searched as an extra list.",
+    "products: optional list - the feature is only detected in test cases of these products (and in queries when that product, or no product, is selected). Use for abbreviations that mean different things per product, e.g. EP = Event Pattern (INTERACT) but Endpoint (DETECT)."
+  ],
+  "features": {
+    "AB_TESTING": {
+      "label": "A/B Testing",
+      "aliases": [
+        "A/B",
+        "A/B test",
+        "A/B testing",
+        "AB test",
+        "AB testing",
+        "ABTesting",
+        "ABTest",
+        "ABT"
+      ],
+      "patterns": [
+        "a\\s*/\\s*b(?:[\\s_-]*test(?:ing|s)?)?",
+        "ab[\\s_-]*test(?:ing|s)?",
+        "abt"
+      ],
+      "examples_match": [
+        "A/B Testing",
+        "A/B \ntesting",
+        "AB Testing",
+        "TC_DT_ABTesting_DDL_001",
+        "ABT_034",
+        "Open ABT tab",
+        "ABTest",
+        "ABt_Rule_Only_Filter_044",
+        "a/b test"
+      ],
+      "examples_no_match": [
+        "ABTRACT",
+        "LAB test",
+        "Tab testing",
+        "table ABC",
+        "AB",
+        "ABS value",
+        "stab_test"
+      ]
+    },
+    "RTP": {
+      "label": "Real-time Personalization",
+      "aliases": [
+        "RTP",
+        "Real-time personalization",
+        "Real time personalization",
+        "Realtime personalization",
+        "Real-time personalisation"
+      ],
+      "patterns": [
+        "rtp",
+        "real[\\s_-]*time[\\s_-]*personali[sz]ation"
+      ],
+      "examples_match": [
+        "RTP",
+        "TC_RTP_Offer_001",
+        "Verify RTP rules",
+        "Real-time personalization",
+        "real time personalization",
+        "RealTimePersonalization",
+        "Real-Time\nPersonalization",
+        "real_time_personalisation"
+      ],
+      "examples_no_match": [
+        "RT",
+        "TC_RT_ABTesting_074",
+        "RTDeployment_Page__039",
+        "RTSelectionMethod",
+        "real-time deployment",
+        "HTTP",
+        "SRTP",
+        "RTPS",
+        "personalization"
+      ]
+    },
+    "EVENT_PATTERN": {
+      "label": "Event Pattern",
+      "products": [
+        "INTERACT"
+      ],
+      "aliases": [
+        "Event Pattern",
+        "Event Patterns",
+        "EventPattern",
+        "EP"
+      ],
+      "patterns": [
+        "event[\\s_-]*patterns?",
+        "ep"
+      ],
+      "examples_match": [
+        "Event Pattern",
+        "Event Patterns",
+        "EventPattern",
+        "Eventpattern",
+        "event\npattern",
+        "TC_ADV_EP_Validate_UI_Details_05",
+        "Verify in EP",
+        "EP negative scenarios"
+      ],
+      "examples_no_match": [
+        "EPS",
+        "step",
+        "Endpoint",
+        "EP2",
+        "event",
+        "pattern",
+        "PatternNode",
+        "repeat"
+      ]
+    },
+    "TRIGGER_ACTION": {
+      "label": "Trigger Action",
+      "products": [
+        "INTERACT"
+      ],
+      "aliases": [
+        "Trigger Action",
+        "Trigger Actions",
+        "TriggerAction",
+        "TA"
+      ],
+      "patterns": [
+        "trigger[\\s_-]*actions?",
+        "ta"
+      ],
+      "examples_match": [
+        "Trigger Actions",
+        "Trigger Action",
+        "TriggerAction",
+        "trigger_action",
+        "Verify TA added to Interactive Channel",
+        "Verify in TA",
+        "Add delay in TA"
+      ],
+      "examples_no_match": [
+        "DATA",
+        "TAB",
+        "TAX",
+        "Trigger",
+        "triggered",
+        "triggered action",
+        "metadata",
+        "TA1"
+      ]
+    }
+  },
+  "query_intents": {
+    "NEGATIVE_TESTING": {
+      "label": "Negative testing (QA meaning)",
+      "patterns": [
+        "negative[\\s_-]*(?:test(?:s|ing)?|scenarios?|cases?|flows?|paths?)(?:[\\s_-]*(?:scenarios?|cases?))?",
+        "(?:test|testing)[\\s_-]*(?:scenarios?|cases?)?[\\s_-]*(?:that\\s+are\\s+)?negative"
+      ],
+      "search_as": "invalid input, error handling, validation message, not allowed, cannot save, mandatory field blank, boundary value exceeded, special characters, failure case",
+      "guidance": "The user means NEGATIVE TESTING in the QA sense: tests that use invalid/unexpected input or conditions and EXPECT a rejection, error, validation message or no effect. This is NOT the same as product features named 'Negative Event' or 'Negative Action' (e.g. in Interact event patterns) - tests that configure those features successfully are POSITIVE tests. Only list cases whose steps/expected results show an error, validation, rejection or 'should not' outcome, or that are labelled Negative. If the retrieved cases are feature tests of Negative Event/Action, say so explicitly and do not present them as negative tests.",
+      "examples_match": [
+        "Give me the negative test scenarios for Event Pattern",
+        "negative test cases for RTP",
+        "negative scenarios",
+        "any negative testing for offers?",
+        "negative flows",
+        "test cases that are negative"
+      ],
+      "examples_no_match": [
+        "negative event in event pattern",
+        "Negative Action tab",
+        "dependent event with negative action",
+        "TC_ADV_EP_TimeBound_Negative_Event_TimePeriod_Week_RT_36",
+        "negative value"
+      ],
+      "label_tag": "NEGATIVE"
+    }
+  }
+}

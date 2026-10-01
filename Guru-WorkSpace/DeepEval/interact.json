@@ -1,0 +1,191 @@
+[
+  {
+    "question": "What all cache management we support in Interact?",
+    "expected_answer": "Unica Interact supports these cache management solutions by default:\nIgnite (memory-centric distributed caching solution included with Interact)\nEHCache (open-source caching solution included with every Interact installation)\nRedis (open-source in-memory data structure store that can be used as a database, cache, message broker, and streaming engine)",
+    "actual_answer": "Unica Interact supports these cache management solutions:\n- **Ignite** (memory-centric distributed caching solution included with Interact)\n- **EHCache** (open-source caching solution included with every Interact installation)\n- **Redis** (open-source in-memory data structure store used as a database/cache; supported as another caching solution for dynamically changing environments such as cloud providers)\n\nFor example, in large-volume environments with multiple runtime servers fronted by a load balancer, using a cache manager helps share runtime load across servers and maintain **session affinity** (subsequent requests for a session are handled by the same runtime server that created the session).  \n\nNote: From 12.1.6 onwards, support of Distributed EHCache is reintroduced with Redis as an L2 cache.\n\nSee *Unica Interact V26.1.0 Tuning Guide* for more details: [UnicaInteract26_1_0TuningGuide_en_us.pdf](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0TuningGuide_en_us.pdf#page=3)",
+    "api_error": null,
+    "metadata": {
+      "category": "interact",
+      "difficulty": "easy",
+      "test_type": "simple_factual"
+    },
+    "metrics": {
+      "answer_relevancy": {
+        "score": 1.0,
+        "success": true,
+        "reason": "The score is 1.00 because there are no irrelevant statements in the actual output, indicating a direct and relevant response to the input question about cache management in Interact.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "hallucination": {
+        "score": 1.0,
+        "success": true,
+        "reason": "The score is 1.00 because the actual output fully aligns with the provided context, indicating no hallucinations.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "correctness": {
+        "score": 0.8,
+        "success": true,
+        "reason": "The actual output closely matches the expected output in terms of supported cache management solutions, but the expected output includes a more detailed description of Redis, which is not present in the actual output.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "contextual_precision": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_recall": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_relevancy": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "faithfulness": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      }
+    },
+    "overall_pass": true
+  },
+  {
+    "question": "How do I set up a new interactive channel, add a zone to it, and enable learning mode?",
+    "expected_answer": "To set up a new Unica Interact interactive channel, add a zone, and enable learning mode, follow these steps.\nA) Create a new interactive channel\nGo to Interact > Interactive channels.\nOn All interactive channels, click the Add interactive channel icon.\nIn the Interactive channel summary dialog:\nEnter Name and Description.\nSelect the Security policy (you cannot change the security policy after creation).\n(Optional) Select a parent interactive channel if you want to reuse marketing objects.\nSelect one or more Runtime server groups.\nSelect the Production runtime server group.\nSet Maximum # of times to show any offer during a single visit.\nClick Save and return.\nB) Add a zone to the interactive channel\nOpen the interactive channel and go to the Interaction points tab.\nClick the Add zone icon.\nIn the Add/edit Zone dialog:\nEnter a Name and Description.\n(Optional) Click Advanced features to configure additional settings (including learning mode options for the zone).\nClick Save and return.\nC) Enable learning mode (for the zone)\nWhen you\u2019re adding/editing the zone, use Advanced features \u2192 Learning mode and choose one of the available settings:\nInherit from interactive channel (default)\nUse marketer\u2019s scores only\nUse custom learning model (select from the drop-down; if no custom learning models exist for the interactive channel, this option is unavailable)\nYou can also add zones (and add interaction points under them) from the Strategy tab:\nGo to the interactive channel\u2019s Strategy tab and click Add/Modify Rules.\nIn the Zone area, click Add Zone.\nProvide Zone Info and (optionally) add Interaction Points (including a Default String to return).\nUnder Learning Mode, select:\nInherit from interactive channel, Use marketer\u2019s scores only, or Use custom learning model\nClick Add New Zone.\nIf you want \u201ccustom learning model\u201d behavior, you typically need to create/enable a learning model for the interactive channel (via the Self learning tab) and click Enable for that model.",
+    "actual_answer": "To set up a new **Unica Interact** interactive channel, add a zone, and enable/choose a learning mode:\n\n1) Create a new interactive channel\n1. Go to **Interact > Interactive channels** (opens the *All interactive channels* page).\n2. Click the **Add interactive channel** icon.\n3. In the *Interactive channel summary* dialog, enter:\n   - **Name** and **Description**\n   - **Security policy** (you *cannot* change the security policy after the channel is created)\n   - Optional: **Parent interactive channel** (to reuse marketing objects)\n   - **Runtime server groups** (you can select multiple)\n   - **Production runtime server group**\n   - **Maximum # of times to show any offer during a single visit**\n4. Click **Save and return**.\n\n2) Add a zone to the interactive channel\nYou can add zones from the Interactive Channel\u2019s **Interaction points** tab:\n1. Open the interactive channel and go to the **Interaction points** tab.\n2. Click the **Add zone** icon.\n3. In the *Add/edit Zone* dialog, enter:\n   - **Name**\n   - **Description**\n4. (Optional) Click **Advanced features** to set learning behavior for the zone (see next section).\n5. Click **Save and return**.\n\n(Alternative UI) If you\u2019re working under the **Strategy** tab:\n1. Click **Add/Modify Rules**\n2. In the **Zone** list, click **Select or drag zone**, then click **Add Zone**\n3. Provide **Zone Info** (name/description), optionally add **Interaction Point(s)**, and set **Learning Mode**\n4. Click **Add New Zone**\n\n3) Enable/choose learning mode (interactive channel / zone level)\nWhen adding/editing a **zone**, use **Advanced features > Learning mode** to enable how learning is applied for that zone. You can choose:\n- **Inherit from interactive channel** (default)\n- **Use marketer\u2019s scores only**\n- **Use custom learning model** (select a custom model by name; if none exist, this option is dimmed)\n\nThere are also zone-level settings that determine how Interact resolves *mixed learning* conflicts (for example, some offers coming from learning-enabled sources and others from non-learning sources), such as:\n- **Intermixing - Use Learning Mode for this zone (Default)**\n- **Prioritizing non-learning offers**\n- **Prioritizing learning offers**\n- **Prioritizing non-learning offers: dedupe**\n- **Prioritizing learning offers: dedupe**\n- **% Random** (overrides the global percentRandomSelection setting if set at the zone)\n\nTo use a **custom learning model** (\u201cself learning\u201d) for an interactive channel:\n- Go to the interactive channel\u2019s **Self learning** tab\n- Click **Add model**, define predictive attributes/event patterns, click **Enable**, then **Save and return**\n\nNote: Before you can use the Self Learning feature, you must enable built-in learning globally for your Unica Interact environment. For information about enabling the learning module and more information about learning in general, see the Unica Interact Administrator's Guide.\n\nFor more details, see: [UnicaInteract26_1_0UserGuide_en_us.pdf](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0UserGuide_en_us.pdf#page=40) (please review the document for more information).\n\nIf you tell me whether you\u2019re using the **Interaction points tab** flow or the **Strategy tab** flow, I can tailor the exact clicks/fields to that UI.",
+    "api_error": null,
+    "metadata": {
+      "category": "interact",
+      "difficulty": "medium",
+      "test_type": "multi_step"
+    },
+    "metrics": {
+      "answer_relevancy": {
+        "score": 1.0,
+        "success": true,
+        "reason": "The score is 1.00 because the input is clear and concise, and the actual output directly addresses the question, with no irrelevant statements.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "hallucination": {
+        "score": 0.5,
+        "success": false,
+        "reason": "The score is 0.50 because the actual output partially aligns with the contexts, with 50% of the alignments being factual and 50% of the contradictions being present.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "correctness": {
+        "score": 0.4,
+        "success": false,
+        "reason": "The response does not provide a clear and concise step-by-step guide for setting up a new interactive channel, adding a zone, and enabling learning mode. The expected output is more detailed and includes specific UI elements and settings.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "contextual_precision": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_recall": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_relevancy": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "faithfulness": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      }
+    },
+    "overall_pass": false
+  },
+  {
+    "question": "What is the difference between a treatment rule and an eligibility rule in Interact, and which one determines the final offer ranking?",
+    "expected_answer": "In Unica Interact, a treatment rule is the primary rule object used to decide which offers are candidates for a visitor and interaction point (zone), while an eligibility rule/expression is the eligibility criterion evaluated (often at runtime) to decide whether a treatment rule (and its offer/offer list) is eligible to participate.\n\nTreatment rule (what it is)\nThe main guideline Interact uses to present offers.\nContains three required elements: smart segment, zone (with interaction points), and an offer or offer list.\nCan also include a marketing score (default 50) to weight offers, and optional features such as suppression, score overrides, learning, etc.\nInteract uses treatment rules as the first-level method to determine which offers are eligible for a visitor.\n(Example: you can assign multiple offers to the same segment/zone via multiple treatment rules.)\n\nEligibility rule / eligibility expression (what it does)\nEligibility determines whether an offer (via its treatment rule) is eligible at runtime.\nAn offer is only eligible if it is within its effective period (Effective to Expiration date) and/or an expression evaluates to true at runtime.\nYou can write eligibility expressions directly in treatment rules (for example, based on offer attributes like offer.dynamic.ownProductX='yes'), to control targeting outside interactive flowcharts.\n\nWhich determines the final offer ranking?\nFinal ranking is driven by score/arbitration after eligibility filtering, primarily using the marketing score (and any configured dynamic scoring/learning/overrides).\nSpecifically: Interact calculates a score for each eligible treatment rule/offer, and when multiple offers are available, it uses the marketing score to determine which offer to recommend (higher score wins). If scores tie, Interact breaks the tie via random selection (configurable).",
+    "actual_answer": "In Unica Interact, a *treatment rule* is the main rule construct used to decide **which offers are candidates** and how they\u2019re processed for a visitor request, while an *eligibility rule* (called an **eligibility predicate/expression**) is the **boolean condition** used to decide whether a rule/offer is **eligible at runtime**.\n\n**Treatment rule**\n- The primary guideline Interact uses to present offers. A treatment rule ties together the required elements:\n  - a *smart segment* to target,\n  - a *zone/interaction point context* (where the visitor is interacting),\n  - and an *offer or offer list* to present.  \n- For candidate offers coming from treatment rules, Interact:\n  - performs an *eligibility test* using criteria defined with each treatment rule,\n  - calculates a *score* for each eligible rule/offer (can be dynamic based on real-time profile and historic activity),\n  - and then sorts/returns offers accordingly.  \n- Each treatment rule also has a **marketing score** (default 50) that influences selection; higher scores are more likely to be presented, and ties can be broken randomly.  \n\n**Eligibility rule (eligibility predicate/expression)**\n- The runtime condition that determines whether an offer/rule is eligible. An offer is only eligible if it\u2019s within its effective period (Effective/Expiration) and/or its eligibility expression evaluates to true at runtime.\n- You can write these eligibility expressions directly within treatment rules (for example, using offer attributes like `offer.dynamic.ownProductX='yes'`) to control targeting.\n\n**Which determines the final offer ranking?**\n- **Final offer ranking is determined by scoring and arbitration after eligibility is applied.** Specifically:\n  - First, eligibility is evaluated; ineligible rules/offers are excluded.\n  - Then Interact calculates scores for eligible candidates (including the treatment rule\u2019s marketing score and any dynamic scoring logic) and **sorts offers based on the calculated score**, returning the top offers requested.\n\nFor more details, see *UnicaInteract26_1_0UserGuide_en_us.pdf* ([Page 88](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0UserGuide_en_us.pdf#page=88), [Page 89](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0UserGuide_en_us.pdf#page=89)).",
+    "api_error": null,
+    "metadata": {
+      "category": "interact",
+      "difficulty": "medium",
+      "test_type": "multi_document"
+    },
+    "metrics": {
+      "answer_relevancy": {
+        "score": 1.0,
+        "success": true,
+        "reason": "The score is 1.00 because the actual output is highly relevant to the input question, providing a clear and concise explanation of the difference between treatment rules and eligibility rules in Interact, and how they determine the final offer ranking.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "hallucination": {
+        "score": 0.0,
+        "success": false,
+        "reason": "The score is 0.00 because there are no factual alignments or contradictions found between the actual output and the contexts, indicating that the output aligns perfectly with the provided information.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "correctness": {
+        "score": 0.6,
+        "success": false,
+        "reason": "The response does not fully align with the evaluation steps, as it does not clearly state which part of the actual output is incorrect or inconsistent with the expected output. The response also does not provide a clear explanation of why the score was given.",
+        "error": null,
+        "skipped_reason": null
+      },
+      "contextual_precision": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_recall": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "contextual_relevancy": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      },
+      "faithfulness": {
+        "score": null,
+        "success": null,
+        "reason": null,
+        "error": null,
+        "skipped_reason": "API response did not expose retrieved context"
+      }
+    },
+    "overall_pass": false
+  }
+]

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unica MaxAI DeepEval Report — interact</title>
+<style>
+  :root {
+    --bg:#0f1420; --panel:#171d2c; --panel2:#1e2536; --line:#2a3348;
+    --text:#e6eaf3; --muted:#95a0b8; --pass:#2ecc71; --fail:#ff5f6d;
+    --warn:#f5b342; --na:#6b7690; --accent:#4c9aff;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:#f5f7fb; --panel:#ffffff; --panel2:#f0f3f9; --line:#dde3ee;
+      --text:#131824; --muted:#5a6580; --na:#98a1b5;
+    }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+    font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:1200px; margin:0 auto; padding:28px 20px 60px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  .sub { color:var(--muted); font-size:13px; margin-bottom:22px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:22px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px 16px; }
+  .card .n { font-size:26px; font-weight:600; }
+  .card .l { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.4px; }
+  .pass { color:var(--pass); } .fail { color:var(--fail); } .warnc { color:var(--warn); }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:22px; }
+  .panel h2 { font-size:15px; margin:0 0 12px; }
+  .avg { display:grid; grid-template-columns:190px 1fr 70px; gap:10px; align-items:center; margin-bottom:8px; }
+  .bar { background:var(--panel2); border-radius:99px; height:8px; overflow:hidden; }
+  .bar > i { display:block; height:100%; border-radius:99px; background:var(--accent); }
+  .muted { color:var(--muted); }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  input[type=search], select { background:var(--panel); color:var(--text); border:1px solid var(--line);
+    border-radius:8px; padding:9px 11px; font-size:13px; outline:none; }
+  input[type=search] { flex:1; min-width:220px; }
+  input[type=search]:focus, select:focus { border-color:var(--accent); }
+  .row { background:var(--panel); border:1px solid var(--line); border-radius:10px; margin-bottom:8px; overflow:hidden; }
+  .rowhead { display:flex; gap:12px; align-items:flex-start; padding:12px 14px; cursor:pointer; }
+  .rowhead:hover { background:var(--panel2); }
+  .badge { flex:none; font-size:11px; font-weight:700; padding:3px 9px; border-radius:99px; letter-spacing:.4px; }
+  .b-pass { background:rgba(46,204,113,.15); color:var(--pass); }
+  .b-fail { background:rgba(255,95,109,.15); color:var(--fail); }
+  .q { flex:1; font-weight:500; }
+  .tags { color:var(--muted); font-size:12px; margin-top:3px; font-weight:400; }
+  .chev { flex:none; color:var(--muted); transition:transform .15s; }
+  .row.open .chev { transform:rotate(90deg); }
+  .body { display:none; padding:0 14px 16px; border-top:1px solid var(--line); }
+  .row.open .body { display:block; }
+  .sec { margin-top:14px; }
+  .sec h4 { margin:0 0 6px; font-size:12px; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); }
+  .txt { background:var(--panel2); border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+    white-space:pre-wrap; word-break:break-word; }
+  table { width:100%; border-collapse:collapse; margin-top:6px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; font-size:13px; }
+  th { color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.4px; }
+  .s-pass { color:var(--pass); font-weight:600; } .s-fail { color:var(--fail); font-weight:600; }
+  .s-na { color:var(--na); } .s-error { color:var(--warn); font-weight:600; }
+  .err { background:rgba(255,95,109,.12); border:1px solid rgba(255,95,109,.35); color:var(--fail);
+    border-radius:8px; padding:10px 12px; }
+  .empty { text-align:center; color:var(--muted); padding:30px; }
+  ul.ctx { margin:0; padding-left:18px; } ul.ctx li { margin-bottom:5px; }
+  @media print { .controls, .chev { display:none; } .body { display:block !important; } body { background:#fff; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 id="title"></h1>
+  <div class="sub" id="sub"></div>
+
+  <div class="cards" id="cards"></div>
+
+  <div class="panel">
+    <h2>Average scores</h2>
+    <div id="avgs"></div>
+  </div>
+
+  <div class="controls">
+    <input type="search" id="q" placeholder="Search question, answer or reason...">
+    <select id="status"><option value="">All results</option><option value="pass">Passed only</option><option value="fail">Failed only</option></select>
+    <select id="cat"></select>
+    <select id="type"></select>
+  </div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty" style="display:none">No test cases match these filters.</div>
+</div>
+
+<script id="data" type="application/json">{"title": "Unica MaxAI DeepEval Report \u2014 interact", "generatedAt": "2026-09-11 14:27:47", "total": 3, "passed": 3, "failed": 0, "apiErrors": 0, "averages": [{"key": "contextual_precision", "label": "Contextual Precision", "average": null, "evaluated": 0, "lowerIsBetter": false}, {"key": "contextual_recall", "label": "Contextual Recall", "average": null, "evaluated": 0, "lowerIsBetter": false}, {"key": "contextual_relevancy", "label": "Contextual Relevancy", "average": null, "evaluated": 0, "lowerIsBetter": false}, {"key": "faithfulness", "label": "Faithfulness", "average": null, "evaluated": 0, "lowerIsBetter": false}, {"key": "answer_relevancy", "label": "Answer Relevancy", "average": 0.9509803921568628, "evaluated": 3, "lowerIsBetter": false}, {"key": "hallucination", "label": "Hallucination", "average": 1.0, "evaluated": 3, "lowerIsBetter": false}, {"key": "correctness", "label": "Correctness", "average": 0.8666666666666667, "evaluated": 3, "lowerIsBetter": false}], "cases": [{"index": 1, "question": "What all cache management we support in Interact?", "expected": "Unica Interact supports these cache management solutions by default:\nIgnite (memory-centric distributed caching solution included with Interact)\nEHCache (open-source caching solution included with every Interact installation)\nRedis (open-source in-memory data structure store that can be used as a database, cache, message broker, and streaming engine)", "actual": "Unica Interact supports these cache management solutions:\n- **Ignite** (memory-centric distributed caching; built into Interact)\n- **EHCache** (included with every Interact installation; can be configured as **Local** or **Distributed**)\n- **Redis** (supported as an additional caching solution, including support for dynamically changing environments such as cloud providers; can also act as an L2 cache in some configurations)\n\nFor more details, see *UnicaInteract26_1_0TuningGuide_en_us.pdf* ([Page 3](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0TuningGuide_en_us.pdf#page=3)) and *UnicaInteract26_1_0AdminGuide_en_us.pdf* ([Page 268](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0AdminGuide_en_us.pdf#page=268)).", "apiError": null, "retrievedContext": [], "expectedContext": ["Interact cache managemen Ignite EHCache and Redis , details will mention inInteract Tuning Guide "], "category": "interact", "difficulty": "easy", "testType": "simple_factual", "pass": true, "metrics": [{"key": "contextual_precision", "label": "Contextual Precision", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_recall", "label": "Contextual Recall", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_relevancy", "label": "Contextual Relevancy", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "faithfulness", "label": "Faithfulness", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "answer_relevancy", "label": "Answer Relevancy", "state": "pass", "score": 1.0, "detail": "The score is 1.00 because the output fully addresses the user's question about Interact's cache management features without including any irrelevant statements.", "lowerIsBetter": false}, {"key": "hallucination", "label": "Hallucination", "state": "pass", "score": 1.0, "detail": "The score is 1.00 because the actual output fully aligns with the context regarding Interact's support for Ignite, EHCache, and Redis, with no contradictions found.", "lowerIsBetter": false}, {"key": "correctness", "label": "Correctness", "state": "pass", "score": 0.9, "detail": "The actual output directly addresses the input question by listing Ignite, EHCache, and Redis with specific details about their configurations (e.g., Local vs. Distributed for EHCache). However, it deviates from the expected output regarding the definition of Redis; the actual output describes it as an 'additional caching solution' supporting cloud environments, whereas the expected output defines it broadly as a data structure store usable as a database or message broker. Additionally, the actual output includes specific documentation references not present in the expected output. Despite these minor discrepancies in descriptive detail, the core factual claims regarding supported solutions remain consistent.", "lowerIsBetter": false}]}, {"index": 2, "question": "How do I set up a new interactive channel, add a zone to it, and enable learning mode?", "expected": "To set up a new Unica Interact interactive channel, add a zone, and enable learning mode, follow these steps.\nA) Create a new interactive channel\nGo to Interact > Interactive channels.\nOn All interactive channels, click the Add interactive channel icon.\nIn the Interactive channel summary dialog:\nEnter Name and Description.\nSelect the Security policy (you cannot change the security policy after creation).\n(Optional) Select a parent interactive channel if you want to reuse marketing objects.\nSelect one or more Runtime server groups.\nSelect the Production runtime server group.\nSet Maximum # of times to show any offer during a single visit.\nClick Save and return.\nB) Add a zone to the interactive channel\nOpen the interactive channel and go to the Interaction points tab.\nClick the Add zone icon.\nIn the Add/edit Zone dialog:\nEnter a Name and Description.\n(Optional) Click Advanced features to configure additional settings (including learning mode options for the zone).\nClick Save and return.\nC) Enable learning mode (for the zone)\nWhen you\u2019re adding/editing the zone, use Advanced features \u2192 Learning mode and choose one of the available settings:\nInherit from interactive channel (default)\nUse marketer\u2019s scores only\nUse custom learning model (select from the drop-down; if no custom learning models exist for the interactive channel, this option is unavailable)\nYou can also add zones (and add interaction points under them) from the Strategy tab:\nGo to the interactive channel\u2019s Strategy tab and click Add/Modify Rules.\nIn the Zone area, click Add Zone.\nProvide Zone Info and (optionally) add Interaction Points (including a Default String to return).\nUnder Learning Mode, select:\nInherit from interactive channel, Use marketer\u2019s scores only, or Use custom learning model\nClick Add New Zone.\nIf you want \u201ccustom learning model\u201d behavior, you typically need to create/enable a learning model for the interactive channel (via the Self learning tab) and click Enable for that model.", "actual": "To set up a new *Unica Interact* interactive channel, add a zone, and enable learning mode, follow these steps.\n\n1) Create a new interactive channel\nBefore you begin, have these details ready:\n- Name and description for the interactive channel\n- Security policy (if none exist, the default global policy is selected and you cannot change it; you cannot edit the security policy after creating the interactive channel)\n- Optional parent interactive channel (to reuse marketing objects)\n- Runtime server group(s) and production runtime server group\n- Maximum number of times to show any offer during a single visit\n\nSteps:\n1. Select **Interact > Interactive channels**.\n2. On **All interactive channels**, click **Add interactive channel**.\n3. Enter **Name** and **Description**.\n4. Select the **Security policy**.\n5. (Optional) Select a **parent interactive channel** to reuse marketing objects.\n6. Select one or more **Runtime server groups** to associate with this channel.\n7. Select the **Production runtime server group**.\n8. Enter **Maximum # of times to show any offer during a single visit**.\n9. Click **Save and return**.\n\n2) Add a zone to the interactive channel (and optionally set its learning mode)\nSteps:\n1. Open your interactive channel and go to the **Interaction points** tab.\n2. Click **Add zone**.\n3. Enter a **Name** and **Description** for the zone.\n4. Optional: Click **Advanced features** to configure zone-specific learning settings. Under **Learning mode**, choose one of:\n   - **Inherit from interactive channel** (default)\n   - **Use marketer's scores only**\n   - **Use custom learning model** (select from the drop-down)\n\n3) Enable learning mode\n- Learning can be enabled/controlled at multiple levels in Interact: **interactive channel**, **zone**, and **treatment rule**.\n- To enable learning for the *zone*, use the zone\u2019s **Advanced features > Learning mode** options (above).\n- If you want a *custom learning model*, you can create and enable it for the interactive channel:\n  1. Go to the interactive channel\u2019s **Self learning** tab.\n  2. Click **Add model**.\n  3. Enter **Name** and **Description**.\n  4. Define the model by adding visitor attributes and/or event patterns to **Predictive attributes of interest**.\n  5. Click **Enable** to make the model active.\n  6. Click **Save and return**.\n\nNote: Two different ICs having two different patterns used in learning models and deployed- When posted an event from IC2's pattern event pattern from IC1 is also written to the Learning Table. Fundamentally, Unica Interact is designed to be cross channel, so the idea of learning is that the system can learn and apply attributes from all channels.\n\nSource: [UnicaInteract26_1_0UserGuide_en_us.pdf](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0UserGuide_en_us.pdf#page=40) (see the document for more details)", "apiError": null, "retrievedContext": [], "expectedContext": ["To set up a new Unica Interact interactive channel, add a zone, and enable learning mode, follow these steps.\nA) Create a new interactive channel\nGo to Interact > Interactive channels.\nOn All interactive channels, click the Add interactive channel icon.\nIn the Interactive channel summary dialog:\nEnter Name and Description.\nSelect the Security policy (you cannot change the security policy after creation).\n(Optional) Select a parent interactive channel if you want to reuse marketing objects.\nSelect one or more Runtime server groups.\nSelect the Production runtime server group.\nSet Maximum # of times to show any offer during a single visit.\nClick Save and return.\nB) Add a zone to the interactive channel\nOpen the interactive channel and go to the Interaction points tab.\nClick the Add zone icon.\nIn the Add/edit Zone dialog:\nEnter a Name and Description.\n(Optional) Click Advanced features to configure additional settings (including learning mode options for the zone).\nClick Save and return.\nC) Enable learning mode (for the zone)\nWhen you\u2019re adding/editing the zone, use Advanced features \u2192 Learning mode and choose one of the available settings:\nInherit from interactive channel (default)\nUse marketer\u2019s scores only\nUse custom learning model (select from the drop-down; if no custom learning models exist for the interactive channel, this option is unavailable)\nYou can also add zones (and add interaction points under them) from the Strategy tab:\nGo to the interactive channel\u2019s Strategy tab and click Add/Modify Rules.\nIn the Zone area, click Add Zone.\nProvide Zone Info and (optionally) add Interaction Points (including a Default String to return).\nUnder Learning Mode, select:\nInherit from interactive channel, Use marketer\u2019s scores only, or Use custom learning model\nClick Add New Zone.\nIf you want \u201ccustom learning model\u201d behavior, you typically need to create/enable a learning model for the interactive channel (via the Self learning tab) and click Enable for that model."], "category": "interact", "difficulty": "medium", "testType": "multi_step", "pass": true, "metrics": [{"key": "contextual_precision", "label": "Contextual Precision", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_recall", "label": "Contextual Recall", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_relevancy", "label": "Contextual Relevancy", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "faithfulness", "label": "Faithfulness", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "answer_relevancy", "label": "Answer Relevancy", "state": "pass", "score": 0.8529411764705882, "detail": "The score is 0.85 because the output includes several irrelevant statements regarding prerequisites, security constraints, optional features, and specific configuration details that do not address the core 'how-to' steps requested in the input.", "lowerIsBetter": false}, {"key": "hallucination", "label": "Hallucination", "state": "pass", "score": 1.0, "detail": "The score is 1.00 because the actual output fully aligns with the provided contexts, correctly outlining all steps and details without any contradictions.", "lowerIsBetter": false}, {"key": "correctness", "label": "Correctness", "state": "pass", "score": 0.9, "detail": "The actual output directly addresses the user's question by providing a structured, step-by-step guide that aligns well with the expected output. It correctly covers creating an interactive channel, adding zones, and configuring learning modes. However, it omits the alternative method mentioned in the expected output for adding zones via the 'Strategy tab', which represents a minor omission of critical information regarding available workflows.", "lowerIsBetter": false}]}, {"index": 3, "question": "What is the difference between a treatment rule and an eligibility rule in Interact, and which one determines the final offer ranking?", "expected": "In Unica Interact, a treatment rule is the primary rule object used to decide which offers are candidates for a visitor and interaction point (zone), while an eligibility rule/expression is the eligibility criterion evaluated (often at runtime) to decide whether a treatment rule (and its offer/offer list) is eligible to participate.\n\nTreatment rule (what it is)\nThe main guideline Interact uses to present offers.\nContains three required elements: smart segment, zone (with interaction points), and an offer or offer list.\nCan also include a marketing score (default 50) to weight offers, and optional features such as suppression, score overrides, learning, etc.\nInteract uses treatment rules as the first-level method to determine which offers are eligible for a visitor.\n(Example: you can assign multiple offers to the same segment/zone via multiple treatment rules.)\n\nEligibility rule / eligibility expression (what it does)\nEligibility determines whether an offer (via its treatment rule) is eligible at runtime.\nAn offer is only eligible if it is within its effective period (Effective to Expiration date) and/or an expression evaluates to true at runtime.\nYou can write eligibility expressions directly in treatment rules (for example, based on offer attributes like offer.dynamic.ownProductX='yes'), to control targeting outside interactive flowcharts.\n\nWhich determines the final offer ranking?\nFinal ranking is driven by score/arbitration after eligibility filtering, primarily using the marketing score (and any configured dynamic scoring/learning/overrides).\nSpecifically: Interact calculates a score for each eligible treatment rule/offer, and when multiple offers are available, it uses the marketing score to determine which offer to recommend (higher score wins). If scores tie, Interact breaks the tie via random selection (configurable).", "actual": "In Unica Interact, a *treatment rule* is the main guideline used to present offers. It defines **(1) the target smart segment**, **(2) the zone/interaction points**, and **(3) the offer or offer list** to present. Treatment rules are processed through strategies: Interact finds candidate offers from treatment rules, runs eligibility tests, calculates scores, optionally personalizes attributes, and then returns offers.  \n\nAn *eligibility rule* (referred to as an **eligibility predicate/expression** inside a treatment rule) is the **criteria/expression evaluated at runtime** to decide whether a rule/offer is eligible. An offer is eligible only if it is within its effective period (Effective/Expiration dates) and/or the eligibility expression evaluates to true. You can write these eligibility expressions directly in treatment rules (for example, based on offer attributes or day of week) to control targeting outside interactive flowcharts.\n\nWhich determines the final offer ranking?\n- **Eligibility predicates determine whether offers/rules are included at all** (eligible vs. excluded).\n- **Final ranking is determined by score** after eligibility: Interact calculates a score for each eligible treatment rule/offer (using marketing score and optionally dynamic scoring/learning), then offers are sorted based on the calculated score and the top requested offers are returned. If multiple offers have the same score, Interact can break ties randomly (configurable).\n\n[UnicaInteract26_1_0UserGuide_en_us.pdf](https://doc.unica.com/products/interact/26_1_0/en_us/UnicaInteract26_1_0UserGuide_en_us.pdf#page=88) (see the document for more details)", "apiError": null, "retrievedContext": [], "expectedContext": ["Eligibility rules filter which offers a visitor qualifies for.", "Arbitration (treatment) logic ranks eligible offers using scores, priorities, or self-learning models to pick the final offer."], "category": "interact", "difficulty": "medium", "testType": "multi_document", "pass": true, "metrics": [{"key": "contextual_precision", "label": "Contextual Precision", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_recall", "label": "Contextual Recall", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "contextual_relevancy", "label": "Contextual Relevancy", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "faithfulness", "label": "Faithfulness", "state": "na", "detail": "API response did not expose retrieved context"}, {"key": "answer_relevancy", "label": "Answer Relevancy", "state": "pass", "score": 1.0, "detail": "The score is 1.00 because the output directly addresses both parts of the input regarding the differences between treatment and eligibility rules in Interact and correctly identifies which rule determines the final offer ranking, with no irrelevant statements present.", "lowerIsBetter": false}, {"key": "hallucination", "label": "Hallucination", "state": "pass", "score": 1.0, "detail": "The score is 1.00 because the actual output fully aligns with both factual contexts regarding eligibility rules and arbitration logic, with no contradictions present.", "lowerIsBetter": false}, {"key": "correctness", "label": "Correctness", "state": "pass", "score": 0.8, "detail": "The actual output directly addresses the input question by defining both treatment and eligibility rules and explicitly stating that final ranking is determined by score after eligibility filtering, which aligns with the expected output. However, it omits specific details present in the expected output regarding marketing scores (default 50), suppression features, learning capabilities, and the ability to assign multiple offers via multiple treatment rules. Additionally, the actual output includes an external document link rather than strictly adhering to the content scope of the expected output.", "lowerIsBetter": false}]}]}</script>
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('data').textContent);
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+    });
+  };
+  var fmt = function (n) { return n == null ? 'N/A' : n.toFixed(3); };
+
+  document.title = D.title;
+  document.getElementById('title').textContent = D.title;
+  document.getElementById('sub').textContent =
+    'Generated ' + D.generatedAt + ' \u00b7 ' + D.total + ' test cases';
+
+  var rate = D.total ? Math.round(D.passed / D.total * 100) : 0;
+  document.getElementById('cards').innerHTML = [
+    ['Total', D.total, ''],
+    ['Passed', D.passed, 'pass'],
+    ['Failed', D.failed, 'fail'],
+    ['Pass rate', rate + '%', rate >= 80 ? 'pass' : (rate >= 50 ? 'warnc' : 'fail')],
+    ['API errors', D.apiErrors, D.apiErrors ? 'fail' : '']
+  ].map(function (c) {
+    return '<div class="card"><div class="n ' + c[2] + '">' + c[1] + '</div><div class="l">' + c[0] + '</div></div>';
+  }).join('');
+
+  document.getElementById('avgs').innerHTML = D.averages.map(function (a) {
+    var pct = a.average == null ? 0 : Math.round(a.average * 100);
+    var label = esc(a.label) + (a.lowerIsBetter ? ' <span class="muted">(lower is better)</span>' : '');
+    var note = a.evaluated ? '' : ' <span class="muted">&mdash; not evaluated</span>';
+    return '<div class="avg"><div>' + label + note + '</div>' +
+           '<div class="bar"><i style="width:' + pct + '%"></i></div>' +
+           '<div style="text-align:right">' + fmt(a.average) + '</div></div>';
+  }).join('');
+
+  var fill = function (id, values, allLabel) {
+    var el = document.getElementById(id);
+    el.innerHTML = '<option value="">' + allLabel + '</option>' + values.map(function (v) {
+      return '<option value="' + esc(v) + '">' + esc(v) + '</option>';
+    }).join('');
+  };
+  var uniq = function (key) {
+    return D.cases.map(function (c) { return c[key]; })
+      .filter(function (v, i, a) { return v && a.indexOf(v) === i; }).sort();
+  };
+  fill('cat', uniq('category'), 'All products');
+  fill('type', uniq('testType'), 'All test types');
+
+  var metricRows = function (c) {
+    return c.metrics.map(function (m) {
+      var cls = 's-' + m.state;
+      var val = m.state === 'pass' || m.state === 'fail' ? fmt(m.score)
+              : (m.state === 'error' ? 'ERROR' : 'N/A');
+      var status = m.state === 'pass' ? 'PASS' : m.state === 'fail' ? 'FAIL' : '';
+      return '<tr><td>' + esc(m.label) + (m.lowerIsBetter ? ' <span class="muted">(lower is better)</span>' : '') +
+             '</td><td class="' + cls + '">' + val + '</td><td class="' + cls + '">' + status +
+             '</td><td class="muted">' + esc(m.detail) + '</td></tr>';
+    }).join('');
+  };
+
+  var ctxList = function (items) {
+    return '<ul class="ctx">' + items.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>';
+  };
+
+  var render = function (cases) {
+    document.getElementById('empty').style.display = cases.length ? 'none' : 'block';
+    document.getElementById('list').innerHTML = cases.map(function (c) {
+      var tags = [c.category, c.difficulty, c.testType].filter(Boolean).map(esc).join(' \u00b7 ');
+      var body = '';
+      if (c.apiError) {
+        body += '<div class="sec"><h4>API error</h4><div class="err">' + esc(c.apiError) + '</div></div>';
+      }
+      body += '<div class="sec"><h4>Expected answer</h4><div class="txt">' + esc(c.expected || '(none)') + '</div></div>';
+      body += '<div class="sec"><h4>Actual answer</h4><div class="txt">' + esc(c.actual || '(none)') + '</div></div>';
+      body += '<div class="sec"><h4>Metrics</h4><table><tr><th>Metric</th><th>Score</th><th>Result</th><th>Reason</th></tr>' +
+              metricRows(c) + '</table></div>';
+      if (c.retrievedContext.length) {
+        body += '<div class="sec"><h4>Retrieved context</h4>' + ctxList(c.retrievedContext) + '</div>';
+      }
+      if (c.expectedContext.length) {
+        body += '<div class="sec"><h4>Ground-truth context</h4>' + ctxList(c.expectedContext) + '</div>';
+      }
+      return '<div class="row"><div class="rowhead"><span class="chev">&#9656;</span>' +
+             '<span class="badge ' + (c.pass ? 'b-pass">PASS' : 'b-fail">FAIL') + '</span>' +
+             '<span class="q">' + c.index + '. ' + esc(c.question) +
+             '<div class="tags">' + tags + '</div></span></div>' +
+             '<div class="body">' + body + '</div></div>';
+    }).join('');
+  };
+
+  var apply = function () {
+    var q = document.getElementById('q').value.toLowerCase();
+    var st = document.getElementById('status').value;
+    var cat = document.getElementById('cat').value;
+    var ty = document.getElementById('type').value;
+    render(D.cases.filter(function (c) {
+      if (st === 'pass' && !c.pass) return false;
+      if (st === 'fail' && c.pass) return false;
+      if (cat && c.category !== cat) return false;
+      if (ty && c.testType !== ty) return false;
+      if (!q) return true;
+      var hay = [c.question, c.expected, c.actual, c.apiError || ''].join(' ').toLowerCase();
+      if (hay.indexOf(q) !== -1) return true;
+      return c.metrics.some(function (m) { return (m.detail || '').toLowerCase().indexOf(q) !== -1; });
+    }));
+  };
+
+  ['q', 'status', 'cat', 'type'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', apply);
+  });
+
+  document.getElementById('list').addEventListener('click', function (e) {
+    var head = e.target.closest('.rowhead');
+    if (head) head.parentNode.classList.toggle('open');
+  });
+
+  apply();
+})();
+</script>
+</body>
+</html>

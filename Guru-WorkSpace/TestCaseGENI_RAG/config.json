@@ -1,0 +1,280 @@
+{
+  "version": "1.0",
+  "description": "Multi-product Jira test case ingestion configuration",
+  "qdrant": {
+    "url": "http://localhost:6333",
+    "collection_name": "jira_test_cases_all",
+    "embedding_model": "all-MiniLM-L6-v2",
+    "vector_size": 384
+  },
+  "watcher": {
+    "watch_interval_seconds": 5,
+    "batch_size": 50,
+    "inbox_base": "test_cases_inbox",
+    "processed_base": "test_cases_processed",
+    "archive_base": "test_cases_archive",
+    "logs_base": "ingestion_logs"
+  },
+  "products": {
+    "CAMPAIGN": {
+      "name": "Unica Campaign",
+      "description": "Campaign management and orchestration",
+      "project_key": "CAMPAIGN",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/CAMPAIGN/current/",
+          "inbox_archive": "test_cases_inbox/CAMPAIGN/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/CAMPAIGN/",
+          "archive": "test_cases_archive/CAMPAIGN/",
+          "logs": "ingestion_logs/CAMPAIGN/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "CAMPAIGN"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "INTERACT": {
+      "name": "Unica Interact",
+      "description": "Real-time customer interactions",
+      "project_key": "INTERACT",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/INTERACT/current/",
+          "inbox_archive": "test_cases_inbox/INTERACT/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/INTERACT/",
+          "archive": "test_cases_archive/INTERACT/",
+          "logs": "ingestion_logs/INTERACT/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "INTERACT"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "OPTIMIZE": {
+      "name": "Unica Optimize",
+      "description": "Optimization and experimentation",
+      "project_key": "OPTIMIZE",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/OPTIMIZE/current/",
+          "inbox_archive": "test_cases_inbox/OPTIMIZE/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/OPTIMIZE/",
+          "archive": "test_cases_archive/OPTIMIZE/",
+          "logs": "ingestion_logs/OPTIMIZE/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "OPTIMIZE"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "JOURNEY": {
+      "name": "Unica Journey",
+      "description": "Customer journey orchestration",
+      "project_key": "JOURNEY",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/JOURNEY/current/",
+          "inbox_archive": "test_cases_inbox/JOURNEY/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/JOURNEY/",
+          "archive": "test_cases_archive/JOURNEY/",
+          "logs": "ingestion_logs/JOURNEY/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "JOURNEY"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "PLAN": {
+      "name": "Unica Plan",
+      "description": "Marketing planning and budgeting",
+      "project_key": "PLAN",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/PLAN/current/",
+          "inbox_archive": "test_cases_inbox/PLAN/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/PLAN/",
+          "archive": "test_cases_archive/PLAN/",
+          "logs": "ingestion_logs/PLAN/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "PLAN"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "MAXAI": {
+      "name": "MaxAI (Conversational AI)",
+      "description": "Agentic AI platform for conversations",
+      "project_key": "MAXAI",
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/MAXAI/current/",
+          "inbox_archive": "test_cases_inbox/MAXAI/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/MAXAI/",
+          "archive": "test_cases_archive/MAXAI/",
+          "logs": "ingestion_logs/MAXAI/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "MAXAI"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "DETECT": {
+      "name": "Detect",
+      "description": "",
+      "project_key": null,
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/DETECT/current/",
+          "inbox_archive": "test_cases_inbox/DETECT/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/DETECT/",
+          "archive": "test_cases_archive/DETECT/",
+          "logs": "ingestion_logs/DETECT/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "DETECT"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "AC": {
+      "name": "AC",
+      "description": "",
+      "project_key": null,
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/AC/current/",
+          "inbox_archive": "test_cases_inbox/AC/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/AC/",
+          "archive": "test_cases_archive/AC/",
+          "logs": "ingestion_logs/AC/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "AC"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "SC": {
+      "name": "SC",
+      "description": "",
+      "project_key": null,
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/SC/current/",
+          "inbox_archive": "test_cases_inbox/SC/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/SC/",
+          "archive": "test_cases_archive/SC/",
+          "logs": "ingestion_logs/SC/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "SC"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    },
+    "OFFER": {
+      "name": "Offer",
+      "description": "",
+      "project_key": null,
+      "project_id": null,
+      "paths": {
+        "input": {
+          "inbox_current": "test_cases_inbox/OFFER/current/",
+          "inbox_archive": "test_cases_inbox/OFFER/archive/",
+          "description": "Drop CSV files in /current, archive old versions in /archive"
+        },
+        "output": {
+          "processed": "test_cases_processed/OFFER/",
+          "archive": "test_cases_archive/OFFER/",
+          "logs": "ingestion_logs/OFFER/",
+          "description": "Processed CSVs moved here, logs stored in logs/"
+        }
+      },
+      "qdrant": {
+        "collection": "jira_test_cases_all",
+        "metadata_filter": {
+          "product": "OFFER"
+        },
+        "description": "All products use single collection, filtered by product metadata"
+      }
+    }
+  }
+}

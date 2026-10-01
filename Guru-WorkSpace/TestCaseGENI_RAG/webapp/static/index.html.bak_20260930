@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TestCaseGENI – RAG Test Case Assistant</title>
+<style>
+:root{
+  --teal:#17707F;--teal2:#2EC0CB;--teal3:#36D6D9;--blue:#0F5FDC;--blue2:#3C91FF;
+  --ice:#DCE6F0;--grey:#ECF3F8;--dark:#14142B;--bg:#F7F7FC;--navy:#0B1D3A;
+  --ok:#00C3CD;--warn:#F5A623;--err:#DC3545;
+  --grad:linear-gradient(135deg,#0B1D3A 0%,#17707F 45%,#2EC0CB 85%,#36D6D9 100%);
+  --font:Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);color:var(--dark);background:var(--bg);height:100vh;display:flex;flex-direction:column}
+header{background:var(--grad);color:#fff;padding:14px 24px;display:flex;align-items:center;gap:24px}
+header h1{font-size:1.35rem;margin:0;font-weight:700;letter-spacing:.3px}
+header .sub{font-size:.8rem;opacity:.85}
+.badges{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.badge{font-size:.72rem;padding:4px 10px;border-radius:12px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);white-space:nowrap}
+.badge .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;background:#aaa}
+.dot.on{background:#7CFFB2}.dot.off{background:#FF8A8A}
+nav{display:flex;gap:4px;background:#fff;border-bottom:1px solid var(--ice);padding:0 24px}
+nav button{border:0;background:none;padding:12px 18px;font:600 .92rem var(--font);color:#555;cursor:pointer;border-bottom:3px solid transparent}
+nav button.active{color:var(--teal);border-bottom-color:var(--teal2)}
+main{flex:1;display:flex;min-height:0}
+aside{width:250px;background:#fff;border-right:1px solid var(--ice);padding:16px;overflow:auto;flex-shrink:0}
+aside h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.6px;color:var(--teal);margin:0 0 10px}
+.pc{display:flex;justify-content:space-between;padding:7px 10px;border-radius:6px;font-size:.87rem;cursor:pointer}
+.pc:hover{background:var(--grey)}.pc.sel{background:var(--ice);font-weight:700}
+.pc span:last-child{color:var(--teal);font-weight:700}
+label{font-size:.8rem;font-weight:600;color:#444;display:block;margin:12px 0 5px}
+select,input[type=text],input[type=url],input[type=number],textarea{width:100%;padding:9px 10px;border:1px solid var(--ice);border-radius:6px;font:0.9rem var(--font);background:#fff}
+select:focus,input:focus,textarea:focus{outline:2px solid var(--teal3);border-color:transparent}
+.btn{background:var(--teal);color:#fff;border:0;border-radius:6px;padding:10px 18px;font:600 .9rem var(--font);cursor:pointer}
+.btn:hover{background:#125c68}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sec{background:#fff;color:var(--teal);border:1px solid var(--teal2)}
+.btn.sec:hover{background:var(--grey)}
+section.view{flex:1;display:none;min-width:0}
+section.view.active{display:flex}
+/* chat */
+#chatView{flex-direction:column}
+#chatLog{flex:1;overflow:auto;padding:24px}
+.msg{max-width:860px;margin:0 auto 16px;display:flex;gap:12px}
+.msg .av{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:#fff}
+.msg.user .av{background:var(--blue2)}.msg.bot .av{background:var(--teal)}
+.msg .bubble{background:#fff;border:1px solid var(--ice);border-radius:8px;padding:12px 16px;line-height:1.5;font-size:.93rem;flex:1;min-width:0;overflow-wrap:anywhere}
+.msg.user .bubble{background:var(--grey)}
+.bubble code{background:var(--grey);padding:1px 5px;border-radius:4px}
+.bubble table{border-collapse:collapse;margin:8px 0;font-size:.85rem}
+.bubble th,.bubble td{border:1px solid var(--ice);padding:5px 8px;text-align:left}
+.bubble th{background:var(--ice)}
+.key{color:var(--teal);font-weight:700;background:#E6F7F8;padding:0 4px;border-radius:3px}
+details.refs{margin-top:10px;font-size:.82rem}
+details.refs summary{cursor:pointer;color:var(--teal);font-weight:600}
+.ref{border-left:3px solid var(--teal2);padding:6px 10px;margin:6px 0;background:var(--bg);border-radius:0 6px 6px 0}
+.ref b{color:var(--teal)}.ref .sc{float:right;color:#777}
+#chatBar{border-top:1px solid var(--ice);background:#fff;padding:14px 24px}
+#chatBar form{max-width:860px;margin:0 auto;display:flex;gap:10px}
+#chatBar textarea{resize:none;height:48px}
+.suggest{max-width:860px;margin:0 auto 10px;display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:.78rem;border:1px solid var(--ice);background:#fff;border-radius:14px;padding:5px 11px;cursor:pointer;color:var(--teal)}
+.chip:hover{background:var(--grey)}
+.empty{text-align:center;color:#777;margin-top:60px}
+.empty h2{color:var(--teal);font-size:1.4rem}
+/* generate */
+#genView{overflow:hidden}
+#genForm{width:400px;flex-shrink:0;background:#fff;border-right:1px solid var(--ice);padding:18px 20px;overflow:auto}
+#genForm h2{font-size:1.05rem;color:var(--teal);margin:0 0 4px}
+.hint{font-size:.75rem;color:#777;margin-top:3px}
+.src{border:1px solid var(--ice);border-radius:8px;padding:10px 12px;margin-top:12px}
+.src legend{font-size:.8rem;font-weight:700;color:var(--teal);padding:0 4px}
+.src label{margin-top:6px}
+.row2{display:flex;gap:10px}.row2>div{flex:1}
+.drop{border:1.5px dashed var(--teal3);border-radius:6px;padding:12px;text-align:center;font-size:.8rem;color:#666;cursor:pointer;background:var(--bg)}
+.drop.has{border-style:solid;color:var(--teal);font-weight:600}
+#genOut{flex:1;overflow:auto;padding:20px 24px;min-width:0}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.toolbar .count{font-weight:700;color:var(--teal);font-size:1.05rem;margin-right:auto}
+.warn{background:#FFF6E5;border:1px solid #F5D69A;color:#7a5200;padding:8px 12px;border-radius:6px;font-size:.83rem;margin-bottom:10px}
+.error{background:#FDECEE;border:1px solid #F3B5BC;color:#8a1c28;padding:8px 12px;border-radius:6px;font-size:.85rem;margin-bottom:10px}
+.card{background:#fff;border:1px solid var(--ice);border-radius:8px;margin-bottom:10px}
+.card>summary{list-style:none;padding:11px 14px;cursor:pointer;display:flex;gap:10px;align-items:center}
+.card>summary::-webkit-details-marker{display:none}
+.card .id{font-size:.75rem;color:#777;font-family:monospace;min-width:130px}
+.card .t{font-weight:600;flex:1}
+.tag{font-size:.7rem;padding:2px 8px;border-radius:10px;background:var(--grey);color:var(--teal);font-weight:700;white-space:nowrap}
+.tag.High{background:#FDECEE;color:var(--err)}.tag.Low{background:#EEF4FF;color:var(--blue)}
+.card .body{padding:0 16px 14px;font-size:.87rem;line-height:1.5}
+.card .body p{margin:6px 0}
+.steps{width:100%;border-collapse:collapse;margin-top:8px;font-size:.83rem}
+.steps th{background:var(--teal);color:#fff;text-align:left;padding:6px 8px;font-weight:600}
+.steps td{border:1px solid var(--ice);padding:6px 8px;vertical-align:top}
+.steps tr:nth-child(even) td{background:var(--bg)}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--ice);border-top-color:var(--teal);border-radius:50%;animation:s 1s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes s{to{transform:rotate(360deg)}}
+.placeholder{color:#777;text-align:center;margin-top:80px}
+.placeholder h2{color:var(--teal)}
+.flow{display:flex;justify-content:center;gap:10px;margin:20px 0;flex-wrap:wrap}
+.flow div{background:#fff;border:1px solid var(--ice);border-radius:8px;padding:10px 14px;font-size:.8rem}
+.flow b{color:var(--teal)}
+.tabs2{display:flex;gap:6px;margin-bottom:12px}
+.tabs2 button{border:1px solid var(--ice);background:#fff;border-radius:6px;padding:6px 12px;font:.82rem var(--font);cursor:pointer}
+.tabs2 button.active{background:var(--teal);color:#fff;border-color:var(--teal)}
+pre.req{white-space:pre-wrap;background:#fff;border:1px solid var(--ice);border-radius:8px;padding:12px;font-size:.8rem;max-height:500px;overflow:auto}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>TestCaseGENI</h1>
+    <div class="sub">HCL Software QA · RAG test-case assistant</div>
+  </div>
+  <div class="badges" id="badges"><span class="badge">Checking services…</span></div>
+</header>
+
+<nav>
+  <button class="active" data-view="chatView">💬 Chat with Test Cases</button>
+  <button data-view="genView">⚙️ Generate Test Cases</button>
+</nav>
+
+<main>
+  <aside>
+    <h3>Knowledge base</h3>
+    <div id="prodList"><div class="hint">Loading…</div></div>
+    <label for="featSel">Feature filter</label>
+    <select id="featSel"><option value="">All features</option></select>
+    <div class="hint" id="featHint">Synonyms from glossary.json (e.g. A/B = ABT = AB testing) are always added to searches. The filter restricts results to tagged test cases.</div>
+    <label for="topK">Top-K retrieval</label>
+    <input type="number" id="topK" min="1" max="20" value="5" />
+    <div class="hint">Number of similar test cases pulled from Qdrant as context.</div>
+  </aside>
+
+  <!-- ======================= CHAT ======================= -->
+  <section class="view active" id="chatView">
+    <div id="chatLog">
+      <div class="empty" id="chatEmpty">
+        <h2>Ask anything about your test cases</h2>
+        <p>Answers are grounded in the test cases ingested into Qdrant and cite their keys.</p>
+      </div>
+    </div>
+    <div id="chatBar">
+      <div class="suggest">
+        <span class="chip">Which test cases cover A/B testing branch selection?</span>
+        <span class="chip">Summarise negative scenarios for Interact event patterns</span>
+        <span class="chip">What preconditions are common for offer arbitration tests?</span>
+        <span class="chip">Are there any automation-covered tests for segment matching?</span>
+      </div>
+      <form id="chatForm">
+        <textarea id="chatInput" placeholder="Ask about test cases… (Enter to send, Shift+Enter for new line)"></textarea>
+        <button class="btn" id="chatSend" type="submit">Send</button>
+        <button class="btn sec" id="chatClear" type="button" title="Clear conversation">Clear</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ======================= GENERATE ======================= -->
+  <section class="view" id="genView">
+    <form id="genForm" autocomplete="off">
+      <h2>Generate from requirement</h2>
+      <div class="hint">Provide one or more inputs. The agent extracts every testable requirement from each source (with a quote as evidence), drops anything it can't find in the source, then writes detailed test cases per requirement using the top-K similar RAG cases for style. Leave "Max test cases" blank for full coverage.</div>
+
+      <fieldset class="src"><legend>Jira story</legend>
+        <label for="storyId">Story ID</label>
+        <input type="text" id="storyId" name="story_id" placeholder="e.g. HMA-401957" pattern="[A-Za-z][A-Za-z0-9_]+-\d+" />
+      </fieldset>
+
+      <fieldset class="src"><legend>Figma screen</legend>
+        <label for="figmaUrl">Figma link (needs FIGMA_TOKEN)</label>
+        <input type="url" id="figmaUrl" name="figma_url" placeholder="https://www.figma.com/design/…?node-id=12-34" />
+        <label>…or screenshot of the screen</label>
+        <div class="drop" data-for="shotFile">Click to attach PNG / JPG</div>
+        <input type="file" id="shotFile" name="screenshot" accept=".png,.jpg,.jpeg,.webp" hidden />
+      </fieldset>
+
+      <fieldset class="src"><legend>Design document</legend>
+        <div class="drop" data-for="docFile">Click to attach PDF / DOCX / TXT / MD</div>
+        <input type="file" id="docFile" name="design_doc" accept=".pdf,.docx,.txt,.md" hidden />
+      </fieldset>
+
+      <label for="notes">Additional notes / scope (optional)</label>
+      <textarea id="notes" name="notes" rows="3" placeholder="e.g. focus on validation of sampling %; exclude performance"></textarea>
+
+      <div class="row2">
+        <div><label for="genProduct">Product</label>
+          <select id="genProduct" name="product"><option value="">All products</option></select></div>
+        <div><label for="numCases">Max test cases</label>
+          <input type="number" id="numCases" name="num_cases" min="1" max="200" placeholder="Auto (full coverage)" /></div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px">
+        <button class="btn" id="genBtn" type="submit">Generate test cases</button>
+        <button class="btn sec" type="reset" id="genReset">Reset</button>
+      </div>
+    </form>
+
+    <div id="genOut">
+      <div class="placeholder">
+        <h2>Nothing generated yet</h2>
+        <div class="flow">
+          <div><b>1.</b> Story / Figma / Design doc</div><div>→</div>
+          <div><b>2.</b> Extract &amp; verify requirements</div><div>→</div>
+          <div><b>3.</b> Top-K RAG per requirement group</div><div>→</div>
+          <div><b>4.</b> Detailed cases + gap-fill</div><div>→</div>
+          <div><b>5.</b> Review coverage &amp; export</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* ---------------- utilities ---------------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let selectedProduct = "";          // sidebar filter used by chat
+let chatHistory = [];              // [{role, content}]
+let lastGen = null;                // last generation result
+
+async function api(path, opts = {}) {
+  const r = await fetch(path, opts);
+  if (!r.ok) {
+    let msg = r.statusText;
+    try { msg = (await r.json()).detail || msg; } catch {}
+    throw new Error(msg);
+  }
+  return r;
+}
+
+/* Minimal, safe markdown: escape first, then format */
+function md(text) {
+  let h = esc(text);
+  // tables
+  h = h.replace(/((?:^\|.*\|\s*$\n?){2,})/gm, block => {
+    const rows = block.trim().split("\n").filter(r => !/^\|\s*:?-{2,}/.test(r));
+    return "<table>" + rows.map((r, i) => "<tr>" + r.replace(/^\||\|$/g, "").split("|")
+      .map(c => i === 0 ? `<th>${c.trim()}</th>` : `<td>${c.trim()}</td>`).join("") + "</tr>").join("") + "</table>";
+  });
+  h = h.replace(/^### (.*)$/gm, "<b>$1</b>").replace(/^## (.*)$/gm, "<b>$1</b>")
+       .replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/`([^`]+)`/g, "<code>$1</code>")
+       .replace(/\[([A-Z][A-Z0-9_]*-T?\d+)\]/g, '<span class="key">$1</span>')
+       .replace(/^\s*[-*] (.*)$/gm, "<li>$1</li>").replace(/^\s*\d+\. (.*)$/gm, "<li>$1</li>")
+       .replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
+       .replace(/\n(?!<)/g, "<br>");
+  return h;
+}
+
+function refsHtml(refs) {
+  if (!refs?.length) return "";
+  return `<details class="refs"><summary>📚 ${refs.length} retrieved reference test case(s)</summary>` +
+    refs.map(r => `<div class="ref"><span class="sc">sim ${r.score}</span><b>${esc(r.key)}</b> · ${esc(r.title)}
+      <div class="hint">${esc(r.product)} · ${esc(r.component || "-")} · ${esc(r.test_type || "-")}${(r.features || []).map(f => ` · <span class="tag">${esc(f)}</span>`).join("")}</div>
+      ${r.objective ? `<div>${esc(r.objective.slice(0, 220))}</div>` : ""}</div>`).join("") + "</details>";
+}
+
+/* ---------------- header / sidebar ---------------- */
+async function loadHealth() {
+  try {
+    const h = await (await api("/api/health")).json();
+    const b = (ok, label) => `<span class="badge"><span class="dot ${ok ? "on" : "off"}"></span>${label}</span>`;
+    $("#badges").innerHTML =
+      b(h.qdrant, `Qdrant ${h.points ?? "–"} pts`) + b(h.llm, `${h.provider}: ${h.model}`) +
+      b(h.jira, "Jira") + b(h.figma, "Figma");
+  } catch (e) { $("#badges").innerHTML = `<span class="badge"><span class="dot off"></span>Backend offline</span>`; }
+}
+
+async function loadProducts() {
+  try {
+    const { products } = await (await api("/api/products")).json();
+    const total = Object.values(products).reduce((a, b) => a + (b || 0), 0);
+    const entries = [["", "All products", total], ...Object.entries(products).map(([k, v]) => [k, k, v])];
+    $("#prodList").innerHTML = entries.map(([k, name, v]) =>
+      `<div class="pc ${k === selectedProduct ? "sel" : ""}" data-p="${k}"><span>${name}</span><span>${v ?? "–"}</span></div>`).join("");
+    $("#genProduct").innerHTML = `<option value="">All products</option>` +
+      Object.entries(products).map(([k, v]) => `<option value="${k}" ${v ? "" : "disabled"}>${k}${v ? ` (${v})` : " (empty)"}</option>`).join("");
+    document.querySelectorAll(".pc").forEach(el => el.onclick = () => {
+      selectedProduct = el.dataset.p; $("#genProduct").value = selectedProduct; loadProducts();
+    });
+  } catch (e) { $("#prodList").innerHTML = `<div class="error">${esc(e.message)}</div>`; }
+}
+
+/* ---------------- tabs ---------------- */
+document.querySelectorAll("nav button").forEach(btn => btn.onclick = () => {
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b === btn));
+  document.querySelectorAll("section.view").forEach(v => v.classList.toggle("active", v.id === btn.dataset.view));
+});
+
+/* ---------------- chat ---------------- */
+function addMsg(role, html) {
+  $("#chatEmpty")?.remove();
+  const d = document.createElement("div");
+  d.className = `msg ${role}`;
+  d.innerHTML = `<div class="av">${role === "user" ? "You" : "AI"}</div><div class="bubble">${html}</div>`;
+  $("#chatLog").appendChild(d);
+  $("#chatLog").scrollTop = $("#chatLog").scrollHeight;
+  return d.querySelector(".bubble");
+}
+
+async function sendChat(text) {
+  text = text.trim(); if (!text) return;
+  addMsg("user", esc(text).replace(/\n/g, "<br>"));
+  $("#chatInput").value = ""; $("#chatSend").disabled = true;
+  const bubble = addMsg("bot", `<span class="spinner"></span>Searching knowledge base…`);
+  try {
+    const res = await (await api("/api/chat", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, history: chatHistory, product: selectedProduct || null,
+                             feature: $("#featSel").value || null,
+                             top_k: +$("#topK").value || 5 })
+    })).json();
+    bubble.innerHTML = md(res.answer) + refsHtml(res.references);
+    chatHistory.push({ role: "user", content: text }, { role: "assistant", content: res.answer });
+  } catch (e) {
+    bubble.innerHTML = `<div class="error">${esc(e.message)}</div>`;
+  } finally { $("#chatSend").disabled = false; $("#chatLog").scrollTop = $("#chatLog").scrollHeight; }
+}
+$("#chatForm").onsubmit = e => { e.preventDefault(); sendChat($("#chatInput").value); };
+$("#chatInput").onkeydown = e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendChat(e.target.value); } };
+document.querySelectorAll(".chip").forEach(c => c.onclick = () => sendChat(c.textContent));
+$("#chatClear").onclick = () => { chatHistory = []; $("#chatLog").innerHTML =
+  `<div class="empty" id="chatEmpty"><h2>Ask anything about your test cases</h2><p>Conversation cleared.</p></div>`; };
+
+/* ---------------- file pickers ---------------- */
+document.querySelectorAll(".drop").forEach(d => {
+  const input = document.getElementById(d.dataset.for), def = d.textContent;
+  d.onclick = () => input.click();
+  input.onchange = () => {
+    const f = input.files[0];
+    d.classList.toggle("has", !!f);
+    d.textContent = f ? `📎 ${f.name} (${(f.size / 1024).toFixed(0)} KB)` : def;
+  };
+  $("#genReset").addEventListener("click", () => { d.classList.remove("has"); d.textContent = def; });
+});
+
+/* ---------------- generate ---------------- */
+$("#genForm").onsubmit = async e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const hasInput = fd.get("story_id") || fd.get("figma_url") || fd.get("notes")?.trim() ||
+                   $("#docFile").files.length || $("#shotFile").files.length;
+  if (!hasInput) { $("#genOut").innerHTML = `<div class="error">Provide at least one input (story ID, Figma link/screenshot, design doc or notes).</div>`; return; }
+  fd.set("top_k", $("#topK").value || 5);
+  fd.set("feature", $("#featSel").value || "");
+  if (!fd.get("num_cases")) fd.set("num_cases", "0");   // 0 = auto / full coverage
+  $("#genBtn").disabled = true;
+  $("#genOut").innerHTML = `<div class="placeholder"><span class="spinner"></span>
+    Extracting requirements → verifying evidence → retrieving top-${esc(fd.get("top_k"))} references per group → generating ${+fd.get("num_cases") ? "up to " + esc(fd.get("num_cases")) : "full-coverage"} test cases…
+    <div class="hint">Full coverage of a large story + design doc can take several minutes.</div></div>`;
+  try {
+    lastGen = await (await api("/api/generate", { method: "POST", body: fd })).json();
+    lastGen.story_id = fd.get("story_id");
+    renderGen("cases");
+  } catch (err) {
+    $("#genOut").innerHTML = `<div class="error">${esc(err.message)}</div>`;
+  } finally { $("#genBtn").disabled = false; }
+};
+
+function renderGen(tab) {
+  const g = lastGen, cases = g.test_cases || [], st = g.stats || {};
+  let body = "";
+  if (tab === "reqs") {
+    const row = r => `<tr><td><span class="key">${esc(r.id || "-")}</span></td><td>${esc(r.category)}</td>
+      <td>${esc(r.text)}${r.visual_only ? ' <span class="tag">visual</span>' : ""}</td>
+      <td class="hint">“${esc((r.evidence || "").slice(0, 200))}”<br>${esc(r.source)}</td>
+      <td>${r.reason ? `<span class="tag High">rejected</span><div class="hint">${esc(r.reason)}</div>`
+          : r.covered ? `<span class="tag">${r.test_cases.length} TC</span><div class="hint">${esc(r.test_cases.join(", "))}</div>`
+          : '<span class="tag High">NOT covered</span>'}</td></tr>`;
+    body = `<table class="steps"><tr><th>ID</th><th>Category</th><th>Requirement</th><th>Evidence / source</th><th>Coverage</th></tr>
+      ${(g.requirements || []).map(row).join("")}${(g.rejected_requirements || []).map(row).join("")}</table>`;
+  } else if (tab === "qs") {
+    body = (g.open_questions || []).length
+      ? `<div class="hint" style="margin-bottom:8px">Information the sources do not provide. Cases marked TBD depend on these – resolve with the PO / designer before execution.</div><ol>${g.open_questions.map(q => `<li style="margin-bottom:6px">${esc(q)}</li>`).join("")}</ol>`
+      : `<div class="hint">No open questions.</div>`;
+  } else if (tab === "cases") {
+    body = cases.map(tc => `
+      <details class="card"><summary>
+        <span class="id">${esc(tc.tc_id)}</span><span class="t">${esc(tc.title)}</span>
+        ${(tc.requirement_ids || []).map(i => `<span class="tag">${esc(i)}</span>`).join("")}
+        ${tc.has_tbd ? '<span class="tag High" title="Contains <TBD> - missing info in sources">TBD</span>' : ""}
+        <span class="tag">${esc(tc.test_type || "")}</span><span class="tag ${esc(tc.priority)}">${esc(tc.priority || "")}</span>
+      </summary><div class="body">
+        <p><b>Objective:</b> ${esc(tc.objective)}</p>
+        <p><b>Preconditions:</b> ${esc(tc.preconditions)}</p>
+        <table class="steps"><tr><th>#</th><th>Step</th><th>Test data</th><th>Expected</th></tr>
+          ${(tc.steps || []).map((s, i) => `<tr><td>${i + 1}</td><td>${esc(s.step)}</td><td>${esc(s.test_data)}</td><td>${esc(s.expected)}</td></tr>`).join("")}
+        </table>
+        <p><b>Overall expected:</b> ${esc(tc.expected_result)}</p>
+        <p class="hint"><b>Component:</b> ${esc(tc.component || "-")} · <b>Traceability:</b> ${esc(tc.traceability || "-")}
+          · <b>Refs:</b> ${(tc.reference_keys || []).map(k => `<span class="key">${esc(k)}</span>`).join(" ") || "-"}</p>
+      </div></details>`).join("") || `<div class="warn">The model returned no test cases.</div>`;
+  } else if (tab === "refs") {
+    body = refsHtml(g.references).replace("<details", "<details open");
+  } else {
+    body = `<div class="hint" style="margin-bottom:6px">Sources: ${(g.sources || []).map(s => esc(s.type + (s.id ? ": " + s.id : ""))).join(" · ")}</div>
+            <pre class="req">${esc(g.requirement_preview)}</pre>`;
+  }
+  $("#genOut").innerHTML = `
+    ${(g.warnings || []).map(w => `<div class="warn">⚠ ${esc(w)}</div>`).join("")}
+    <div class="toolbar">
+      <span class="count">${cases.length} test cases · ${st.covered ?? "–"}/${st.requirements ?? "–"} requirements covered${st.with_tbd ? ` · ${st.with_tbd} with TBD` : ""}</span>
+      <button class="btn sec" onclick="expandAll(true)">Expand all</button>
+      <button class="btn sec" onclick="expandAll(false)">Collapse</button>
+      <button class="btn sec" onclick="downloadJson()">JSON</button>
+      <button class="btn" onclick="exportXlsx()">Export Excel</button>
+    </div>
+    <div class="tabs2">
+      <button class="${tab === "cases" ? "active" : ""}" onclick="renderGen('cases')">Test cases</button>
+      <button class="${tab === "reqs" ? "active" : ""}" onclick="renderGen('reqs')">Requirements &amp; coverage (${(g.requirements || []).length})</button>
+      <button class="${tab === "qs" ? "active" : ""}" onclick="renderGen('qs')">Open questions (${(g.open_questions || []).length})</button>
+      <button class="${tab === "refs" ? "active" : ""}" onclick="renderGen('refs')">RAG references (${(g.references || []).length})</button>
+      <button class="${tab === "req" ? "active" : ""}" onclick="renderGen('req')">Requirement context</button>
+    </div>
+    ${g.saved_as ? `<div class="hint" style="margin-bottom:8px">Saved on server: ${esc(g.saved_as)}</div>` : ""}
+    ${body}`;
+}
+function expandAll(open) { document.querySelectorAll(".card").forEach(c => c.open = open); }
+function saveBlob(blob, name) { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click(); URL.revokeObjectURL(a.href); }
+function downloadJson() { saveBlob(new Blob([JSON.stringify(lastGen, null, 2)], { type: "application/json" }), `test_cases_${lastGen.story_id || "generated"}.json`); }
+async function exportXlsx() {
+  try {
+    const r = await api("/api/export", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ story_id: lastGen.story_id || null, test_cases: lastGen.test_cases, references: lastGen.references,
+                             requirements: [...(lastGen.requirements || []), ...(lastGen.rejected_requirements || [])],
+                             open_questions: lastGen.open_questions || [] }) });
+    const name = (r.headers.get("Content-Disposition") || "").match(/filename="(.+)"/)?.[1] || "test_cases.xlsx";
+    saveBlob(await r.blob(), name);
+  } catch (e) { alert("Export failed: " + e.message); }
+}
+
+async function loadFeatures() {
+  try {
+    const { features } = await (await api("/api/features")).json();
+    $("#featSel").innerHTML = `<option value="">All features</option>` + features.map(f =>
+      `<option value="${esc(f.id)}" title="${esc(f.aliases.join(", "))}">${esc(f.label)} (${f.count ?? "–"})</option>`).join("");
+    if (features.length && features.every(f => !f.count))
+      $("#featHint").textContent = "No test cases are tagged yet – run tag_existing_points.py --apply or re-ingest. Synonym expansion still works.";
+  } catch (e) { $("#featHint").textContent = "Features unavailable: " + e.message; }
+}
+loadHealth(); loadProducts(); loadFeatures();
+</script>
+</body>
+</html>

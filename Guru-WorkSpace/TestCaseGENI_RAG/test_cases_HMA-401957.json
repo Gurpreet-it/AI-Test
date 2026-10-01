@@ -1,0 +1,772 @@
+[
+  {
+    "title": "Login with valid credentials",
+    "objective": "To verify if the user is able to login with valid credentials.",
+    "preconditions": "The user is registered and has valid login credentials. The login page is accessible.",
+    "steps": [
+      "Navigate to the login page",
+      "Enter valid username and password",
+      "Click on the 'Login' button"
+    ],
+    "expected_result": "The user is successfully logged in and redirected to the dashboard.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Login with invalid credentials",
+    "objective": "To verify if the system prevents login with invalid credentials.",
+    "preconditions": "The user is on the login page.",
+    "steps": [
+      "Enter invalid username and password",
+      "Click on the 'Login' button"
+    ],
+    "expected_result": "An error message is displayed indicating invalid credentials.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Password reset link",
+    "objective": "To verify if the password reset link is working correctly.",
+    "preconditions": "The user is on the login page and has a registered email.",
+    "steps": [
+      "Click on 'Forgot Password'",
+      "Enter registered email",
+      "Click on 'Reset Password'"
+    ],
+    "expected_result": "A password reset link is sent to the registered email.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Navigation menu visibility",
+    "objective": "To verify if the navigation menu is visible on the dashboard.",
+    "preconditions": "The user is logged in and on the dashboard page.",
+    "steps": [
+      "Look for the navigation menu on the dashboard"
+    ],
+    "expected_result": "The navigation menu is visible on the dashboard.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Logout functionality",
+    "objective": "To verify if the logout functionality is working correctly.",
+    "preconditions": "The user is logged in.",
+    "steps": [
+      "Click on the 'Logout' button"
+    ],
+    "expected_result": "The user is logged out and redirected to the login page.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Profile picture upload",
+    "objective": "To verify if the user can upload a profile picture.",
+    "preconditions": "The user is logged in and on the profile settings page.",
+    "steps": [
+      "Click on 'Upload Picture'",
+      "Select a picture from the device",
+      "Click on 'Save'"
+    ],
+    "expected_result": "The selected picture is uploaded and displayed as the profile picture.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Profile picture file size limit",
+    "objective": "To verify if the system restricts the file size of the profile picture.",
+    "preconditions": "The user is logged in and on the profile settings page.",
+    "steps": [
+      "Click on 'Upload Picture'",
+      "Select a picture with size more than the limit",
+      "Click on 'Save'"
+    ],
+    "expected_result": "An error message is displayed indicating the file size limit.",
+    "severity": "Medium",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Password strength indicator",
+    "objective": "To verify if the password strength indicator is working correctly.",
+    "preconditions": "The user is on the 'Change Password' page.",
+    "steps": [
+      "Enter a password in the 'New Password' field"
+    ],
+    "expected_result": "The password strength indicator displays the strength of the entered password.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Search functionality",
+    "objective": "To verify if the search functionality is working correctly.",
+    "preconditions": "The user is logged in and on a page with a search bar.",
+    "steps": [
+      "Enter a search term in the search bar",
+      "Click on 'Search'"
+    ],
+    "expected_result": "The search results related to the search term are displayed.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Input field character limit",
+    "objective": "To verify if the system restricts the number of characters in an input field.",
+    "preconditions": "The user is on a page with an input field.",
+    "steps": [
+      "Enter characters in the input field more than the limit"
+    ],
+    "expected_result": "The system restricts input after reaching the character limit.",
+    "severity": "Medium",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Pagination functionality",
+    "objective": "To verify if the pagination functionality is working correctly.",
+    "preconditions": "The user is on a page with a list of items and pagination.",
+    "steps": [
+      "Click on a page number"
+    ],
+    "expected_result": "The page displays the items corresponding to the clicked page number.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Data sorting functionality",
+    "objective": "To verify if the data sorting functionality is working correctly.",
+    "preconditions": "The user is on a page with sortable data.",
+    "steps": [
+      "Click on a column header"
+    ],
+    "expected_result": "The data is sorted based on the clicked column header.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Data filtering functionality",
+    "objective": "To verify if the data filtering functionality is working correctly.",
+    "preconditions": "The user is on a page with filterable data.",
+    "steps": [
+      "Select a filter option"
+    ],
+    "expected_result": "The data is filtered based on the selected filter option.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Form submission with all fields filled",
+    "objective": "To verify if the form can be submitted with all fields filled.",
+    "preconditions": "The user is on a form page.",
+    "steps": [
+      "Fill all the fields in the form",
+      "Click on 'Submit'"
+    ],
+    "expected_result": "The form is submitted successfully.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Form submission with mandatory fields empty",
+    "objective": "To verify if the system prevents form submission with mandatory fields empty.",
+    "preconditions": "The user is on a form page.",
+    "steps": [
+      "Leave the mandatory fields empty",
+      "Click on 'Submit'"
+    ],
+    "expected_result": "An error message is displayed indicating the mandatory fields.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Date picker functionality",
+    "objective": "To verify if the date picker functionality is working correctly.",
+    "preconditions": "The user is on a page with a date picker field.",
+    "steps": [
+      "Click on the date picker field",
+      "Select a date"
+    ],
+    "expected_result": "The selected date is displayed in the date picker field.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Checkbox selection",
+    "objective": "To verify if the checkbox can be selected and deselected.",
+    "preconditions": "The user is on a page with a checkbox.",
+    "steps": [
+      "Click on the checkbox"
+    ],
+    "expected_result": "The checkbox is selected or deselected based on its previous state.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Radio button selection",
+    "objective": "To verify if the radio button can be selected.",
+    "preconditions": "The user is on a page with radio buttons.",
+    "steps": [
+      "Click on a radio button"
+    ],
+    "expected_result": "The clicked radio button is selected.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Dropdown selection",
+    "objective": "To verify if an option can be selected from a dropdown.",
+    "preconditions": "The user is on a page with a dropdown.",
+    "steps": [
+      "Click on the dropdown",
+      "Select an option"
+    ],
+    "expected_result": "The selected option is displayed as the selected option in the dropdown.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "URL redirection",
+    "objective": "To verify if the URL redirects to the correct page.",
+    "preconditions": "The user is on a page with a hyperlink.",
+    "steps": [
+      "Click on the hyperlink"
+    ],
+    "expected_result": "The user is redirected to the correct page.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Tooltip visibility",
+    "objective": "To verify if the tooltip is visible on hovering over an element.",
+    "preconditions": "The user is on a page with an element having a tooltip.",
+    "steps": [
+      "Hover over the element"
+    ],
+    "expected_result": "The tooltip is visible.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Error message visibility",
+    "objective": "To verify if the error message is visible on form validation failure.",
+    "preconditions": "The user is on a form page.",
+    "steps": [
+      "Submit the form with invalid data"
+    ],
+    "expected_result": "The error message is visible.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Success message visibility",
+    "objective": "To verify if the success message is visible on successful form submission.",
+    "preconditions": "The user is on a form page.",
+    "steps": [
+      "Submit the form with valid data"
+    ],
+    "expected_result": "The success message is visible.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Input field data retention",
+    "objective": "To verify if the data in the input field is retained after page refresh.",
+    "preconditions": "The user is on a form page and has entered data in an input field.",
+    "steps": [
+      "Refresh the page"
+    ],
+    "expected_result": "The data in the input field is retained.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Input field data clearance",
+    "objective": "To verify if the data in the input field is cleared on clicking the 'Clear' button.",
+    "preconditions": "The user is on a form page and has entered data in an input field.",
+    "steps": [
+      "Click on the 'Clear' button"
+    ],
+    "expected_result": "The data in the input field is cleared.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Verify Login Functionality",
+    "objective": "To ensure that the login functionality is working as expected.",
+    "preconditions": "The user must have a valid username and password. The login page should be accessible.",
+    "steps": [
+      "Navigate to the login page.",
+      "Enter valid username and password.",
+      "Click on the login button."
+    ],
+    "expected_result": "The user should be successfully logged in and redirected to the home page.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Test Password Encryption",
+    "objective": "To ensure that the user's password is properly encrypted.",
+    "preconditions": "The user must have a valid account. The login page should be accessible.",
+    "steps": [
+      "Navigate to the login page.",
+      "Enter valid username and password.",
+      "Inspect the network traffic for the login request."
+    ],
+    "expected_result": "The password in the network request should be encrypted.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Check UI Responsiveness on Mobile",
+    "objective": "To ensure that the application's UI is responsive on mobile devices.",
+    "preconditions": "The application should be accessible on a mobile device.",
+    "steps": [
+      "Open the application on a mobile device.",
+      "Navigate through different pages.",
+      "Check the responsiveness of the UI."
+    ],
+    "expected_result": "The application's UI should be responsive and properly scaled on the mobile device.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Input Field Boundary",
+    "objective": "To test the maximum character limit of an input field.",
+    "preconditions": "The application should be accessible. The input field should be visible.",
+    "steps": [
+      "Navigate to the page with the input field.",
+      "Enter characters into the input field until the limit is reached.",
+      "Try to enter more characters."
+    ],
+    "expected_result": "No more characters should be able to be entered once the limit is reached.",
+    "severity": "Low",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Verify Error Message Display",
+    "objective": "To ensure that the appropriate error message is displayed when an invalid username or password is entered.",
+    "preconditions": "The user must have a valid account. The login page should be accessible.",
+    "steps": [
+      "Navigate to the login page.",
+      "Enter an invalid username or password.",
+      "Click on the login button."
+    ],
+    "expected_result": "An error message should be displayed indicating that the username or password is incorrect.",
+    "severity": "High",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Logout Functionality",
+    "objective": "To ensure that the logout functionality is working as expected.",
+    "preconditions": "The user must be logged in. The logout button should be visible.",
+    "steps": [
+      "Click on the logout button.",
+      "Confirm the logout action if prompted.",
+      "Check if the user is logged out."
+    ],
+    "expected_result": "The user should be successfully logged out and redirected to the login page.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Check Session Timeout",
+    "objective": "To ensure that the user's session expires after a period of inactivity.",
+    "preconditions": "The user must be logged in. The application should be idle for the session timeout duration.",
+    "steps": [
+      "Leave the application idle for the session timeout duration.",
+      "Try to navigate to a different page."
+    ],
+    "expected_result": "The user should be logged out and redirected to the login page.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Test Navigation Menu",
+    "objective": "To ensure that the navigation menu is functioning correctly.",
+    "preconditions": "The user must be logged in. The navigation menu should be visible.",
+    "steps": [
+      "Click on each item in the navigation menu.",
+      "Check if the user is redirected to the correct page."
+    ],
+    "expected_result": "The user should be redirected to the correct page when an item in the navigation menu is clicked.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Check Password Complexity Requirements",
+    "objective": "To ensure that the password complexity requirements are enforced.",
+    "preconditions": "The user must be on the change password page.",
+    "steps": [
+      "Enter a password that does not meet the complexity requirements.",
+      "Try to change the password."
+    ],
+    "expected_result": "An error message should be displayed indicating that the password does not meet the complexity requirements.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Test Form Submission",
+    "objective": "To ensure that form data is correctly submitted.",
+    "preconditions": "The user must be on a form page. The form should be filled out.",
+    "steps": [
+      "Fill out the form.",
+      "Click on the submit button.",
+      "Check if the form data is correctly submitted."
+    ],
+    "expected_result": "The form data should be correctly submitted and the user should be redirected to the appropriate page.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Verify Data Encryption",
+    "objective": "To ensure that sensitive data is properly encrypted.",
+    "preconditions": "The user must be logged in. Sensitive data should be submitted.",
+    "steps": [
+      "Submit sensitive data.",
+      "Inspect the network traffic for the data submission request."
+    ],
+    "expected_result": "The sensitive data in the network request should be encrypted.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Check UI Responsiveness on Tablet",
+    "objective": "To ensure that the application's UI is responsive on tablet devices.",
+    "preconditions": "The application should be accessible on a tablet device.",
+    "steps": [
+      "Open the application on a tablet device.",
+      "Navigate through different pages.",
+      "Check the responsiveness of the UI."
+    ],
+    "expected_result": "The application's UI should be responsive and properly scaled on the tablet device.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Dropdown Field Boundary",
+    "objective": "To test the maximum selection limit of a dropdown field.",
+    "preconditions": "The application should be accessible. The dropdown field should be visible.",
+    "steps": [
+      "Navigate to the page with the dropdown field.",
+      "Select options in the dropdown field until the limit is reached.",
+      "Try to select more options."
+    ],
+    "expected_result": "No more options should be able to be selected once the limit is reached.",
+    "severity": "Low",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Verify Success Message Display",
+    "objective": "To ensure that the appropriate success message is displayed when a form is successfully submitted.",
+    "preconditions": "The user must be on a form page. The form should be filled out.",
+    "steps": [
+      "Fill out the form.",
+      "Click on the submit button."
+    ],
+    "expected_result": "A success message should be displayed indicating that the form was successfully submitted.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Page Refresh",
+    "objective": "To ensure that the page refresh functionality is working as expected.",
+    "preconditions": "The user must be on a page. The page should be loaded.",
+    "steps": [
+      "Refresh the page.",
+      "Check if the page is correctly reloaded."
+    ],
+    "expected_result": "The page should be correctly reloaded.",
+    "severity": "Low",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Check Cookie Security",
+    "objective": "To ensure that cookies are securely handled.",
+    "preconditions": "The user must be logged in. Cookies should be set.",
+    "steps": [
+      "Inspect the cookies set by the application.",
+      "Check if the cookies are secure and HttpOnly."
+    ],
+    "expected_result": "The cookies set by the application should be secure and HttpOnly.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Test Pagination Functionality",
+    "objective": "To ensure that the pagination functionality is working as expected.",
+    "preconditions": "The user must be on a page with pagination. There should be multiple pages of content.",
+    "steps": [
+      "Click on different page numbers.",
+      "Check if the correct page of content is displayed."
+    ],
+    "expected_result": "The correct page of content should be displayed when a page number is clicked.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Check Username Uniqueness",
+    "objective": "To ensure that usernames are unique.",
+    "preconditions": "The user must be on the registration page.",
+    "steps": [
+      "Enter a username that is already taken.",
+      "Try to register."
+    ],
+    "expected_result": "An error message should be displayed indicating that the username is already taken.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Test Search Functionality",
+    "objective": "To ensure that the search functionality is working as expected.",
+    "preconditions": "The user must be on a page with a search bar. There should be content to search.",
+    "steps": [
+      "Enter a search term.",
+      "Click on the search button.",
+      "Check the search results."
+    ],
+    "expected_result": "The search results should correctly reflect the search term.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Verify Data Integrity",
+    "objective": "To ensure that data is not corrupted during transmission.",
+    "preconditions": "The user must be logged in. Data should be transmitted.",
+    "steps": [
+      "Transmit data.",
+      "Inspect the transmitted data."
+    ],
+    "expected_result": "The transmitted data should not be corrupted.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Check UI Consistency",
+    "objective": "To ensure that the application's UI is consistent across different pages.",
+    "preconditions": "The application should be accessible.",
+    "steps": [
+      "Navigate through different pages.",
+      "Check the consistency of the UI."
+    ],
+    "expected_result": "The application's UI should be consistent across different pages.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Checkbox Field Boundary",
+    "objective": "To test the maximum selection limit of a checkbox field.",
+    "preconditions": "The application should be accessible. The checkbox field should be visible.",
+    "steps": [
+      "Navigate to the page with the checkbox field.",
+      "Select options in the checkbox field until the limit is reached.",
+      "Try to select more options."
+    ],
+    "expected_result": "No more options should be able to be selected once the limit is reached.",
+    "severity": "Low",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Verify Tooltip Display",
+    "objective": "To ensure that tooltips are correctly displayed when hovering over an element.",
+    "preconditions": "The user must be on a page with an element that has a tooltip.",
+    "steps": [
+      "Hover over the element.",
+      "Check if the tooltip is displayed."
+    ],
+    "expected_result": "The tooltip should be displayed when hovering over the element.",
+    "severity": "Low",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Back Button",
+    "objective": "To ensure that the back button functionality is working as expected.",
+    "preconditions": "The user must be on a page. The user should have navigated to the page from another page.",
+    "steps": [
+      "Click on the back button.",
+      "Check if the user is redirected to the previous page."
+    ],
+    "expected_result": "The user should be redirected to the previous page.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Verify Login Functionality",
+    "objective": "To ensure that the user is able to log in successfully using valid credentials.",
+    "preconditions": "The user must have a valid username and password. The login page of the application is accessible.",
+    "steps": [
+      "Navigate to the login page",
+      "Enter valid username and password",
+      "Click on the login button"
+    ],
+    "expected_result": "The user should be successfully logged in and redirected to the home page.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Check Error Message for Invalid Login",
+    "objective": "To verify that the application displays an appropriate error message when invalid credentials are used.",
+    "preconditions": "The user is on the login page of the application.",
+    "steps": [
+      "Enter an invalid username and password",
+      "Click on the login button"
+    ],
+    "expected_result": "An error message should be displayed indicating that the login attempt was unsuccessful.",
+    "severity": "High",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Test Password Encryption",
+    "objective": "To ensure that user passwords are stored securely and not in plain text.",
+    "preconditions": "The user has a registered account with a password.",
+    "steps": [
+      "Navigate to the user database",
+      "Check the stored password for the user"
+    ],
+    "expected_result": "The password should be stored as an encrypted hash, not in plain text.",
+    "severity": "Critical",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Verify Logout Functionality",
+    "objective": "To ensure that the user is able to log out successfully.",
+    "preconditions": "The user is logged into the application.",
+    "steps": [
+      "Click on the logout button",
+      "Confirm logout if prompted"
+    ],
+    "expected_result": "The user should be successfully logged out and redirected to the login page.",
+    "severity": "Medium",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Check Session Timeout",
+    "objective": "To verify that the application logs out the user after a period of inactivity.",
+    "preconditions": "The user is logged into the application.",
+    "steps": [
+      "Leave the application idle for the specified timeout period"
+    ],
+    "expected_result": "The user should be automatically logged out after the timeout period.",
+    "severity": "High",
+    "test_type": "Security",
+    "dimension": "Security"
+  },
+  {
+    "title": "Test Password Reset Functionality",
+    "objective": "To ensure that the user is able to reset their password successfully.",
+    "preconditions": "The user has a registered account and has access to the associated email address.",
+    "steps": [
+      "Click on the 'forgot password' link",
+      "Enter the associated email address",
+      "Click on the reset password link in the received email",
+      "Enter a new password and confirm it"
+    ],
+    "expected_result": "The user should be able to reset their password and log in with the new password.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Verify Email Validation",
+    "objective": "To ensure that the application validates email addresses correctly during registration.",
+    "preconditions": "The user is on the registration page of the application.",
+    "steps": [
+      "Enter an invalid email address",
+      "Attempt to submit the registration form"
+    ],
+    "expected_result": "An error message should be displayed indicating that the email address is invalid.",
+    "severity": "Medium",
+    "test_type": "Boundary",
+    "dimension": "Boundary"
+  },
+  {
+    "title": "Check Username Uniqueness",
+    "objective": "To verify that the application does not allow the creation of multiple accounts with the same username.",
+    "preconditions": "The user is on the registration page of the application. An account with a specific username already exists.",
+    "steps": [
+      "Enter the existing username",
+      "Attempt to submit the registration form"
+    ],
+    "expected_result": "An error message should be displayed indicating that the username is already taken.",
+    "severity": "High",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  },
+  {
+    "title": "Test Profile Picture Upload",
+    "objective": "To ensure that the user is able to upload a profile picture successfully.",
+    "preconditions": "The user is logged into the application and is on their profile page.",
+    "steps": [
+      "Click on the 'upload profile picture' button",
+      "Select a valid image file",
+      "Confirm the upload"
+    ],
+    "expected_result": "The profile picture should be updated with the uploaded image.",
+    "severity": "Medium",
+    "test_type": "UI",
+    "dimension": "UI"
+  },
+  {
+    "title": "Verify Data Persistence",
+    "objective": "To ensure that user data is saved and persists across sessions.",
+    "preconditions": "The user is logged into the application and has made changes to their profile.",
+    "steps": [
+      "Log out of the application",
+      "Log back in and navigate to the profile page"
+    ],
+    "expected_result": "The changes made to the profile should still be present.",
+    "severity": "Critical",
+    "test_type": "Functional",
+    "dimension": "Functional"
+  }
+]

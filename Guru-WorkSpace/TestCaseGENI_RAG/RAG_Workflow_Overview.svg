@@ -1,0 +1,404 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2000" height="1450" viewBox="0 0 2000 1450">
+<rect width="2000" height="1450" fill="#F7F7FC"/>
+<text x="1000.0" y="62" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="38" fill="#0B1D3A" font-weight="bold" text-anchor="middle">TestCaseGENI RAG — End-to-End Workflow</text>
+<text x="1000.0" y="96" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="17" fill="#5A6072" font-weight="normal" text-anchor="middle">Ingest Zephyr test cases → Embed &amp; store in Qdrant → Retrieve top-K context → Chat answers &amp; grounded test case generation (OpenAI / Ollama)</text>
+<rect x="40" y="140" width="1920" height="400" rx="16" fill="#F1FAFB" stroke="#2EC0CB" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="64" y="123" width="229.3" height="34" rx="8" fill="#D8F3F5" stroke="#2EC0CB"/>
+<text x="178.65" y="146" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#17707F" font-weight="bold" text-anchor="middle">1. INGESTION PIPELINE</text>
+<rect x="66.0" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="64.0" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="80.0" y="190" width="38" height="38" rx="9" fill="#12A150"/>
+<text x="99.0" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">XLS</text>
+<text x="128.0" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Zephyr Excel</text>
+<text x="128.0" y="225" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Export</text>
+<text x="80.0" y="254" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Jira / Zephyr Scale test case</text>
+<text x="80.0" y="270" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">export dropped into the product</text>
+<text x="80.0" y="286" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">inbox.</text>
+<text x="80.0" y="312" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Folder:</text>
+<text x="82.0" y="328" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">test_cases_inbox/</text>
+<text x="82.0" y="343" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">  &lt;PRODUCT&gt;/current/</text>
+<text x="80.0" y="364" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Formats:</text>
+<text x="82.0" y="380" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">.xlsx / .xls (23 columns)</text>
+<text x="80.0" y="401" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Product:</text>
+<text x="82.0" y="417" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">from folder name</text>
+<text x="82.0" y="432" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">(config.json)</text>
+<line x1="80.0" y1="481" x2="290.83333333333337" y2="481" stroke="#ECF3F8"/>
+<text x="276.83333333333337" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Excel rows</text>
+<circle cx="306.83333333333337" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<path d="M312.83333333333337,494 C321.83333333333337,494 321.83333333333337,494 328.83333333333337,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="336.83333333333337,494 326.83333333333337,489 326.83333333333337,499" fill="#2EC0CB"/>
+<rect x="338.83333333333337" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="336.83333333333337" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="352.83333333333337" y="190" width="38" height="38" rx="9" fill="#8B5CF6"/>
+<text x="371.83333333333337" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">{ }</text>
+<text x="400.83333333333337" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Excel Reader &amp;</text>
+<text x="400.83333333333337" y="225" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Cleaner</text>
+<text x="352.83333333333337" y="254" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">ingest_from_excel.py parses each</text>
+<text x="352.83333333333337" y="270" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">row into one test case.</text>
+<text x="352.83333333333337" y="296" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Skips:</text>
+<text x="354.83333333333337" y="312" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">~$ lock files, blank rows</text>
+<text x="352.83333333333337" y="333" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Merge:</text>
+<text x="354.83333333333337" y="349" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Zephyr multi-step rows → 1</text>
+<text x="354.83333333333337" y="364" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">case</text>
+<text x="352.83333333333337" y="385" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Clean:</text>
+<text x="354.83333333333337" y="401" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">NaN → &quot;&quot; (no &#x27;nan&#x27; text)</text>
+<line x1="352.83333333333337" y1="481" x2="563.6666666666667" y2="481" stroke="#ECF3F8"/>
+<text x="549.6666666666667" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Test cases</text>
+<circle cx="579.6666666666667" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<path d="M585.6666666666667,494 C594.6666666666667,494 594.6666666666667,494 601.6666666666667,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="609.6666666666667,494 599.6666666666667,489 599.6666666666667,499" fill="#2EC0CB"/>
+<rect x="611.6666666666667" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="609.6666666666667" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="625.6666666666667" y="190" width="38" height="38" rx="9" fill="#F5A623"/>
+<text x="644.6666666666667" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">1:1</text>
+<text x="673.6666666666667" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Chunking</text>
+<text x="625.6666666666667" y="248" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">No text splitting — one test</text>
+<text x="625.6666666666667" y="264" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">case = one chunk / one vector.</text>
+<text x="625.6666666666667" y="290" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Chunk:</text>
+<text x="627.6666666666667" y="306" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">whole test case (name,</text>
+<text x="627.6666666666667" y="321" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">objective, steps, data,</text>
+<text x="627.6666666666667" y="336" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">expected, folder)</text>
+<text x="625.6666666666667" y="357" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Model input limit:</text>
+<text x="627.6666666666667" y="373" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">256 tokens (longer text</text>
+<text x="627.6666666666667" y="388" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">truncated)</text>
+<line x1="625.6666666666667" y1="481" x2="836.5000000000001" y2="481" stroke="#ECF3F8"/>
+<text x="822.5000000000001" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Case text</text>
+<circle cx="852.5000000000001" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<path d="M858.5000000000001,494 C867.5000000000001,494 867.5000000000001,494 874.5000000000001,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="882.5000000000001,494 872.5000000000001,489 872.5000000000001,499" fill="#2EC0CB"/>
+<rect x="884.5000000000001" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="882.5000000000001" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="898.5000000000001" y="190" width="38" height="38" rx="9" fill="#17707F"/>
+<text x="917.5000000000001" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">A=B</text>
+<text x="946.5000000000001" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Glossary Tagger</text>
+<text x="898.5000000000001" y="248" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">glossary.py detects features &amp;</text>
+<text x="898.5000000000001" y="264" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">adds their synonyms.</text>
+<text x="898.5000000000001" y="290" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Features:</text>
+<text x="900.5000000000001" y="306" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">AB_TESTING · RTP</text>
+<text x="898.5000000000001" y="327" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Payload:</text>
+<text x="900.5000000000001" y="343" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">features: [&quot;RTP&quot;, …]</text>
+<text x="898.5000000000001" y="364" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Text:</text>
+<text x="900.5000000000001" y="380" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">+ &quot;Feature: … (also known as</text>
+<text x="900.5000000000001" y="395" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">…)&quot;</text>
+<line x1="898.5000000000001" y1="481" x2="1109.3333333333335" y2="481" stroke="#ECF3F8"/>
+<text x="1095.3333333333335" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Tagged text</text>
+<circle cx="1125.3333333333335" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<path d="M1131.3333333333335,494 C1140.3333333333335,494 1140.3333333333335,494 1147.3333333333335,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="1155.3333333333335,494 1145.3333333333335,489 1145.3333333333335,499" fill="#2EC0CB"/>
+<rect x="1157.3333333333335" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1155.3333333333335" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1171.3333333333335" y="190" width="38" height="38" rx="9" fill="#E4572E"/>
+<text x="1190.3333333333335" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">AI</text>
+<text x="1219.3333333333335" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Embeddings</text>
+<text x="1171.3333333333335" y="248" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">sentence-transformers, runs</text>
+<text x="1171.3333333333335" y="264" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">locally on CPU.</text>
+<text x="1171.3333333333335" y="290" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Model:</text>
+<text x="1173.3333333333335" y="306" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">all-MiniLM-L6-v2</text>
+<text x="1171.3333333333335" y="327" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Dimensions:</text>
+<text x="1173.3333333333335" y="343" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">384</text>
+<text x="1171.3333333333335" y="364" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">API key:</text>
+<rect x="1171.3333333333335" y="368" width="154.79999999999998" height="20" rx="6" fill="#E3F7EC" stroke="#9ED9B5"/>
+<text x="1180.3333333333335" y="382" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" fill="#0B7A3B" font-weight="normal" text-anchor="start">none · local model</text>
+<line x1="1171.3333333333335" y1="481" x2="1382.1666666666667" y2="481" stroke="#ECF3F8"/>
+<text x="1368.1666666666667" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Vectors</text>
+<circle cx="1398.1666666666667" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<path d="M1404.1666666666667,494 C1413.1666666666667,494 1413.1666666666667,494 1420.1666666666667,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="1428.1666666666667,494 1418.1666666666667,489 1418.1666666666667,499" fill="#2EC0CB"/>
+<rect x="1430.166666666667" y="177" width="242.83333333333334" height="342" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1428.166666666667" y="174" width="242.83333333333334" height="342" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1444.166666666667" y="190" width="38" height="38" rx="9" fill="#6D28D9"/>
+<text x="1463.166666666667" y="215" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">DB</text>
+<text x="1492.166666666667" y="206" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Qdrant Vector DB</text>
+<text x="1444.166666666667" y="248" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Upsert points (vector + payload)</text>
+<text x="1444.166666666667" y="264" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">in batches of 50.</text>
+<text x="1444.166666666667" y="290" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Collection:</text>
+<text x="1446.166666666667" y="306" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">jira_test_cases_all</text>
+<text x="1444.166666666667" y="327" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Distance:</text>
+<text x="1446.166666666667" y="343" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Cosine</text>
+<text x="1444.166666666667" y="364" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Point ID:</text>
+<text x="1446.166666666667" y="380" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">UUID5(product + key)</text>
+<text x="1444.166666666667" y="401" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Indexes:</text>
+<text x="1446.166666666667" y="417" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">product, features</text>
+<line x1="1444.166666666667" y1="481" x2="1655.0000000000002" y2="481" stroke="#ECF3F8"/>
+<text x="1641.0000000000002" y="498" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Points</text>
+<circle cx="1671.0000000000002" cy="494" r="6" fill="#2EC0CB" stroke="#fff" stroke-width="2"/>
+<rect x="1704" y="204" width="235" height="290" rx="6" fill="#000" opacity="0.06"/>
+<rect x="1701" y="200" width="235" height="290" rx="6" fill="#FFF6D6" stroke="#F1D98A"/>
+<circle cx="1723" cy="204" r="7" fill="#DC3545"/>
+<text x="1719" y="234" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16" fill="#14142B" font-weight="bold" text-anchor="start">Ingestion Summary</text>
+<text x="1719" y="262" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#14142B" font-weight="normal" text-anchor="start">26 Excel files →</text>
+<text x="1719" y="283" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#5A6072" font-weight="bold" text-anchor="start">2,250 test cases in Qdrant</text>
+<text x="1719" y="325" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#14142B" font-weight="bold" text-anchor="start">INTERACT: 2,250</text>
+<text x="1719" y="346" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#14142B" font-weight="bold" text-anchor="start">RTP: 2,150</text>
+<text x="1719" y="367" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#14142B" font-weight="bold" text-anchor="start">A/B Testing: 196</text>
+<text x="1719" y="409" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#5A6072" font-weight="normal" text-anchor="start">Re-ingest = update</text>
+<text x="1719" y="430" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#5A6072" font-weight="normal" text-anchor="start">(no duplicates)</text>
+<text x="1719" y="451" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.2" fill="#14142B" font-weight="normal" text-anchor="start">Files → test_cases_processed/</text>
+<path d="M1677,494 C1686.0,494 1686.0,494 1693,494" fill="none" stroke="#2EC0CB" stroke-width="2.2"/>
+<polygon points="1701,494 1691,489 1691,499" fill="#2EC0CB"/>
+<rect x="40" y="590" width="1920" height="370" rx="16" fill="#F2F7FF" stroke="#3C91FF" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="64" y="573" width="378.1" height="34" rx="8" fill="#DDEBFF" stroke="#3C91FF"/>
+<text x="253.05" y="596" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#0F5FDC" font-weight="bold" text-anchor="middle">2. CHAT PIPELINE  (Web UI → Chat tab)</text>
+<rect x="66.0" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="64.0" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="80.0" y="640" width="38" height="38" rx="9" fill="#3C91FF"/>
+<text x="99.0" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">?</text>
+<text x="128.0" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Chat Input</text>
+<text x="80.0" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">User asks a question about Unica</text>
+<text x="80.0" y="714" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">test cases.</text>
+<text x="80.0" y="740" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Filters:</text>
+<text x="82.0" y="756" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">product · feature</text>
+<text x="80.0" y="777" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Top-K:</text>
+<text x="82.0" y="793" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">5 (sidebar)</text>
+<text x="80.0" y="814" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">History:</text>
+<text x="82.0" y="830" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">last 8 turns</text>
+<line x1="80.0" y1="901" x2="289.7142857142857" y2="901" stroke="#ECF3F8"/>
+<text x="275.7142857142857" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Message</text>
+<circle cx="305.7142857142857" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M311.7142857142857,914 C320.7142857142857,914 320.7142857142857,914 327.7142857142857,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="335.7142857142857,914 325.7142857142857,909 325.7142857142857,919" fill="#3C91FF"/>
+<rect x="337.7142857142857" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="335.7142857142857" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="351.7142857142857" y="640" width="38" height="38" rx="9" fill="#17707F"/>
+<text x="370.7142857142857" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">A=B</text>
+<text x="399.7142857142857" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Query Expansion</text>
+<text x="351.7142857142857" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">glossary.py adds the synonyms of</text>
+<text x="351.7142857142857" y="714" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">detected features.</text>
+<text x="351.7142857142857" y="740" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Example:</text>
+<text x="353.7142857142857" y="756" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">&quot;ABT …&quot; + A/B Testing, AB</text>
+<text x="353.7142857142857" y="771" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">testing, …</text>
+<text x="351.7142857142857" y="792" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Follow-ups:</text>
+<text x="353.7142857142857" y="808" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">+ previous question</text>
+<line x1="351.7142857142857" y1="901" x2="561.4285714285714" y2="901" stroke="#ECF3F8"/>
+<text x="547.4285714285714" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Query</text>
+<circle cx="577.4285714285714" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M583.4285714285714,914 C592.4285714285714,914 592.4285714285714,914 599.4285714285714,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="607.4285714285714,914 597.4285714285714,909 597.4285714285714,919" fill="#3C91FF"/>
+<rect x="609.4285714285714" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="607.4285714285714" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="623.4285714285714" y="640" width="38" height="38" rx="9" fill="#E4572E"/>
+<text x="642.4285714285714" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">AI</text>
+<text x="671.4285714285714" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Embeddings</text>
+<text x="623.4285714285714" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Same model as ingestion (must</text>
+<text x="623.4285714285714" y="714" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">match).</text>
+<text x="623.4285714285714" y="740" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Model:</text>
+<text x="625.4285714285714" y="756" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">all-MiniLM-L6-v2</text>
+<text x="623.4285714285714" y="777" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Dimensions:</text>
+<text x="625.4285714285714" y="793" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">384</text>
+<line x1="623.4285714285714" y1="901" x2="833.1428571428571" y2="901" stroke="#ECF3F8"/>
+<text x="819.1428571428571" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Query vector</text>
+<circle cx="849.1428571428571" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M855.1428571428571,914 C864.1428571428571,914 864.1428571428571,914 871.1428571428571,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="879.1428571428571,914 869.1428571428571,909 869.1428571428571,919" fill="#3C91FF"/>
+<rect x="881.1428571428571" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="879.1428571428571" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="895.1428571428571" y="640" width="38" height="38" rx="9" fill="#6D28D9"/>
+<text x="914.1428571428571" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">DB</text>
+<text x="943.1428571428571" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Qdrant Search</text>
+<text x="895.1428571428571" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Retrieve the most similar test</text>
+<text x="895.1428571428571" y="714" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">cases.</text>
+<text x="895.1428571428571" y="740" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Collection:</text>
+<text x="897.1428571428571" y="756" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">jira_test_cases_all</text>
+<text x="895.1428571428571" y="777" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Search:</text>
+<text x="897.1428571428571" y="793" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">query_points, limit = top-K</text>
+<text x="895.1428571428571" y="814" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Filter:</text>
+<text x="897.1428571428571" y="830" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">product / features</text>
+<line x1="895.1428571428571" y1="901" x2="1104.857142857143" y2="901" stroke="#ECF3F8"/>
+<text x="1090.857142857143" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Top-K cases</text>
+<circle cx="1120.857142857143" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M1126.857142857143,914 C1135.857142857143,914 1135.857142857143,914 1142.857142857143,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="1150.857142857143,914 1140.857142857143,909 1140.857142857143,919" fill="#3C91FF"/>
+<rect x="1152.857142857143" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1150.857142857143" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1166.857142857143" y="640" width="38" height="38" rx="9" fill="#12A150"/>
+<text x="1185.857142857143" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">T</text>
+<text x="1214.857142857143" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Prompt Template</text>
+<text x="1166.857142857143" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">CHAT_SYSTEM in</text>
+<text x="1166.857142857143" y="714" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">testcase_agent.py.</text>
+<text x="1166.857142857143" y="740" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Step 1:</text>
+<text x="1168.857142857143" y="756" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">scope check — Unica &amp; test</text>
+<text x="1168.857142857143" y="771" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">cases only</text>
+<text x="1166.857142857143" y="792" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Step 2:</text>
+<text x="1168.857142857143" y="808" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">answer ONLY from context,</text>
+<text x="1168.857142857143" y="823" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">cite [KEY]</text>
+<text x="1166.857142857143" y="844" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Output:</text>
+<text x="1168.857142857143" y="860" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">JSON {in_scope, answer}</text>
+<line x1="1166.857142857143" y1="901" x2="1376.5714285714287" y2="901" stroke="#ECF3F8"/>
+<text x="1362.5714285714287" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Prompt</text>
+<circle cx="1392.5714285714287" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M1398.5714285714287,914 C1407.5714285714287,914 1407.5714285714287,914 1414.5714285714287,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="1422.5714285714287,914 1412.5714285714287,909 1412.5714285714287,919" fill="#3C91FF"/>
+<rect x="1424.5714285714287" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1422.5714285714287" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1438.5714285714287" y="640" width="38" height="38" rx="9" fill="#0B1D3A"/>
+<text x="1457.5714285714287" y="665" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">LLM</text>
+<text x="1486.5714285714287" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">LLM</text>
+<text x="1438.5714285714287" y="698" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Generates the grounded answer.</text>
+<text x="1438.5714285714287" y="724" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Provider:</text>
+<text x="1440.5714285714287" y="740" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">OpenAI gpt-4o (default) |</text>
+<text x="1440.5714285714287" y="755" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Ollama</text>
+<text x="1438.5714285714287" y="776" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Mode:</text>
+<text x="1440.5714285714287" y="792" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">JSON, temperature 0.1</text>
+<text x="1438.5714285714287" y="813" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">API key:</text>
+<rect x="1438.5714285714287" y="817" width="124.39999999999999" height="20" rx="6" fill="#E3F7EC" stroke="#9ED9B5"/>
+<text x="1447.5714285714287" y="831" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" fill="#0B7A3B" font-weight="normal" text-anchor="start">OPENAI_API_KEY</text>
+<line x1="1438.5714285714287" y1="901" x2="1648.2857142857144" y2="901" stroke="#ECF3F8"/>
+<text x="1634.2857142857144" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Model response</text>
+<circle cx="1664.2857142857144" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<path d="M1670.2857142857144,914 C1679.2857142857144,914 1679.2857142857144,914 1686.2857142857144,914" fill="none" stroke="#3C91FF" stroke-width="2.2"/>
+<polygon points="1694.2857142857144,914 1684.2857142857144,909 1684.2857142857144,919" fill="#3C91FF"/>
+<rect x="1696.2857142857142" y="627" width="241.71428571428572" height="312" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1694.2857142857142" y="624" width="241.71428571428572" height="312" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1710.2857142857142" y="640" width="38" height="38" rx="9" fill="#17707F"/>
+<path d="M1719.2857142857142,660 l7,7 l13,-15" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1758.2857142857142" y="656" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Guardrail &amp; Chat</text>
+<text x="1758.2857142857142" y="675" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Output</text>
+<text x="1710.2857142857142" y="704" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Enforced in code, not by the</text>
+<text x="1710.2857142857142" y="720" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">model.</text>
+<text x="1710.2857142857142" y="746" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">in_scope = true:</text>
+<text x="1712.2857142857142" y="762" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">answer + cited keys +</text>
+<text x="1712.2857142857142" y="777" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">references</text>
+<text x="1710.2857142857142" y="798" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">otherwise:</text>
+<text x="1712.2857142857142" y="814" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">fixed Unica-only message, no</text>
+<text x="1712.2857142857142" y="829" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">references</text>
+<line x1="1710.2857142857142" y1="901" x2="1920.0" y2="901" stroke="#ECF3F8"/>
+<text x="1906.0" y="918" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Output</text>
+<circle cx="1936.0" cy="914" r="6" fill="#3C91FF" stroke="#fff" stroke-width="2"/>
+<rect x="40" y="1010" width="1920" height="385" rx="16" fill="#F4F6FA" stroke="#17707F" stroke-width="1.6" stroke-dasharray="7 5"/>
+<rect x="64" y="993" width="564.1" height="34" rx="8" fill="#ECF3F8" stroke="#17707F"/>
+<text x="346.05" y="1016" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#17707F" font-weight="bold" text-anchor="middle">3. TEST CASE GENERATION PIPELINE  (Web UI → Generate tab)</text>
+<rect x="66.0" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="64.0" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="80.0" y="1060" width="38" height="38" rx="9" fill="#0F5FDC"/>
+<text x="99.0" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">IN</text>
+<text x="128.0" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Inputs</text>
+<text x="80.0" y="1118" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Any combination of requirement</text>
+<text x="80.0" y="1134" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">sources.</text>
+<text x="80.0" y="1160" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Story:</text>
+<text x="82.0" y="1176" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Jira story ID</text>
+<text x="80.0" y="1197" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">UI:</text>
+<text x="82.0" y="1213" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Figma link or screenshot</text>
+<text x="80.0" y="1234" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Docs:</text>
+<text x="82.0" y="1250" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">PDF · DOCX · TXT · MD + notes</text>
+<text x="80.0" y="1271" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Keys:</text>
+<rect x="80.0" y="1275" width="200.39999999999998" height="20" rx="6" fill="#E3F7EC" stroke="#9ED9B5"/>
+<text x="89.0" y="1289" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.5" fill="#0B7A3B" font-weight="normal" text-anchor="start">JIRA_TOKEN · FIGMA_TOKEN</text>
+<line x1="80.0" y1="1336" x2="289.7142857142857" y2="1336" stroke="#ECF3F8"/>
+<text x="275.7142857142857" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Sources</text>
+<circle cx="305.7142857142857" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M311.7142857142857,1349 C320.7142857142857,1349 320.7142857142857,1349 327.7142857142857,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="335.7142857142857,1349 325.7142857142857,1344 325.7142857142857,1354" fill="#17707F"/>
+<rect x="337.7142857142857" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="335.7142857142857" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="351.7142857142857" y="1060" width="38" height="38" rx="9" fill="#8B5CF6"/>
+<text x="370.7142857142857" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">{ }</text>
+<text x="399.7142857142857" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Source Collector</text>
+<text x="351.7142857142857" y="1118" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Each source kept separate.</text>
+<text x="351.7142857142857" y="1144" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Jira:</text>
+<text x="353.7142857142857" y="1160" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">ADF description → text</text>
+<text x="351.7142857142857" y="1181" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Figma:</text>
+<text x="353.7142857142857" y="1197" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">text layers + frame PNG</text>
+<text x="351.7142857142857" y="1218" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Docs:</text>
+<text x="353.7142857142857" y="1234" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">pypdf / python-docx, 10k-char</text>
+<text x="353.7142857142857" y="1249" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">sections</text>
+<line x1="351.7142857142857" y1="1336" x2="561.4285714285714" y2="1336" stroke="#ECF3F8"/>
+<text x="547.4285714285714" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Source texts</text>
+<circle cx="577.4285714285714" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M583.4285714285714,1349 C592.4285714285714,1349 592.4285714285714,1349 599.4285714285714,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="607.4285714285714,1349 597.4285714285714,1344 597.4285714285714,1354" fill="#17707F"/>
+<rect x="609.4285714285714" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="607.4285714285714" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="623.4285714285714" y="1060" width="38" height="38" rx="9" fill="#0B1D3A"/>
+<text x="642.4285714285714" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">LLM</text>
+<text x="671.4285714285714" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Requirement</text>
+<text x="671.4285714285714" y="1095" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Extraction</text>
+<text x="623.4285714285714" y="1124" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">LLM lists atomic testable</text>
+<text x="623.4285714285714" y="1140" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">requirements per source.</text>
+<text x="623.4285714285714" y="1166" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">IDs:</text>
+<text x="625.4285714285714" y="1182" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">STORY-01 · FIG-03 · DOC-07</text>
+<text x="623.4285714285714" y="1203" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Each has:</text>
+<text x="625.4285714285714" y="1219" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">verbatim evidence quote</text>
+<text x="623.4285714285714" y="1240" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Also:</text>
+<text x="625.4285714285714" y="1256" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">open questions</text>
+<line x1="623.4285714285714" y1="1336" x2="833.1428571428571" y2="1336" stroke="#ECF3F8"/>
+<text x="819.1428571428571" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Requirements</text>
+<circle cx="849.1428571428571" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M855.1428571428571,1349 C864.1428571428571,1349 864.1428571428571,1349 871.1428571428571,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="879.1428571428571,1349 869.1428571428571,1344 869.1428571428571,1354" fill="#17707F"/>
+<rect x="881.1428571428571" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="879.1428571428571" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="895.1428571428571" y="1060" width="38" height="38" rx="9" fill="#17707F"/>
+<path d="M904.1428571428571,1080 l7,7 l13,-15" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="943.1428571428571" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Grounding Check</text>
+<text x="895.1428571428571" y="1118" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Code verifies evidence exists in</text>
+<text x="895.1428571428571" y="1134" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">the source.</text>
+<text x="895.1428571428571" y="1160" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Rule:</text>
+<text x="897.1428571428571" y="1176" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">exact match or ≥ 85% word</text>
+<text x="897.1428571428571" y="1191" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">overlap</text>
+<text x="895.1428571428571" y="1212" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Fail:</text>
+<text x="897.1428571428571" y="1228" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">rejected (shown in UI)</text>
+<line x1="895.1428571428571" y1="1336" x2="1104.857142857143" y2="1336" stroke="#ECF3F8"/>
+<text x="1090.857142857143" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Verified reqs</text>
+<circle cx="1120.857142857143" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M1126.857142857143,1349 C1135.857142857143,1349 1135.857142857143,1349 1142.857142857143,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="1150.857142857143,1349 1140.857142857143,1344 1140.857142857143,1354" fill="#17707F"/>
+<rect x="1152.857142857143" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1150.857142857143" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1166.857142857143" y="1060" width="38" height="38" rx="9" fill="#6D28D9"/>
+<text x="1185.857142857143" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="15" fill="#fff" font-weight="bold" text-anchor="middle">DB</text>
+<text x="1214.857142857143" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">RAG per</text>
+<text x="1214.857142857143" y="1095" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Requirement Group</text>
+<text x="1166.857142857143" y="1124" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Top-K references fetched for</text>
+<text x="1166.857142857143" y="1140" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">every group.</text>
+<text x="1166.857142857143" y="1166" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Group size:</text>
+<text x="1168.857142857143" y="1182" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">4 requirements</text>
+<text x="1166.857142857143" y="1203" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Retrieve:</text>
+<text x="1168.857142857143" y="1219" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">top-K 5 · MiniLM + Qdrant</text>
+<text x="1166.857142857143" y="1240" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Use:</text>
+<text x="1168.857142857143" y="1256" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">style &amp; format only</text>
+<line x1="1166.857142857143" y1="1336" x2="1376.5714285714287" y2="1336" stroke="#ECF3F8"/>
+<text x="1362.5714285714287" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Reqs + refs</text>
+<circle cx="1392.5714285714287" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M1398.5714285714287,1349 C1407.5714285714287,1349 1407.5714285714287,1349 1414.5714285714287,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="1422.5714285714287,1349 1412.5714285714287,1344 1412.5714285714287,1354" fill="#17707F"/>
+<rect x="1424.5714285714287" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1422.5714285714287" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1438.5714285714287" y="1060" width="38" height="38" rx="9" fill="#0B1D3A"/>
+<text x="1457.5714285714287" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">LLM</text>
+<text x="1486.5714285714287" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Test Case</text>
+<text x="1486.5714285714287" y="1095" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Generation</text>
+<text x="1438.5714285714287" y="1124" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">GEN_SYSTEM: strict</text>
+<text x="1438.5714285714287" y="1140" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">no-hallucination rules.</text>
+<text x="1438.5714285714287" y="1166" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Covers:</text>
+<text x="1440.5714285714287" y="1182" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">positive · negative ·</text>
+<text x="1440.5714285714287" y="1197" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">boundary · UI</text>
+<text x="1438.5714285714287" y="1218" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Steps:</text>
+<text x="1440.5714285714287" y="1234" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">atomic, each with expected</text>
+<text x="1440.5714285714287" y="1249" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">result</text>
+<text x="1438.5714285714287" y="1270" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Unknowns:</text>
+<text x="1440.5714285714287" y="1286" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">&lt;TBD: …&gt; + open questions</text>
+<line x1="1438.5714285714287" y1="1336" x2="1648.2857142857144" y2="1336" stroke="#ECF3F8"/>
+<text x="1634.2857142857144" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Test cases</text>
+<circle cx="1664.2857142857144" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<path d="M1670.2857142857144,1349 C1679.2857142857144,1349 1679.2857142857144,1349 1686.2857142857144,1349" fill="none" stroke="#17707F" stroke-width="2.2"/>
+<polygon points="1694.2857142857144,1349 1684.2857142857144,1344 1684.2857142857144,1354" fill="#17707F"/>
+<rect x="1696.2857142857142" y="1047" width="241.71428571428572" height="327" rx="12" fill="#000" opacity="0.05"/>
+<rect x="1694.2857142857142" y="1044" width="241.71428571428572" height="327" rx="12" fill="#fff" stroke="#DCE6F0" stroke-width="1.5"/>
+<rect x="1710.2857142857142" y="1060" width="38" height="38" rx="9" fill="#12A150"/>
+<text x="1729.2857142857142" y="1085" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13" fill="#fff" font-weight="bold" text-anchor="middle">OUT</text>
+<text x="1758.2857142857142" y="1076" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="16.5" fill="#14142B" font-weight="bold" text-anchor="start">Validate &amp; Output</text>
+<text x="1710.2857142857142" y="1118" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">Traceable, de-duplicated, full</text>
+<text x="1710.2857142857142" y="1134" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#5A6072" font-weight="normal" text-anchor="start">coverage.</text>
+<text x="1710.2857142857142" y="1160" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Checks:</text>
+<text x="1712.2857142857142" y="1176" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">drop untraceable · dedupe ·</text>
+<text x="1712.2857142857142" y="1191" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">gap-fill</text>
+<text x="1710.2857142857142" y="1212" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">UI tabs:</text>
+<text x="1712.2857142857142" y="1228" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">cases · coverage · open</text>
+<text x="1712.2857142857142" y="1243" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">questions</text>
+<text x="1710.2857142857142" y="1264" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.3" fill="#14142B" font-weight="bold" text-anchor="start">Export:</text>
+<text x="1712.2857142857142" y="1280" font-family="'Menlo', 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="11.6" fill="#2B3040" font-weight="normal" text-anchor="start">Excel (4 sheets) · JSON audit</text>
+<line x1="1710.2857142857142" y1="1336" x2="1920.0" y2="1336" stroke="#ECF3F8"/>
+<text x="1906.0" y="1353" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="12.5" fill="#14142B" font-weight="bold" text-anchor="end">Output</text>
+<circle cx="1936.0" cy="1349" r="6" fill="#17707F" stroke="#fff" stroke-width="2"/>
+<text x="1000.0" y="1428" font-family="Arial, 'Liberation Sans', Helvetica, sans-serif" font-size="13.5" fill="#8A90A2" font-weight="normal" text-anchor="middle">Stack: Python · FastAPI / uvicorn · Qdrant v1.13 · sentence-transformers (all-MiniLM-L6-v2) · OpenAI gpt-4o / Ollama · Jira &amp; Figma APIs · pandas / openpyxl   |   Config: config.json · glossary.json · .env</text>
+</svg>

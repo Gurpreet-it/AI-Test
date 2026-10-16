@@ -19,7 +19,7 @@ INTERACT_TEST_CASES: List[MaxAITestCase] = [
                         "Ignite (memory-centric distributed caching solution included with Interact)\n"
                         "EHCache (open-source caching solution included with every Interact installation)\n"
                         "Redis (open-source in-memory data structure store that can be used as a database, cache, message broker, and streaming engine)",
-        expected_context=["Interact cache managemen Ignite EHCache and Redis , details will mention inInteract Tuning Guide "],
+        expected_context=["Interact cache managemen Ignite, EHCache and Redis , details will mention in Interact Tuning Guide "],
         metadata={"category": "interact", "difficulty": "easy", "test_type": "simple_factual"},
     ),
     MaxAITestCase(

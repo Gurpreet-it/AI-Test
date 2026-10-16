@@ -2,147 +2,81 @@ import { TopicGenerator } from "./TopicGenerator";
 import { ContentWriter } from "./ContentWriter";
 import { ImageGenerator } from "./ImageGenerator";
 import { ExcelManager } from "@/lib/ExcelManager";
-import { PipelineResult, ContentRow } from "@/lib/types";
+import { AgentResult, ContentBrand, ContentRow, PipelineResult, PipelineStep } from "@/lib/types";
 
-async function processContent(brand: "tech" | "hcl-unica"): Promise<PipelineResult> {
+const SKIPPED: AgentResult = { success: false, message: "Skipped" };
+
+/** Row a "content only" / "images only" run should act on. */
+async function pickTarget(brand: ContentBrand, id?: string, needs?: "content" | "images") {
+  const rows = await ExcelManager.readAll(brand);
+  if (id) return rows.find((r) => r.id === id);
+  const open = rows.filter((r) =>
+    needs === "content" ? !r.linkedinPost : needs === "images" ? !r.promptFile : true
+  );
+  return (open.length ? open : rows)[open.length ? open.length - 1 : rows.length - 1];
+}
+
+async function writeContent(row: ContentRow): Promise<AgentResult> {
+  await ExcelManager.updateById(row.id, { status: "Writing" });
+  const res = await new ContentWriter().run(row);
+  if (res.success && res.data) {
+    await ExcelManager.updateById(row.id, {
+      linkedinPost: res.data.linkedinPost ?? "",
+      igScript: res.data.igScript ?? "",
+      status: "Done",
+    });
+  } else {
+    await ExcelManager.updateById(row.id, { status: "Error" });
+  }
+  return res;
+}
+
+async function writeImagePrompt(row: ContentRow): Promise<AgentResult> {
+  const res = await new ImageGenerator().run(row.topic, row.brand);
+  if (res.success) await ExcelManager.updateById(row.id, { promptFile: res.filePath });
+  return { success: res.success, message: res.filePath };
+}
+
+export async function runPipeline(
+  brand: ContentBrand,
+  step: PipelineStep,
+  id?: string,
+  customTopic?: string
+): Promise<PipelineResult> {
   const ranAt = new Date().toISOString();
-  const tg = new TopicGenerator();
-  const topicResult = await tg.run(brand);
+  let topic = SKIPPED;
+  let content = SKIPPED;
+  let images = SKIPPED;
 
-  let contentResult = { success: false, message: "Skipped" };
-  let imageResult = { success: false, message: "Skipped" };
-  
-  if (topicResult.success && topicResult.data) {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
-      const row: ContentRow = {
-        date: topicResult.data.date || new Date().toISOString().split("T")[0],
-        topic: topicResult.data.topic || "",
-        linkedinPost: "",
-        mediumArticle: "",
-        igScript: "",
-        ytScript: "",
-        devToArticle: "",
-        status: "Writing",
-        linkedinImage: "",
-        mediumImage: "",
-        igImage: "",
-      };
-
-      if (row.topic && row.topic.length > 0) {
-        // Content
-        const cw = new ContentWriter();
-        const cwResult = await cw.run(row);
-        
-        if (cwResult.success && cwResult.data) {
-          await ExcelManager.updateByDate(row.date, {
-            linkedinPost: cwResult.data.linkedinPost || "",
-            igScript: cwResult.data.igScript || "",
-            status: "Done",
-          });
-          contentResult = cwResult;
-        } else {
-          contentResult = cwResult;
-        }
-
-        // Images
-        const ig = new ImageGenerator();
-        const igResult = await ig.run(row.topic, brand);
-        imageResult = { success: igResult.success, message: igResult.filePath };
-      }
-    } catch (err) {
-      contentResult = { success: false, message: `Error: ${err}` };
+  if (step === "full" || step === "topic") {
+    // customTopic set -> user-supplied topic; unset -> auto-generate
+    topic = await new TopicGenerator().run(brand, customTopic);
+    if (step === "topic" || !topic.success || !topic.data) {
+      return { topic, content, images, ranAt };
     }
+    id = topic.data.id;
   }
 
-  return { topic: topicResult, content: contentResult, images: imageResult, ranAt };
-}
-
-export async function runFullPipeline(): Promise<PipelineResult> {
-  return processContent("tech");
-}
-
-export async function runTopicOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const tg = new TopicGenerator();
-  const topicResult = await tg.run("tech");
-  return { topic: topicResult, content: { success: false, message: "Skipped" }, images: { success: false, message: "Skipped" }, ranAt };
-}
-
-export async function runContentOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const rows = await ExcelManager.readAll();
-  const latestRow = rows[rows.length - 1];
-  let contentResult = { success: false, message: "No row found" };
-  if (latestRow && latestRow.topic) {
-    const cw = new ContentWriter();
-    const cwResult = await cw.run(latestRow);
-    if (cwResult.success && cwResult.data) {
-      await ExcelManager.updateByDate(latestRow.date, {
-        linkedinPost: cwResult.data.linkedinPost || "",
-        igScript: cwResult.data.igScript || "",
-        status: "Done",
-      });
-    }
-    contentResult = cwResult;
+  if (step === "full" || step === "content") {
+    const row = await pickTarget(brand, id, "content");
+    content = row ? await writeContent(row) : { success: false, message: "No topic found — generate a topic first" };
   }
-  return { topic: { success: false, message: "Skipped" }, content: contentResult, images: { success: false, message: "Skipped" }, ranAt };
-}
 
-export async function runImagesOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const rows = await ExcelManager.readAll();
-  const latestRow = rows[rows.length - 1];
-  let imageResult = { success: false, message: "Skipped" };
-  if (latestRow && latestRow.topic) {
-    const ig = new ImageGenerator();
-    const igResult = await ig.run(latestRow.topic, "tech");
-    imageResult = { success: igResult.success, message: igResult.filePath };
+  if (step === "full" || step === "images") {
+    const row = await pickTarget(brand, id, "images");
+    images = row ? await writeImagePrompt(row) : { success: false, message: "No topic found — generate a topic first" };
   }
-  return { topic: { success: false, message: "Skipped" }, content: { success: false, message: "Skipped" }, images: imageResult, ranAt };
+
+  return { topic, content, images, ranAt };
 }
 
-export async function runUnicaFullPipeline(): Promise<PipelineResult> {
-  return processContent("hcl-unica");
-}
-
-export async function runUnicaTopicOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const tg = new TopicGenerator();
-  const topicResult = await tg.run("hcl-unica");
-  return { topic: topicResult, content: { success: false, message: "Skipped" }, images: { success: false, message: "Skipped" }, ranAt };
-}
-
-export async function runUnicaContentOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const rows = await ExcelManager.readAll();
-  const latestRow = rows[rows.length - 1];
-  let contentResult = { success: false, message: "No row found" };
-  if (latestRow && latestRow.topic) {
-    const cw = new ContentWriter();
-    const cwResult = await cw.run(latestRow);
-    if (cwResult.success && cwResult.data) {
-      await ExcelManager.updateByDate(latestRow.date, {
-        linkedinPost: cwResult.data.linkedinPost || "",
-        igScript: cwResult.data.igScript || "",
-        status: "Done",
-      });
-    }
-    contentResult = cwResult;
-  }
-  return { topic: { success: false, message: "Skipped" }, content: contentResult, images: { success: false, message: "Skipped" }, ranAt };
-}
-
-export async function runUnicaImagesOnly(): Promise<PipelineResult> {
-  const ranAt = new Date().toISOString();
-  const rows = await ExcelManager.readAll();
-  const latestRow = rows[rows.length - 1];
-  let imageResult = { success: false, message: "Skipped" };
-  if (latestRow && latestRow.topic) {
-    const ig = new ImageGenerator();
-    const igResult = await ig.run(latestRow.topic, "hcl-unica");
-    imageResult = { success: igResult.success, message: igResult.filePath };
-  }
-  return { topic: { success: false, message: "Skipped" }, content: { success: false, message: "Skipped" }, images: imageResult, ranAt };
-}
+// Backwards-compatible wrappers (older API routes + the 9AM scheduler).
+// The optional argument is the legacy `date` the old routes still pass; it is ignored.
+export const runFullPipeline = (_date?: string) => runPipeline("tech", "full");
+export const runTopicOnly = (_date?: string) => runPipeline("tech", "topic");
+export const runContentOnly = (_date?: string) => runPipeline("tech", "content");
+export const runImagesOnly = (_date?: string) => runPipeline("tech", "images");
+export const runUnicaFullPipeline = (_date?: string) => runPipeline("hcl-unica", "full");
+export const runUnicaTopicOnly = (_date?: string) => runPipeline("hcl-unica", "topic");
+export const runUnicaContentOnly = (_date?: string) => runPipeline("hcl-unica", "content");
+export const runUnicaImagesOnly = (_date?: string) => runPipeline("hcl-unica", "images");

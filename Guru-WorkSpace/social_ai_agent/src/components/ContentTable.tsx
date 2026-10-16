@@ -1,125 +1,85 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { ContentRow } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
 
-interface ContentRow {
-  date: string;
-  topic: string;
-  linkedinPost: string;
-  igScript: string;
-  status: string;
+interface Props {
+  rows: ContentRow[];
+  onPreview: (row: ContentRow) => void;
+  onDelete: (row: ContentRow) => void;
 }
 
-export function ContentTable({ rows }: { rows: ContentRow[] }) {
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [selectedRow, setSelectedRow] = useState<ContentRow | null>(null);
-  const [showModal, setShowModal] = useState(false);
+export function ContentTable({ rows, onPreview, onDelete }: Props) {
+  const [newestFirst, setNewestFirst] = useState(true);
+  const [query, setQuery] = useState("");
 
-  const sortedRows = [...rows].sort((a, b) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return sortOrder === "asc" ? dateA - dateB : dateB - dateA;
-  });
-
-  const handleClearAll = async () => {
-    if (!confirm("Delete all content? This cannot be undone.")) return;
-    try {
-      await fetch("/api/clear", { method: "POST" });
-      window.location.reload();
-    } catch (err) {
-      console.error("Clear failed:", err);
-    }
-  };
+  const visible = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    // rows arrive in creation order, so reversing gives "newest first" even within one day
+    const ordered = newestFirst ? [...rows].reverse() : [...rows];
+    return ordered
+      .sort((a, b) => (newestFirst ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)))
+      .filter((r) => !q || r.topic.toLowerCase().includes(q));
+  }, [rows, newestFirst, query]);
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold text-gray-900">Content Calendar</h3>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-            className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded border border-gray-300 text-gray-700"
-          >
-            📅 Sort {sortOrder === "asc" ? "↑" : "↓"}
-          </button>
-          <button
-            onClick={handleClearAll}
-            className="px-3 py-1 text-sm bg-red-50 hover:bg-red-100 rounded border border-red-300 text-red-700"
-          >
-            🗑️ Clear All
+    <div className="card">
+      <div className="card-head">
+        <h3>Content library ({rows.length})</h3>
+        <div className="toolbar">
+          <input
+            className="search"
+            placeholder="Search topics…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button className="btn small" onClick={() => setNewestFirst((v) => !v)}>
+            📅 {newestFirst ? "Newest first" : "Oldest first"}
           </button>
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-100 border-b border-gray-200">
+      {visible.length === 0 ? (
+        <div className="empty">
+          <div className="big">📭</div>
+          <b>{rows.length === 0 ? "Nothing here yet" : "No matching topics"}</b>
+          {rows.length === 0 ? "Click “Generate new post” to create your first topic, post and carousel." : "Try a different search."}
+        </div>
+      ) : (
+        <table>
+          <thead>
             <tr>
-              <th className="px-4 py-3 text-left font-semibold text-gray-900">Date</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-900">Topic</th>
-              <th className="px-4 py-3 text-left font-semibold text-gray-900">Status</th>
-              <th className="px-4 py-3 text-center font-semibold text-gray-900">Preview</th>
+              <th className="sortable" onClick={() => setNewestFirst((v) => !v)}>
+                Date {newestFirst ? "↓" : "↑"}
+              </th>
+              <th>Topic</th>
+              <th>Status</th>
+              <th style={{ textAlign: "right" }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {sortedRows.map((row, idx) => (
-              <tr key={idx} className="border-b border-gray-200 hover:bg-gray-50">
-                <td className="px-4 py-3 text-gray-600 font-mono text-xs">{row.date}</td>
-                <td className="px-4 py-3 text-gray-900 truncate max-w-md">{row.topic}</td>
-                <td className="px-4 py-3">
-                  <StatusBadge status={row.status as any} />
+            {visible.map((r) => (
+              <tr key={r.id}>
+                <td className="date-cell">{r.date}</td>
+                <td className="topic-cell">{r.topic}</td>
+                <td>
+                  <StatusBadge status={r.status} />
                 </td>
-                <td className="px-4 py-3 text-center">
-                  <button
-                    onClick={() => {
-                      setSelectedRow(row);
-                      setShowModal(true);
-                    }}
-                    className="w-4 h-4 rounded-full bg-blue-500 hover:bg-blue-600"
-                  />
+                <td>
+                  <div className="row-actions">
+                    <button className="btn small" onClick={() => onPreview(r)}>
+                      👁️ Preview
+                    </button>
+                    <button className="btn small danger" onClick={() => onDelete(r)} title="Delete this item">
+                      🗑️
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-
-      {showModal && selectedRow && (
-        <div
-          className="fixed inset-0 bg-black/30 flex items-center justify-center p-4 z-50"
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            className="bg-white rounded-lg border border-gray-200 max-w-2xl w-full max-h-96 overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-4 border-b border-gray-200 flex justify-between items-center sticky top-0 bg-white">
-              <h4 className="font-semibold text-gray-900 truncate">{selectedRow.topic}</h4>
-              <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
-                ✕
-              </button>
-            </div>
-            <div className="p-4 space-y-4">
-              {selectedRow.linkedinPost && (
-                <div>
-                  <h5 className="font-semibold text-green-900 mb-2">📱 LinkedIn Post</h5>
-                  <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-700 text-sm whitespace-pre-wrap">
-                    {selectedRow.linkedinPost}
-                  </div>
-                </div>
-              )}
-              {selectedRow.igScript && (
-                <div>
-                  <h5 className="font-semibold text-purple-900 mb-2">📸 Instagram Carousel</h5>
-                  <div className="bg-gray-50 p-3 rounded border border-gray-200 text-gray-700 text-sm whitespace-pre-wrap">
-                    {selectedRow.igScript}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
       )}
     </div>
   );

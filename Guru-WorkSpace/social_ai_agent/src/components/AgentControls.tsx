@@ -1,106 +1,104 @@
 "use client";
 
-import { useState } from "react";
+import { PipelineStep } from "@/lib/types";
+
+export type TopicMode = "auto" | "custom";
 
 interface Props {
-  addLog: (msg: string, level?: "info" | "success" | "error") => void;
+  disabled: boolean;
+  mode: TopicMode;
+  topicText: string;
+  onModeChange: (m: TopicMode) => void;
+  onTopicChange: (t: string) => void;
+  onRun: (step: PipelineStep) => void;
+  onClear: () => void;
+  canClear: boolean;
+  placeholder: string;
 }
 
-export function AgentControls({ addLog }: Props) {
-  const [loading, setLoading] = useState(false);
-
-  const runPipeline = async (endpoint: string, name: string) => {
-    if (loading) return;
-    setLoading(true);
-    addLog(`▶ ${name} started`, "info");
-    
-    try {
-      const res = await fetch(endpoint, { method: "POST" });
-      const result = await res.json();
-      addLog(`✓ ${name} complete`, "success");
-    } catch (err) {
-      addLog(`✗ ${name} failed`, "error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const buttons = [
-    { label: "Full Pipeline", endpoint: "/api/run", name: "Tech Full" },
-    { label: "Topic Only", endpoint: "/api/run-topic", name: "Topic" },
-    { label: "Write Content", endpoint: "/api/run-content", name: "Content" },
-    { label: "Generate Prompts", endpoint: "/api/run-images", name: "Images" },
-  ];
-
-  const unicaButtons = [
-    { label: "Unica Full", endpoint: "/api/run-unica", name: "Unica Full" },
-    { label: "Unica Topic", endpoint: "/api/run-unica-topic", name: "Unica Topic" },
-    { label: "Unica Content", endpoint: "/api/run-unica-content", name: "Unica Content" },
-    { label: "Unica Images", endpoint: "/api/run-unica-images", name: "Unica Images" },
-  ];
+export function AgentControls({
+  disabled,
+  mode,
+  topicText,
+  onModeChange,
+  onTopicChange,
+  onRun,
+  onClear,
+  canClear,
+  placeholder,
+}: Props) {
+  const custom = mode === "custom";
+  const needsTopic = custom && !topicText.trim();
 
   return (
-    <div>
-      <div style={{ marginBottom: "2rem" }}>
-        <h3 style={{ fontSize: "0.875rem", fontWeight: "bold", color: "#111827", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ width: "0.5rem", height: "0.5rem", background: "#2563eb", borderRadius: "50%" }}></span>
-          Tech Track
-        </h3>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {buttons.map((btn) => (
-            <button
-              key={btn.endpoint}
-              onClick={() => runPipeline(btn.endpoint, btn.name)}
-              disabled={loading}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "#eff6ff",
-                border: "2px solid #93c5fd",
-                color: "#1e40af",
-                borderRadius: "9999px",
-                fontWeight: "600",
-                fontSize: "0.875rem",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.6 : 1,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#dbeafe")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#eff6ff")}
-            >
-              {btn.label}
-            </button>
-          ))}
+    <div className="controls">
+      <div className="topic-box">
+        <div className="seg" role="tablist" aria-label="Topic source">
+          <button
+            role="tab"
+            aria-selected={!custom}
+            className={!custom ? "on" : ""}
+            disabled={disabled}
+            onClick={() => onModeChange("auto")}
+          >
+            ✨ Auto-generate
+          </button>
+          <button
+            role="tab"
+            aria-selected={custom}
+            className={custom ? "on" : ""}
+            disabled={disabled}
+            onClick={() => onModeChange("custom")}
+          >
+            ✍️ My topic
+          </button>
         </div>
+
+        {custom ? (
+          <div className="topic-input">
+            <textarea
+              value={topicText}
+              maxLength={500}
+              rows={3}
+              disabled={disabled}
+              placeholder={`${placeholder}\n(Ctrl/Cmd + Enter to generate)`}
+              onChange={(e) => onTopicChange(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && !needsTopic && !disabled) {
+                  e.preventDefault();
+                  onRun("full");
+                }
+              }}
+              autoFocus
+            />
+            <span className="count">{topicText.length}/500</span>
+          </div>
+        ) : (
+          <p className="topic-hint">The model picks a fresh topic that isn’t already in your library.</p>
+        )}
       </div>
 
-      <div>
-        <h3 style={{ fontSize: "0.875rem", fontWeight: "bold", color: "#111827", marginBottom: "1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ width: "0.5rem", height: "0.5rem", background: "#6b7280", borderRadius: "50%" }}></span>
-          HCL Unica Track
-        </h3>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {unicaButtons.map((btn) => (
-            <button
-              key={btn.endpoint}
-              onClick={() => runPipeline(btn.endpoint, btn.name)}
-              disabled={loading}
-              style={{
-                padding: "0.5rem 1rem",
-                background: "#f3f4f6",
-                border: "2px solid #d1d5db",
-                color: "#374151",
-                borderRadius: "9999px",
-                fontWeight: "600",
-                fontSize: "0.875rem",
-                cursor: loading ? "not-allowed" : "pointer",
-                opacity: loading ? 0.6 : 1,
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#e5e7eb")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#f3f4f6")}
-            >
-              {btn.label}
-            </button>
-          ))}
-        </div>
+      <div className="hero-actions">
+        <button className="btn primary" disabled={disabled || needsTopic} onClick={() => onRun("full")}>
+          {custom ? "🚀 Generate from my topic" : "✨ Generate new post"}
+        </button>
+        <button
+          className="btn"
+          disabled={disabled || needsTopic}
+          onClick={() => onRun("topic")}
+          title={custom ? "Save your topic only (no writing yet)" : "Create a new topic only"}
+        >
+          💡 {custom ? "Add topic only" : "Topic"}
+        </button>
+        <button className="btn" disabled={disabled} onClick={() => onRun("content")} title="Write LinkedIn post + Instagram carousel for the latest topic without content">
+          ✍️ Content
+        </button>
+        <button className="btn" disabled={disabled} onClick={() => onRun("images")} title="Create the Gemini image prompt for the latest topic">
+          🖼️ Image prompt
+        </button>
+        <button className="btn danger" disabled={disabled || !canClear} onClick={onClear}>
+          🗑️ Clear all
+        </button>
       </div>
     </div>
   );

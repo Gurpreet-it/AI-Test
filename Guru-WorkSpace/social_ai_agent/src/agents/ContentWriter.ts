@@ -1,42 +1,43 @@
-import { Ollama } from "ollama";
+import { generate } from "@/lib/llm";
 import { AgentResult, ContentRow } from "@/lib/types";
 
 export class ContentWriter {
-  private ollama: Ollama;
-
-  constructor() {
-    this.ollama = new Ollama({ model: "mistral" });
+  private ask(prompt: string): Promise<string> {
+    return generate(prompt, { temperature: 0.7 });
   }
 
   async run(row: ContentRow): Promise<AgentResult> {
     try {
-      const linkedinPrompt = `Write a 220-280 word LinkedIn post about: "${row.topic}". 
-Style: Clean prose, use em-dashes, opinionated voice, no hashtags, no bullets.
-Return ONLY the post text.`;
+      const isUnica = row.brand === "hcl-unica";
+      const audience = isUnica
+        ? "marketing leaders and campaign managers using HCL Unica / Unica+"
+        : "working QA, DevOps and AI engineers";
+      const voice = isUnica
+        ? "Focus on business outcomes and concrete capabilities. Do not invent metrics, customer names or pricing."
+        : "Keep it practical and beginner-friendly. Explain the idea in plain words with one concrete example.";
 
-      const linkedinRes = await this.ollama.generate({
-        model: "mistral",
-        prompt: linkedinPrompt,
-        stream: false,
-      });
+      const linkedinPost = await this.ask(
+        `Write a LinkedIn post of 300-500 words for ${audience} about: "${row.topic}".
+${voice}
+Style: clean flowing prose, em-dashes, a confident opinionated voice. No hashtags, no bullet points, no emojis, no headings.
+Return ONLY the post text.`
+      );
 
-      const linkedinPost = (linkedinRes.response || "").trim();
+      const igScript = await this.ask(
+        `Create a 10-slide Instagram carousel for ${audience} about: "${row.topic}".
+${voice}
+Format every slide exactly as:
+SLIDE <n>
+HEADLINE: <max 8 words>
+BODY: <1-2 short sentences>
+Slide 1 is a hook, slide 10 is a call to action. Return ONLY the slides.`
+      );
 
-      const igPrompt = `Create a 10-slide Instagram carousel script for: "${row.topic}".
-Format each slide as: HEADLINE: [text] | BODY: [2-3 sentences] | CAPTION: [hook]
-Return ONLY the slides.`;
-
-      const igRes = await this.ollama.generate({
-        model: "mistral",
-        prompt: igPrompt,
-        stream: false,
-      });
-
-      const igScript = (igRes.response || "").trim();
+      if (!linkedinPost || !igScript) throw new Error("Ollama returned empty content");
 
       return {
         success: true,
-        message: `Content written for: ${row.topic}`,
+        message: `Content written: ${row.topic}`,
         data: { linkedinPost, igScript },
       };
     } catch (err) {

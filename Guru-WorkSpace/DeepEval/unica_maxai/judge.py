@@ -1,4 +1,4 @@
-"""Local Mistral model wired up as a DeepEval judge (LLM-as-a-judge)."""
+"""Local LLM wired up as a DeepEval judge (LLM-as-a-judge)."""
 
 from __future__ import annotations
 
@@ -11,19 +11,19 @@ import requests
 
 from deepeval.models import DeepEvalBaseLLM
 
-from .config import MistralJudgeConfig
+from .config import LLMJudgeConfig
 
 
-class MistralJudge(DeepEvalBaseLLM):
-    """DeepEval judge backed by a locally-hosted Mistral model.
+class LLMJudge(DeepEvalBaseLLM):
+    """DeepEval judge backed by a locally hosted language model.
 
     Works with any OpenAI-compatible local server (Ollama, LM Studio, vLLM,
-    text-generation-webui). Configure via MISTRAL_MODEL / MISTRAL_BASE_URL /
-    MISTRAL_API_KEY / MISTRAL_TEMPERATURE env vars — see .env.example.
+    text-generation-webui). Configure via LLM_MODEL / LLM_BASE_URL /
+    LLM_API_KEY / LLM_TEMPERATURE env vars — see .env.example.
     """
 
-    def __init__(self, config: MistralJudgeConfig | None = None):
-        self.config = config or MistralJudgeConfig.from_env()
+    def __init__(self, config: LLMJudgeConfig | None = None):
+        self.config = config or LLMJudgeConfig.from_env()
         self.client = OpenAI(
             api_key=self.config.api_key,
             base_url=self.config.base_url,
@@ -90,4 +90,4 @@ class MistralJudge(DeepEvalBaseLLM):
         return self.generate(prompt, schema=schema)
 
     def get_model_name(self) -> str:
-        return f"Local Mistral ({self.config.model_name} @ {self.config.base_url})"
+        return f"Local LLM ({self.config.model_name} @ {self.config.base_url})"

@@ -9,7 +9,7 @@ For a human-readable report matching the spec's exact report/summary format,
 use `run_unica_maxai_suite.py` instead (it drives the same modules but
 prints per-test-case + aggregated scores rather than pytest's own output).
 
-Setup: this suite judges responses with a locally-hosted Mistral model
+Setup: this suite judges responses with a locally-hosted LLM
 (see unica_maxai/judge.py and .env.example for configuration) rather than a
 hosted LLM, per project requirements.
 """
@@ -21,15 +21,15 @@ from deepeval import assert_test
 from deepeval.test_case import LLMTestCase
 
 from unica_maxai.api_client import MaxAIClient
-from unica_maxai.config import MaxAIAPIConfig, MetricThresholds, MistralJudgeConfig
-from unica_maxai.judge import MistralJudge
+from unica_maxai.config import MaxAIAPIConfig, MetricThresholds, LLMJudgeConfig
+from unica_maxai.judge import LLMJudge
 from unica_maxai.metrics import build_metrics
 from unica_maxai.test_cases import TEST_CASES_BY_PRODUCT
 
 asyncio.set_event_loop(asyncio.new_event_loop())
 
 _client = MaxAIClient(MaxAIAPIConfig.from_env())
-_judge = MistralJudge(MistralJudgeConfig.from_env())
+_judge = LLMJudge(LLMJudgeConfig.from_env())
 _thresholds = MetricThresholds.from_env()
 
 # Product-prefixed ids so a single product can be selected with `-k <product>`.

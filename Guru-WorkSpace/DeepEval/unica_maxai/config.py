@@ -83,12 +83,11 @@ class MaxAIAPIConfig:
 
 
 @dataclass(frozen=True)
-class MistralJudgeConfig:
-    """Config for the local Mistral model used as the DeepEval judge.
+class LLMJudgeConfig:
+    """Config for the local LLM used as the DeepEval judge.
 
     Points at any OpenAI-compatible local server (Ollama, LM Studio,
-    text-generation-webui, vLLM, etc). Defaults assume Ollama running
-    `mistral` locally.
+    text-generation-webui, vLLM, etc).
     """
 
     model_name: str
@@ -97,14 +96,14 @@ class MistralJudgeConfig:
     temperature: float
 
     @classmethod
-    def from_env(cls) -> "MistralJudgeConfig":
+    def from_env(cls) -> "LLMJudgeConfig":
         return cls(
-            model_name=os.environ.get("MISTRAL_MODEL", "qwen-128k:latest"),
-            base_url=os.environ.get("MISTRAL_BASE_URL", "http://localhost:11434/v1"),
+            model_name=os.environ.get("LLM_MODEL", "qwen3:14b"),
+            base_url=os.environ.get("LLM_BASE_URL", "http://localhost:11434/v1"),
             # Ollama/most local servers ignore the key but the OpenAI SDK
             # requires a non-empty string.
-            api_key=os.environ.get("MISTRAL_API_KEY", "not-needed"),
-            temperature=_get_float("MISTRAL_TEMPERATURE", 0.0),
+            api_key=os.environ.get("LLM_API_KEY", "not-needed"),
+            temperature=_get_float("LLM_TEMPERATURE", 0.0),
         )
 
 

@@ -25,6 +25,7 @@ class MetricOutcome:
     reason: Optional[str] = None
     error: Optional[str] = None  # set if the metric could not be evaluated
     skipped_reason: Optional[str] = None  # set if intentionally not run
+    threshold: Optional[float] = None
 
 
 @dataclass

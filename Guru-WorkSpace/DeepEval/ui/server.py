@@ -5,21 +5,26 @@ from __future__ import annotations
 
 import http.server
 import socketserver
+import importlib.util
 import json
 import os
-import subprocess
 import sys
-import tempfile
 import threading
 import time
 import datetime
+import uuid
 from dataclasses import asdict
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 # Paths relative to this script's location
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = SCRIPT_DIR.parent
 EVALUATION_LOCK = threading.Lock()
+RUN_STATE_LOCK = threading.Lock()
+HISTORY_LOCK = threading.Lock()
+HISTORY_PATH = SCRIPT_DIR / "run_history.json"
+ACTIVE_EVALUATION = None
 
 # Try multiple locations for test_cases.json
 TEST_CASES_PATHS = [
@@ -35,6 +40,103 @@ def get_test_cases_path():
         if path.exists():
             return path
     return None
+
+
+def load_run_history(product):
+    """Return saved evaluation runs for one product, newest first."""
+    if not HISTORY_PATH.exists():
+        return []
+    contents = HISTORY_PATH.read_text(encoding="utf-8")
+    history = json.loads(contents) if contents.strip() else {}
+    return sorted(history.get(product, []), key=lambda run: run["started_at"], reverse=True)
+
+
+def save_run_history(record):
+    """Persist a run record atomically so history survives restarts."""
+    with HISTORY_LOCK:
+        history = {}
+        if HISTORY_PATH.exists():
+            contents = HISTORY_PATH.read_text(encoding="utf-8")
+            history = json.loads(contents) if contents.strip() else {}
+        history.setdefault(record["product"], []).append(record)
+        temporary_path = HISTORY_PATH.with_suffix(".tmp")
+        temporary_path.write_text(json.dumps(history, indent=2), encoding="utf-8")
+        temporary_path.replace(HISTORY_PATH)
+
+
+def build_run_record(product, started_at, started, results=None, exit_code=None, error=None):
+    completed_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    return {
+        "run_id": uuid.uuid4().hex,
+        "product": product,
+        "started_at": started_at,
+        "completed_at": completed_at,
+        "elapsed_seconds": round(time.monotonic() - started, 2),
+        "exit_code": exit_code,
+        "error": error,
+        "results": results or [],
+    }
+
+
+def run_evaluation(evaluation, test_cases):
+    """Run one product in the background and update its test-level progress."""
+    started = time.monotonic()
+    product = evaluation["product"]
+    try:
+        from unica_maxai.runner import _results_to_json, run_suite
+
+        def update_progress(event, index, test_case, result):
+            with RUN_STATE_LOCK:
+                test_progress = evaluation["tests"][index]
+                test_progress["status"] = "running" if event == "started" else "completed"
+                if result is not None:
+                    result_data = _results_to_json([result])[0]
+                    has_error = result.api_error or any(
+                        outcome.error for outcome in result.metric_outcomes.values()
+                    )
+                    test_progress["status"] = (
+                        "error" if has_error else ("passed" if result.overall_pass else "failed")
+                    )
+                    test_progress["result"] = result_data
+                    evaluation["results"][index] = result_data
+                    evaluation["completed"] += 1
+
+        results = run_suite(
+            test_cases=test_cases,
+            print_report=False,
+            concurrency=1,
+            progress_callback=update_progress,
+        )
+        results_data = _results_to_json(results)
+        record = build_run_record(
+            product,
+            evaluation["started_at"],
+            started,
+            results=results_data,
+            exit_code=0 if all(result.overall_pass for result in results) else 1,
+        )
+        save_run_history(record)
+        with RUN_STATE_LOCK:
+            evaluation["results"] = results_data
+            evaluation["elapsed_seconds"] = record["elapsed_seconds"]
+            evaluation["status"] = "completed"
+    except Exception as error:
+        results_data = [result for result in evaluation["results"] if result is not None]
+        record = build_run_record(
+            product,
+            evaluation["started_at"],
+            started,
+            results=results_data,
+            exit_code=1,
+            error=str(error),
+        )
+        save_run_history(record)
+        with RUN_STATE_LOCK:
+            evaluation["error"] = str(error)
+            evaluation["elapsed_seconds"] = record["elapsed_seconds"]
+            evaluation["status"] = "failed"
+    finally:
+        EVALUATION_LOCK.release()
 
 
 def load_test_cases():
@@ -67,9 +169,9 @@ def get_judge_config():
             key, value = line.split("=", 1)
             env_values[key.strip()] = value.strip().strip('"\'')
 
-    model = os.environ.get("MISTRAL_MODEL") or env_values.get("MISTRAL_MODEL", "qwen-128k:latest")
-    base_url = os.environ.get("MISTRAL_BASE_URL") or env_values.get(
-        "MISTRAL_BASE_URL", "http://localhost:11434/v1"
+    model = os.environ.get("LLM_MODEL") or env_values.get("LLM_MODEL", "qwen3:14b")
+    base_url = os.environ.get("LLM_BASE_URL") or env_values.get(
+        "LLM_BASE_URL", "http://localhost:11434/v1"
     )
     provider = "Ollama" if "localhost:11434" in base_url or "127.0.0.1:11434" in base_url else "Custom"
     return {"model": model, "provider": provider}
@@ -97,13 +199,45 @@ class DeepEvalHandler(http.server.SimpleHTTPRequestHandler):
             data = {}
 
         if self.path == '/evaluate':
+            product = data.get('product', '')
+            project_path = str(PROJECT_DIR)
+            if project_path not in sys.path:
+                sys.path.insert(0, project_path)
+            from unica_maxai.test_cases import TEST_CASES_BY_PRODUCT
+
+            if product not in TEST_CASES_BY_PRODUCT:
+                self.send_json(400, {"error": f"Unknown product: {product}"})
+                return
             if not EVALUATION_LOCK.acquire(blocking=False):
                 self.send_json(409, {"error": "Another evaluation is already running"})
                 return
-            try:
-                self.run_evaluation(data.get('product', ''))
-            finally:
-                EVALUATION_LOCK.release()
+            global ACTIVE_EVALUATION
+            run_id = uuid.uuid4().hex
+            started_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+            test_cases = TEST_CASES_BY_PRODUCT[product]
+            evaluation = {
+                "run_id": run_id,
+                "product": product,
+                "started_at": started_at,
+                "status": "running",
+                "completed": 0,
+                "total": len(test_cases),
+                "tests": [
+                    {"index": index, "question": test_case.question, "status": "queued", "result": None}
+                    for index, test_case in enumerate(test_cases)
+                ],
+                "results": [None] * len(test_cases),
+                "elapsed_seconds": 0,
+                "error": None,
+            }
+            with RUN_STATE_LOCK:
+                ACTIVE_EVALUATION = evaluation
+            threading.Thread(
+                target=run_evaluation,
+                args=(evaluation, test_cases),
+                daemon=True,
+            ).start()
+            self.send_json(202, {"run_id": run_id, "started_at": started_at})
             return
 
         if self.path != '/ask':
@@ -151,60 +285,6 @@ class DeepEvalHandler(http.server.SimpleHTTPRequestHandler):
         }
         self.wfile.write(json.dumps(response).encode())
 
-    def run_evaluation(self, product):
-        """Execute the same real DeepEval suite used by the command-line runner."""
-        from unica_maxai.test_cases import TEST_CASES_BY_PRODUCT
-
-        if product not in TEST_CASES_BY_PRODUCT:
-            self.send_json(400, {"error": f"Unknown product: {product}"})
-            return
-
-        python_path = PROJECT_DIR / ".venv" / "bin" / "python"
-        if not python_path.exists():
-            self.send_json(500, {"error": "Project virtual environment was not found"})
-            return
-
-        started = time.monotonic()
-        with tempfile.TemporaryDirectory(prefix="deepeval-ui-") as temp_dir:
-            output_path = Path(temp_dir) / "results.json"
-            command = [
-                str(python_path),
-                str(PROJECT_DIR / "run_unica_maxai_suite.py"),
-                "--product",
-                product,
-                "--concurrency",
-                "1",
-                "--output-json",
-                str(output_path),
-            ]
-            try:
-                completed = subprocess.run(
-                    command,
-                    cwd=PROJECT_DIR,
-                    capture_output=True,
-                    text=True,
-                    timeout=3600,
-                )
-            except subprocess.TimeoutExpired:
-                self.send_json(504, {"error": "Evaluation exceeded the one-hour timeout"})
-                return
-
-            if not output_path.exists():
-                error = completed.stderr.strip() or completed.stdout.strip() or "Evaluation failed"
-                self.send_json(500, {"error": error[-2000:]})
-                return
-
-            results = json.loads(output_path.read_text(encoding="utf-8"))
-
-        self.send_json(
-            200,
-            {
-                "results": results,
-                "elapsed_seconds": round(time.monotonic() - started, 2),
-                "exit_code": completed.returncode,
-            },
-        )
-
     def send_json(self, status, payload):
         content = json.dumps(payload).encode('utf-8')
         self.send_response(status)
@@ -215,9 +295,11 @@ class DeepEvalHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         """Handle GET requests, serving index.html at root and test_cases.json for JSON endpoint."""
+        parsed_url = urlparse(self.path)
+        request_path = parsed_url.path
 
         # Serve index.html at root path
-        if self.path == '/':
+        if request_path == '/':
             SCRIPT_DIR = Path(__file__).resolve().parent
             INDEX_PATH = SCRIPT_DIR / 'index.html'
             if INDEX_PATH.exists():
@@ -231,14 +313,32 @@ class DeepEvalHandler(http.server.SimpleHTTPRequestHandler):
             else:
                 # Fallback to default handler if no index.html
                 super().do_GET()
-        elif self.path == '/config':
+        elif request_path == '/config':
             content = json.dumps(get_judge_config()).encode('utf-8')
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.send_header('Content-Length', len(content))
             self.end_headers()
             self.wfile.write(content)
-        elif self.path == '/unica_maxai/test_cases.json':
+        elif request_path == '/history':
+            product = parse_qs(parsed_url.query).get("product", [""])[0]
+            if not product:
+                self.send_json(400, {"error": "A product query parameter is required"})
+                return
+            try:
+                self.send_json(200, {"product": product, "runs": load_run_history(product)})
+            except (OSError, json.JSONDecodeError) as error:
+                self.send_json(500, {"error": f"Could not load run history: {error}"})
+        elif request_path == '/evaluation-progress':
+            run_id = parse_qs(parsed_url.query).get("run_id", [""])[0]
+            with RUN_STATE_LOCK:
+                evaluation = ACTIVE_EVALUATION
+                if evaluation is None or evaluation["run_id"] != run_id:
+                    self.send_json(404, {"error": "Evaluation run was not found"})
+                    return
+                snapshot = json.loads(json.dumps(evaluation))
+            self.send_json(200, snapshot)
+        elif request_path == '/unica_maxai/test_cases.json':
             try:
                 content = json.dumps(load_test_cases()).encode('utf-8')
                 self.send_response(200)
@@ -261,6 +361,11 @@ class DeepEvalHandler(http.server.SimpleHTTPRequestHandler):
 
 def run_server(port=8100):
     """Run the HTTP server with threading support for concurrent requests."""
+    if importlib.util.find_spec("deepeval") is None:
+        raise SystemExit(
+            f"DeepEval is not installed for {sys.executable}. From the DeepEval root, "
+            "start the dashboard with `venv/bin/python ui/server.py --port 8000`."
+        )
 
     class ThreadingTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
         """Threading TCP server to handle multiple requests concurrently."""

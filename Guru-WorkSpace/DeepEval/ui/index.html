@@ -46,9 +46,12 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
-        .product-selector {
+        .product-selector,
+        .history-selector {
             padding: 10px 16px;
             border-radius: 8px;
             border: 1px solid #cbd5e1;
@@ -57,12 +60,19 @@
             color-scheme: light;
             font-size: 14px;
             cursor: pointer;
-            min-width: 200px;
+            min-width: 190px;
+            max-width: 260px;
         }
 
-        .product-selector option {
+        .product-selector option,
+        .history-selector option {
             background: #ffffff;
             color: #172033;
+        }
+
+        .history-selector:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
         }
 
         .run-btn {
@@ -386,11 +396,92 @@
             font-weight: 700;
         }
 
+        .detail-dialog {
+            width: min(860px, calc(100vw - 32px));
+            max-width: none;
+            max-height: min(88vh, 900px);
+            padding: 0;
+            border: 0;
+            border-radius: 10px;
+            color: #263238;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .detail-dialog::backdrop { background: rgba(18, 29, 38, 0.58); }
+
+        .detail-dialog-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 22px 26px;
+            border-bottom: 1px solid #e4e8eb;
+            background: #f8fafb;
+        }
+
+        .detail-dialog-header h2 { font-size: 19px; line-height: 1.4; overflow-wrap: anywhere; }
+        .detail-eyebrow { margin-bottom: 4px; color: #667780; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .detail-close { border: 0; background: transparent; color: #53636c; font-size: 26px; line-height: 1; cursor: pointer; }
+        .detail-dialog-body { max-height: calc(88vh - 84px); overflow: auto; padding: 22px 26px 28px; }
+        .detail-overview { display: grid; grid-template-columns: repeat(6, minmax(90px, 1fr)); gap: 10px; margin-bottom: 22px; }
+        .detail-overview-item { padding: 12px; background: #f4f6f7; border-radius: 6px; }
+        .detail-overview-item span { display: block; margin-bottom: 5px; color: #667780; font-size: 11px; }
+        .detail-overview-item strong { font-size: 16px; }
+        .detail-result.pass { color: #2e7d32; }
+        .detail-result.fail { color: #c62828; }
+        .detail-result.error { color: #ef6c00; }
+        .detail-section { margin-top: 22px; }
+        .detail-section h3 { margin-bottom: 9px; font-size: 14px; }
+        .detail-text { white-space: pre-wrap; overflow-wrap: anywhere; padding: 13px; border: 1px solid #e4e8eb; border-radius: 6px; background: #fff; font: inherit; font-size: 13px; line-height: 1.55; }
+        .detail-reason { padding: 12px 14px; border-left: 3px solid #d08722; background: #fff8eb; font-size: 13px; line-height: 1.55; }
+        .detail-metric-list { display: grid; gap: 9px; }
+        .detail-metric { padding: 13px 14px; border: 1px solid #e4e8eb; border-radius: 6px; }
+        .detail-metric-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+        .detail-metric-header strong { font-size: 13px; }
+        .detail-metric-state { font-size: 11px; font-weight: 700; }
+        .detail-metric-state.pass { color: #2e7d32; }
+        .detail-metric-state.fail { color: #c62828; }
+        .detail-metric-state.error { color: #ef6c00; }
+        .detail-metric-state.skipped { color: #667780; }
+        .detail-metric-stats { margin-top: 6px; color: #52616a; font-size: 12px; }
+        .detail-metric-reason { margin-top: 8px; color: #52616a; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+        .detail-context-list { margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.55; }
+        .detail-context-list li + li { margin-top: 7px; }
+        .detail-empty { color: #77858d; font-size: 13px; }
+
+        .run-progress { grid-column: 1 / -1; padding: 22px; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .run-progress-header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+        .run-progress-header strong { font-size: 15px; }
+        .run-progress-header span { color: #687780; font-size: 12px; }
+        .run-progress progress { width: 100%; height: 8px; margin-bottom: 14px; accent-color: #2e9f65; }
+        .progress-list { display: grid; gap: 7px; list-style: none; }
+        .progress-row { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #e5eaed; border-radius: 6px; background: #fff; }
+        .progress-row.running { border-color: #e3a132; background: #fffaf0; }
+        .progress-row.passed { border-left: 3px solid #36a36c; }
+        .progress-row.failed { border-left: 3px solid #d94a4a; }
+        .progress-row.error { border-left: 3px solid #e18a2e; }
+        .progress-index { color: #74828a; font-size: 11px; font-weight: 700; }
+        .progress-question { font-size: 13px; line-height: 1.4; overflow-wrap: anywhere; }
+        .progress-status { color: #667780; font-size: 11px; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+        .progress-row.running .progress-status { color: #9a6510; }
+        .progress-row.passed .progress-status { color: #2e7d32; }
+        .progress-row.failed .progress-status { color: #c62828; }
+        .progress-row.error .progress-status { color: #ef6c00; }
+
         @media (max-width: 768px) {
-            .dashboard-header { padding: 15px 20px; }
+            .dashboard-header { padding: 15px 20px; align-items: flex-start; flex-direction: column; gap: 14px; }
             .dashboard-header h1 { font-size: 20px; }
+            .header-controls { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+            .product-selector, .history-selector { min-width: 0; max-width: none; width: 100%; }
+            .run-btn { grid-column: 1 / -1; }
             .metrics-bar, .results-grid { padding: 0 20px; }
             .summary-bar { flex-direction: column; gap: 12px; }
+            .detail-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .detail-dialog-header, .detail-dialog-body { padding-left: 18px; padding-right: 18px; }
+            .run-progress { padding: 16px; }
+            .run-progress-header { align-items: flex-start; flex-direction: column; gap: 3px; }
+            .progress-row { grid-template-columns: 22px minmax(0, 1fr); }
+            .progress-status { grid-column: 2; }
         }
     </style>
 </head>
@@ -410,6 +501,9 @@
                 <option value="interact">Interact</option>
                 <option value="journey">Journey</option>
                 <option value="offer">Offer</option>
+            </select>
+            <select id="historySelector" class="history-selector" aria-label="Run history" disabled>
+                <option value="">Run History</option>
             </select>
             <button id="runBtn" class="run-btn" disabled>Loading Tests...</button>
         </div>
@@ -486,9 +580,54 @@
         </div>
     </div>
 
+    <dialog id="detailDialog" class="detail-dialog" aria-labelledby="detailQuestion">
+        <div class="detail-dialog-header">
+            <div>
+                <p class="detail-eyebrow">Test Result</p>
+                <h2 id="detailQuestion"></h2>
+            </div>
+            <button id="closeDetailDialog" class="detail-close" type="button" aria-label="Close details">&times;</button>
+        </div>
+        <div class="detail-dialog-body">
+            <div class="detail-overview">
+                <div class="detail-overview-item"><span>Result</span><strong id="detailOverallResult" class="detail-result"></strong></div>
+                <div class="detail-overview-item"><span>Total Metrics</span><strong id="detailMetricTotal">0</strong></div>
+                <div class="detail-overview-item"><span>Passed</span><strong id="detailMetricPassed">0</strong></div>
+                <div class="detail-overview-item"><span>Failed</span><strong id="detailMetricFailed">0</strong></div>
+                <div class="detail-overview-item"><span>Errors</span><strong id="detailMetricErrors">0</strong></div>
+                <div class="detail-overview-item"><span>N/A</span><strong id="detailMetricSkipped">0</strong></div>
+            </div>
+            <section id="detailFailureSection" class="detail-section" hidden>
+                <h3>Failure reason</h3>
+                <div id="detailFailureReason" class="detail-reason"></div>
+            </section>
+            <section class="detail-section">
+                <h3>Expected answer</h3>
+                <pre id="detailExpectedAnswer" class="detail-text"></pre>
+            </section>
+            <section class="detail-section">
+                <h3>Actual answer</h3>
+                <pre id="detailActualAnswer" class="detail-text"></pre>
+            </section>
+            <section class="detail-section">
+                <h3>Metric results</h3>
+                <div id="detailMetricList" class="detail-metric-list"></div>
+            </section>
+            <section class="detail-section">
+                <h3>Retrieved context</h3>
+                <div id="detailRetrievedContext"></div>
+            </section>
+            <section class="detail-section">
+                <h3>Expected context</h3>
+                <div id="detailExpectedContext"></div>
+            </section>
+        </div>
+    </dialog>
+
     <script>
         const API_BASE = window.location.origin;
         let testCases = [];
+        let productRunHistory = [];
 
         async function loadRuntimeConfig() {
             try {
@@ -545,6 +684,136 @@
             }
         }
 
+        function formatRunDate(value) {
+            const date = new Date(value);
+            return Number.isNaN(date.getTime()) ? value : date.toLocaleString();
+        }
+
+        function summarizeResults(results) {
+            const completedResults = results.filter(Boolean);
+            const hasError = result => result.api_error || Object.values(result.metrics || {}).some(metric => metric.error);
+            const passed = completedResults.filter(result => result.overall_pass).length;
+            const errors = completedResults.filter(hasError).length;
+            return {passed, errors, failed: completedResults.length - passed - errors};
+        }
+
+        function runHistoryLabel(run) {
+            const {passed, failed, errors} = summarizeResults(run.results || []);
+            const outcome = run.error
+                ? 'ERROR'
+                : `${passed} pass · ${failed} fail · ${errors} error`;
+            return `${formatRunDate(run.started_at)} · ${outcome}`;
+        }
+
+        function showRunHistory(run) {
+            if (run.error) {
+                document.getElementById('summaryBar').style.display = 'none';
+                document.getElementById('executionStatus').textContent = `${formatRunDate(run.started_at)} · Run failed`;
+                document.getElementById('resultSummary').textContent = 'Evaluation error';
+                document.getElementById('resultsGrid').innerHTML = `
+                    <div class="no-results"><p>${escapeHtml(run.error)}</p></div>
+                `;
+                return;
+            }
+            updateResultsUI(run.results || [], run.elapsed_seconds, run.started_at);
+        }
+
+        async function loadProductRunHistory(product, selectedRunId = null, restoreLatest = false) {
+            const selector = document.getElementById('historySelector');
+            selector.innerHTML = '<option value="">Run History</option>';
+            selector.disabled = true;
+            productRunHistory = [];
+            if (!product) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/history?product=${encodeURIComponent(product)}`);
+                const payload = await response.json();
+                if (!response.ok) throw new Error(payload.error || `History request failed (${response.status})`);
+                productRunHistory = payload.runs || [];
+                if (productRunHistory.length === 0) {
+                    selector.options[0].textContent = 'No saved runs';
+                    document.getElementById('resultsGrid').innerHTML = `
+                        <div class="no-results"><p>No saved runs for ${escapeHtml(product)} yet. Run tests to add one.</p></div>
+                    `;
+                }
+                for (const run of productRunHistory) {
+                    const option = document.createElement('option');
+                    option.value = run.run_id;
+                    option.textContent = runHistoryLabel(run);
+                    selector.appendChild(option);
+                }
+                selector.disabled = productRunHistory.length === 0;
+
+                const selectedRun = productRunHistory.find(run => run.run_id === selectedRunId)
+                    || (restoreLatest ? productRunHistory[0] : null);
+                if (selectedRun) {
+                    selector.value = selectedRun.run_id;
+                    showRunHistory(selectedRun);
+                }
+            } catch (error) {
+                console.error('Error loading run history:', error);
+                selector.innerHTML = '<option value="">History unavailable</option>';
+                selector.disabled = true;
+            }
+        }
+
+        function renderEvaluationProgress(progress) {
+            const tests = progress.tests || [];
+            const completed = progress.completed || 0;
+            const total = progress.total || tests.length;
+            const runningTest = tests.find(test => test.status === 'running');
+            const passed = tests.filter(test => test.status === 'passed').length;
+            const failed = tests.filter(test => test.status === 'failed').length;
+            const errors = tests.filter(test => test.status === 'error').length;
+            const currentStatus = runningTest
+                ? `Running ${runningTest.index + 1} of ${total}: ${runningTest.question}`
+                : (progress.status === 'completed' ? 'All tests finished' : 'Preparing next test...');
+
+            document.getElementById('executionStatus').textContent = `${completed}/${total} complete · ${currentStatus}`;
+            document.getElementById('resultSummary').textContent = `pass ${passed} · fail ${failed} · error ${errors} · ${completed}/${total} complete`;
+            document.getElementById('passedCount').textContent = passed;
+            document.getElementById('failedCount').textContent = failed;
+            document.getElementById('errorCount').textContent = errors;
+            document.getElementById('summaryBar').style.display = 'flex';
+
+            const statusLabels = {
+                queued: 'Queued',
+                running: 'Running',
+                passed: 'Passed',
+                failed: 'Failed',
+                error: 'Error',
+            };
+            const rows = tests.map(test => `
+                <li class="progress-row ${test.status}" aria-current="${test.status === 'running' ? 'step' : 'false'}">
+                    <span class="progress-index">${test.index + 1}</span>
+                    <span class="progress-question">${escapeHtml(test.question)}</span>
+                    <span class="progress-status">${statusLabels[test.status] || 'Queued'}</span>
+                </li>
+            `).join('');
+
+            document.getElementById('resultsGrid').innerHTML = `
+                <section class="run-progress" aria-live="polite" aria-label="Test execution progress">
+                    <div class="run-progress-header">
+                        <strong>${completed} of ${total} tests complete</strong>
+                        <span>${escapeHtml(currentStatus)}</span>
+                    </div>
+                    <progress value="${completed}" max="${Math.max(total, 1)}">${completed}/${total}</progress>
+                    <ol class="progress-list">${rows}</ol>
+                </section>
+            `;
+        }
+
+        async function pollEvaluationProgress(runId) {
+            while (true) {
+                const response = await fetch(`${API_BASE}/evaluation-progress?run_id=${encodeURIComponent(runId)}`);
+                const progress = await response.json();
+                if (!response.ok) throw new Error(progress.error || `Progress request failed (${response.status})`);
+                renderEvaluationProgress(progress);
+                if (progress.status === 'completed' || progress.status === 'failed') return progress;
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+
         // Run tests for selected product
         async function runTests() {
             if (testCases.length === 0) {
@@ -562,44 +831,64 @@
                 return;
             }
 
+            const productCases = testCases.filter(
+                testCase => testCase.metadata?.category?.trim().toLowerCase() === product
+            );
+            if (productCases.length === 0) {
+                alert('No test cases found for selected product');
+                return;
+            }
+
             const runBtn = document.getElementById('runBtn');
+            const productSelector = document.getElementById('productSelector');
+            const historySelector = document.getElementById('historySelector');
             runBtn.disabled = true;
             runBtn.textContent = 'Running Real Evaluation...';
-            document.getElementById('executionStatus').textContent = 'Calling MaxAI and local judge...';
-            document.getElementById('resultsGrid').innerHTML = `
-                <div class="no-results">
-                    <p>Evaluation is running. Results will appear here when execution is complete.</p>
-                </div>
-            `;
+            productSelector.disabled = true;
+            historySelector.disabled = true;
+            const initialProgress = {
+                completed: 0,
+                total: productCases.length,
+                status: 'running',
+                tests: productCases.map((testCase, index) => ({
+                    index,
+                    question: testCase.question,
+                    status: 'queued',
+                })),
+            };
+            renderEvaluationProgress(initialProgress);
 
             try {
-                const productCases = testCases.filter(
-                    testCase => testCase.metadata?.category?.trim().toLowerCase() === product
-                );
-                if (productCases.length === 0) {
-                    alert('No test cases found for selected product');
-                    return;
-                }
-
-                const response = await fetch(`${API_BASE}/evaluate`, {
+                const startResponse = await fetch(`${API_BASE}/evaluate`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({product})
                 });
-                const payload = await response.json();
-                if (!response.ok) {
-                    throw new Error(payload.error || `Evaluation failed (${response.status})`);
+                const startPayload = await startResponse.json();
+                if (!startResponse.ok) {
+                    throw new Error(startPayload.error || `Evaluation failed (${startResponse.status})`);
                 }
 
-                updateResultsUI(payload.results, payload.elapsed_seconds);
+                const progress = await pollEvaluationProgress(startPayload.run_id);
+                if (progress.status === 'failed') {
+                    const completedResults = (progress.results || []).filter(Boolean);
+                    if (completedResults.length) {
+                        updateResultsUI(completedResults, progress.elapsed_seconds, progress.started_at);
+                    }
+                    throw new Error(progress.error || 'Evaluation failed');
+                }
+                updateResultsUI(progress.results, progress.elapsed_seconds, progress.started_at);
+                await loadProductRunHistory(product, progress.run_id);
 
             } catch (error) {
                 console.error('Error running tests:', error);
                 document.getElementById('executionStatus').textContent = 'Evaluation failed';
+                await loadProductRunHistory(product, null, true);
                 alert('Error running tests: ' + error.message);
             } finally {
                 runBtn.disabled = false;
                 runBtn.textContent = 'Run Tests';
+                productSelector.disabled = false;
             }
         }
 
@@ -790,7 +1079,8 @@
         }
 
         // Update UI with results
-        function updateResultsUI(results, elapsedSeconds) {
+        function updateResultsUI(results, elapsedSeconds, startedAt = null) {
+            results = results.filter(Boolean);
             const grid = document.getElementById('resultsGrid');
             const summaryBar = document.getElementById('summaryBar');
 
@@ -798,11 +1088,10 @@
             grid.innerHTML = '';
 
             // Update metrics bar
-            document.getElementById('executionStatus').textContent = `${elapsedSeconds}s · ${results.length} real tests`;
+            const runDate = startedAt ? `${formatRunDate(startedAt)} · ` : '';
+            document.getElementById('executionStatus').textContent = `${runDate}${elapsedSeconds}s · ${results.length} tests`;
             const hasError = result => result.api_error || Object.values(result.metrics || {}).some(metric => metric.error);
-            const passed = results.filter(result => result.overall_pass).length;
-            const errors = results.filter(hasError).length;
-            const failed = results.length - passed - errors;
+            const {passed, failed, errors} = summarizeResults(results);
             document.getElementById('resultSummary').textContent = `pass ${passed} · fail ${failed} · error ${errors}`;
 
             // Update summary bar
@@ -858,7 +1147,86 @@
                 `;
 
                 grid.appendChild(card);
+                card.querySelector('.details').addEventListener('click', () => showTestDetails(result));
             });
+        }
+
+        function showTestDetails(result) {
+            const metrics = Object.entries(result.metrics || {});
+            const metricStatus = metric => {
+                if (metric.error) return 'ERROR';
+                if (metric.skipped_reason || (metric.score == null && metric.success == null)) return 'N/A';
+                return metric.success ? 'PASS' : 'FAIL';
+            };
+            const counts = {
+                passed: metrics.filter(([, metric]) => metricStatus(metric) === 'PASS').length,
+                failed: metrics.filter(([, metric]) => metricStatus(metric) === 'FAIL').length,
+                errors: metrics.filter(([, metric]) => metricStatus(metric) === 'ERROR').length,
+                skipped: metrics.filter(([, metric]) => metricStatus(metric) === 'N/A').length,
+            };
+            const overall = result.api_error || counts.errors ? 'ERROR' : (result.overall_pass ? 'PASS' : 'FAIL');
+            const resultNode = document.getElementById('detailOverallResult');
+            resultNode.textContent = overall;
+            resultNode.className = `detail-result ${overall.toLowerCase()}`;
+            document.getElementById('detailQuestion').textContent = result.question || 'Test details';
+            document.getElementById('detailMetricTotal').textContent = metrics.length;
+            document.getElementById('detailMetricPassed').textContent = counts.passed;
+            document.getElementById('detailMetricFailed').textContent = counts.failed;
+            document.getElementById('detailMetricErrors').textContent = counts.errors;
+            document.getElementById('detailMetricSkipped').textContent = counts.skipped;
+            document.getElementById('detailExpectedAnswer').textContent = result.expected_answer || 'Not provided';
+            document.getElementById('detailActualAnswer').textContent = result.actual_answer || 'No answer returned';
+
+            const failureReasons = [];
+            if (result.api_error) failureReasons.push(`API error: ${result.api_error}`);
+            for (const [name, metric] of metrics) {
+                if (metric.error) failureReasons.push(`${name}: ${metric.error}`);
+                else if (metric.success === false) {
+                    const fallback = metric.score != null && metric.threshold != null
+                        ? `Score ${metric.score} did not meet threshold ${metric.threshold}.`
+                        : 'Metric did not meet its threshold.';
+                    failureReasons.push(`${name}: ${metric.reason || fallback}`);
+                }
+            }
+            if (overall === 'FAIL' && failureReasons.length === 0) {
+                failureReasons.push('The test did not pass, but no metric-specific failure reason was returned.');
+            }
+            const failureSection = document.getElementById('detailFailureSection');
+            failureSection.hidden = failureReasons.length === 0;
+            document.getElementById('detailFailureReason').innerHTML = failureReasons
+                .map(reason => `<p>${escapeHtml(reason)}</p>`)
+                .join('');
+
+            document.getElementById('detailMetricList').innerHTML = metrics.length
+                ? metrics.map(([name, metric]) => {
+                    const state = metricStatus(metric);
+                    const score = metric.score == null ? 'N/A' : Number(metric.score).toFixed(3);
+                    const threshold = metric.threshold == null ? 'N/A' : Number(metric.threshold).toFixed(3);
+                    const reason = metric.error || metric.skipped_reason || metric.reason || 'No explanation provided.';
+                    return `
+                        <article class="detail-metric">
+                            <div class="detail-metric-header">
+                                <strong>${escapeHtml(name)}</strong>
+                                <span class="detail-metric-state ${state.toLowerCase()}">${state}</span>
+                            </div>
+                            <p class="detail-metric-stats">Score: ${score} · Threshold: ${threshold}</p>
+                            <p class="detail-metric-reason">${escapeHtml(reason)}</p>
+                        </article>
+                    `;
+                }).join('')
+                : '<p class="detail-empty">No metrics were evaluated.</p>';
+
+            const renderContext = (elementId, values) => {
+                const container = document.getElementById(elementId);
+                const contextItems = Array.isArray(values) ? values : [];
+                container.innerHTML = contextItems.length
+                    ? `<ul class="detail-context-list">${contextItems.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+                    : '<p class="detail-empty">No context available.</p>';
+            };
+            renderContext('detailRetrievedContext', result.retrieved_context);
+            renderContext('detailExpectedContext', result.expected_context);
+
+            document.getElementById('detailDialog').showModal();
         }
 
         // Show/hide loading overlay
@@ -883,7 +1251,12 @@
 
         // Event listeners
         document.getElementById('runBtn').addEventListener('click', runTests);
-        document.getElementById('productSelector').addEventListener('change', () => {
+        const detailDialog = document.getElementById('detailDialog');
+        document.getElementById('closeDetailDialog').addEventListener('click', () => detailDialog.close());
+        detailDialog.addEventListener('click', event => {
+            if (event.target === detailDialog) detailDialog.close();
+        });
+        document.getElementById('productSelector').addEventListener('change', async () => {
             // Reset UI when product changes
             document.getElementById('resultsGrid').innerHTML = `
                 <div class="no-results">
@@ -894,6 +1267,15 @@
                 </div>
             `;
             document.getElementById('summaryBar').style.display = 'none';
+            document.getElementById('executionStatus').textContent = 'Ready';
+            document.getElementById('resultSummary').textContent = 'pass 0 · fail 0 · error 0';
+            const product = document.getElementById('productSelector').value;
+            await loadProductRunHistory(product, null, true);
+        });
+
+        document.getElementById('historySelector').addEventListener('change', event => {
+            const run = productRunHistory.find(item => item.run_id === event.target.value);
+            if (run) showRunHistory(run);
         });
 
         // Load test cases on init

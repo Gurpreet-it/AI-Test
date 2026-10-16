@@ -14,14 +14,14 @@ import os
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from deepeval.test_case import LLMTestCase
 
 from .api_client import MaxAIClient
-from .config import MaxAIAPIConfig, MetricThresholds, MistralJudgeConfig
+from .config import MaxAIAPIConfig, MetricThresholds, LLMJudgeConfig
 from .html_report import write_html_report
-from .judge import MistralJudge
+from .judge import LLMJudge
 from .metrics import RETRIEVAL_METRIC_NAMES, build_metrics
 from .report import MetricOutcome, TestCaseResult, format_summary, format_test_case_report
 from .test_cases import TEST_CASES, TEST_CASES_BY_PRODUCT, MaxAITestCase
@@ -30,9 +30,14 @@ from .test_cases import TEST_CASES, TEST_CASES_BY_PRODUCT, MaxAITestCase
 def _evaluate_metric(name: str, metric, test_case: LLMTestCase) -> MetricOutcome:
     try:
         metric.measure(test_case)
-        return MetricOutcome(score=metric.score, success=metric.is_successful(), reason=getattr(metric, "reason", None))
+        return MetricOutcome(
+            score=metric.score,
+            success=metric.is_successful(),
+            reason=getattr(metric, "reason", None),
+            threshold=getattr(metric, "threshold", None),
+        )
     except Exception as exc:  # DeepEval/model/network failures during evaluation
-        return MetricOutcome(error=str(exc))
+        return MetricOutcome(error=str(exc), threshold=getattr(metric, "threshold", None))
 
 
 def run_single_test_case(
@@ -79,15 +84,16 @@ def run_suite(
     test_cases: Optional[List[MaxAITestCase]] = None,
     print_report: bool = True,
     concurrency: int = 1,
+    progress_callback: Optional[Callable[[str, int, MaxAITestCase, Optional[TestCaseResult]], None]] = None,
 ) -> List[TestCaseResult]:
     test_cases = test_cases if test_cases is not None else TEST_CASES
 
     api_config = MaxAIAPIConfig.from_env()
-    judge_config = MistralJudgeConfig.from_env()
+    judge_config = LLMJudgeConfig.from_env()
     thresholds = MetricThresholds.from_env()
 
     client = MaxAIClient(api_config)
-    judge = MistralJudge(judge_config)
+    judge = LLMJudge(judge_config)
 
     def run(tc: MaxAITestCase) -> TestCaseResult:
         return run_single_test_case(tc, client, judge, thresholds)
@@ -109,7 +115,14 @@ def run_suite(
         with ThreadPoolExecutor(max_workers=concurrency) as pool:
             results = list(pool.map(run, test_cases))
     else:
-        results = [run(tc) for tc in test_cases]
+        results = []
+        for index, test_case in enumerate(test_cases):
+            if progress_callback:
+                progress_callback("started", index, test_case, None)
+            result = run(test_case)
+            results.append(result)
+            if progress_callback:
+                progress_callback("completed", index, test_case, result)
 
     if print_report:
         for result in results:
@@ -128,6 +141,8 @@ def _results_to_json(results: List[TestCaseResult]) -> list:
                 "expected_answer": r.test_case.expected_answer,
                 "actual_answer": r.actual_answer,
                 "api_error": r.api_error,
+                "expected_context": r.test_case.expected_context,
+                "retrieved_context": r.retrieved_context,
                 "metadata": r.test_case.metadata,
                 "metrics": {
                     name: {
@@ -136,6 +151,7 @@ def _results_to_json(results: List[TestCaseResult]) -> list:
                         "reason": o.reason,
                         "error": o.error,
                         "skipped_reason": o.skipped_reason,
+                        "threshold": o.threshold,
                     }
                     for name, o in r.metric_outcomes.items()
                 },
